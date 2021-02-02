@@ -85,7 +85,7 @@ export const constantRoutes = [
         path: 'index',
         name: 'Form',
         component: () => import('@/views/form/index'),
-        meta: { title: 'Form', icon: 'form' }
+        meta: { title: '参数设置', icon: 'form' }
       }
     ]
   },
@@ -145,6 +145,26 @@ export const constantRoutes = [
         component: () => import('@/views/nested/menu2/index'),
         name: 'Menu2',
         meta: { title: 'menu2' }
+      }
+    ]
+  },
+  {
+    path: '/user',
+    component: Layout,
+    redirect: '/user/change-password',
+    name: 'user',
+    meta: { title: '用户管理', icon: 'el-icon-s-help' },
+    children: [
+      {
+        path: 'change-password',
+        name: 'changePassword',
+        meta: { title: '修改密码', icon: 'el-icon-s-help' }
+      },
+      {
+        path: 'add-user',
+        component: () => import('@/views/user/addUser/index'),
+        name: 'addUser',
+        meta: { title: '新增用户', icon: 'el-icon-s-help' }
       }
     ]
   },

@@ -157,32 +157,32 @@
   }
 
   // mobile responsive
-  .mobile {
-    .main-container {
-      margin-left: 0px;
-    }
+  // .mobile {
+  //   .main-container {
+  //     margin-left: 0px;
+  //   }
 
-    .sidebar-container {
-      transition: transform .28s;
-      width: $sideBarWidth !important;
-    }
+  //   .sidebar-container {
+  //     transition: transform .28s;
+  //     width: $sideBarWidth !important;
+  //   }
 
-    &.hideSidebar {
-      .sidebar-container {
-        pointer-events: none;
-        transition-duration: 0.3s;
-        transform: translate3d(-$sideBarWidth, 0, 0);
-      }
-    }
-  }
+  //   &.hideSidebar {
+  //     .sidebar-container {
+  //       pointer-events: none;
+  //       transition-duration: 0.3s;
+  //       transform: translate3d(-$sideBarWidth, 0, 0);
+  //     }
+  //   }
+  // }
 
-  .withoutAnimation {
+  // .withoutAnimation {
 
-    .main-container,
-    .sidebar-container {
-      transition: none;
-    }
-  }
+  //   .main-container,
+  //   .sidebar-container {
+  //     transition: none;
+  //   }
+  // }
 }
 
 // when menu collapsed
