@@ -1,12 +1,14 @@
 import { login, logout, getInfo, register, changePassword } from '@/api/user'
 import { getToken, setToken, removeToken } from '@/utils/auth'
-import { resetRouter } from '@/router'
+import router, { resetRouter } from '@/router'
 
 const getDefaultState = () => {
   return {
     token: getToken(),
     name: '',
-    avatar: ''
+    avatar: '',
+    introduction: '',
+    roles: []
   }
 }
 
@@ -16,6 +18,9 @@ const mutations = {
   RESET_STATE: (state) => {
     Object.assign(state, getDefaultState())
   },
+  SET_INTRODUCTION: (state, introduction) => {
+    state.introduction = introduction
+  },
   SET_TOKEN: (state, token) => {
     state.token = token
   },
@@ -24,6 +29,9 @@ const mutations = {
   },
   SET_AVATAR: (state, avatar) => {
     state.avatar = avatar
+  },
+  SET_ROLES: (state, roles) => {
+    state.roles = roles
   }
 }
 
@@ -53,10 +61,15 @@ const actions = {
           return reject('Verification failed, please Login again.')
         }
 
-        const { name, avatar } = data
-
+        const { roles, name, avatar, introduction } = data
+        // roles must be a non-empty array
+        if (!roles || roles.length <= 0) {
+          reject('getInfo: roles must be a non-null array!')
+        }
+        commit('SET_ROLES', roles)
         commit('SET_NAME', name)
         commit('SET_AVATAR', avatar)
+        commit('SET_INTRODUCTION', introduction)
         resolve(data)
       }).catch(error => {
         reject(error)
@@ -79,7 +92,7 @@ const actions = {
   },
 
   // user register
-  register({state}, userRegister) {
+  register({ state }, userRegister) {
     const { username, password, confirmPassword } = userRegister
     return new Promise((resolve, reject) => {
       register({ username: username.trim(), password: password.trim(), confirmPassword: confirmPassword.trim() }, state.token).then(response => {
@@ -94,13 +107,10 @@ const actions = {
   },
 
   // user change password
-  changePassword({commit, state}, userChangePassword) {
+  changePassword({ commit, state }, userChangePassword) {
     const { oldPassword, newPassword, confirmNewPassword } = userChangePassword
     return new Promise((resolve, reject) => {
-      changePassword({  old_password: oldPassword.trim(), new_password: newPassword.trim() }, state.token).then(() => {
-        // removeToken() // must remove  token  first
-        // resetRouter()
-        // commit('RESET_STATE')
+      changePassword({ old_password: oldPassword.trim(), new_password: newPassword.trim(), confirm_new_password: confirmNewPassword.trim() }, state.token).then(() => {
         resolve()
       }).catch(error => {
         reject(error)
@@ -115,6 +125,23 @@ const actions = {
       commit('RESET_STATE')
       resolve()
     })
+  },
+
+  // dynamically modify permissions
+  async changeRoles({ commit, dispatch }, role) {
+    const token = role + '-token'
+
+    commit('SET_TOKEN', token)
+    setToken(token)
+
+    const { roles } = await dispatch('getInfo')
+
+    resetRouter()
+
+    // generate accessible routes map based on roles
+    const accessRoutes = await dispatch('permission/generateRoutes', roles, { root: true })
+    // dynamically add accessible routes
+    router.addRoutes(accessRoutes)
   }
 }
 

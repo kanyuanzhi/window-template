@@ -27,7 +27,7 @@ export function register(data, token) {
   return request({
     url: '/user/register',
     method: 'post',
-    params: {token},
+    params: { token },
     data
   })
 }
@@ -36,7 +36,7 @@ export function changePassword(data, token) {
   return request({
     url: '/user/change-password',
     method: 'post',
-    params: {token},
+    params: { token },
     data
   })
 }

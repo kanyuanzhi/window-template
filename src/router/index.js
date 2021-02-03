@@ -168,15 +168,17 @@ export const constantRoutes = [
         meta: { title: '新增用户', icon: 'el-icon-s-help' }
       }
     ]
-  },
+  }
+]
 
+export const asyncRoutes = [
   {
     path: 'external-link',
     component: Layout,
     children: [
       {
         path: 'https://panjiachen.github.io/vue-element-admin-site/#/',
-        meta: { title: 'External Link', icon: 'link' }
+        meta: { title: 'External Link', icon: 'link', role: ['super'] }
       }
     ]
   },
