@@ -1,4 +1,4 @@
-import { login, logout, getInfo, register } from '@/api/user'
+import { login, logout, getInfo, register, changePassword } from '@/api/user'
 import { getToken, setToken, removeToken } from '@/utils/auth'
 import { resetRouter } from '@/router'
 
@@ -82,11 +82,26 @@ const actions = {
   register({state}, userRegister) {
     const { username, password, confirmPassword } = userRegister
     return new Promise((resolve, reject) => {
-      register({ username: username.trim(), password: password, confirmPassword: confirmPassword }, state.token).then(response => {
+      register({ username: username.trim(), password: password.trim(), confirmPassword: confirmPassword.trim() }, state.token).then(response => {
         const { data } = response
         // commit('SET_TOKEN', data.token)
         // setToken(data.token)
         resolve(data)
+      }).catch(error => {
+        reject(error)
+      })
+    })
+  },
+
+  // user change password
+  changePassword({commit, state}, userChangePassword) {
+    const { oldPassword, newPassword, confirmNewPassword } = userChangePassword
+    return new Promise((resolve, reject) => {
+      changePassword({  old_password: oldPassword.trim(), new_password: newPassword.trim() }, state.token).then(() => {
+        // removeToken() // must remove  token  first
+        // resetRouter()
+        // commit('RESET_STATE')
+        resolve()
       }).catch(error => {
         reject(error)
       })

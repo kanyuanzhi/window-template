@@ -157,12 +157,13 @@ export const constantRoutes = [
     children: [
       {
         path: 'change-password',
+        component: () => import('@/views/user/change-password/index'),
         name: 'changePassword',
         meta: { title: '修改密码', icon: 'el-icon-s-help' }
       },
       {
         path: 'add-user',
-        component: () => import('@/views/user/addUser/index'),
+        component: () => import('@/views/user/add-user/index'),
         name: 'addUser',
         meta: { title: '新增用户', icon: 'el-icon-s-help' }
       }

@@ -31,3 +31,12 @@ export function register(data, token) {
     data
   })
 }
+
+export function changePassword(data, token) {
+  return request({
+    url: '/user/change-password',
+    method: 'post',
+    params: {token},
+    data
+  })
+}
