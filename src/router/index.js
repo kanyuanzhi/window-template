@@ -168,6 +168,12 @@ export const constantRoutes = [
         meta: { title: '新增用户', icon: 'el-icon-s-help' }
       },
       {
+        path: 'edit-user',
+        component: () => import('@/views/user/edit-user/index'),
+        name: 'editUser',
+        meta: { title: '编辑用户', icon: 'el-icon-s-help' }
+      },
+      {
         path: 'edit-role',
         component: () => import('@/views/user/edit-role/index'),
         name: 'EditRole',

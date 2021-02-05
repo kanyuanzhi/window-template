@@ -70,3 +70,19 @@ export function updateUserRoles(data) {
     data
   })
 }
+
+export function updateUserInfo(data) {
+  return request({
+    url: '/user/update-user-info',
+    method: 'post',
+    data
+  })
+}
+
+export function deleteUser(username) {
+  return request({
+    url: '/user/delete-user',
+    method: 'post',
+    params: { username }
+  })
+}
