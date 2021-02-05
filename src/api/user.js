@@ -40,3 +40,33 @@ export function changePassword(data, token) {
     data
   })
 }
+
+export function fetchRoles() {
+  return request({
+    url: '/role/fetch-roles',
+    method: 'get'
+  })
+}
+
+export function updateRole(data) {
+  return request({
+    url: '/role/update-role',
+    method: 'post',
+    data
+  })
+}
+
+export function fetchUsers() {
+  return request({
+    url: '/user/fetch-users',
+    method: 'get'
+  })
+}
+
+export function updateUserRoles(data) {
+  return request({
+    url: '/user/update-user-roles',
+    method: 'post',
+    data
+  })
+}

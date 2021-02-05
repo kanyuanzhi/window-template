@@ -166,6 +166,18 @@ export const constantRoutes = [
         component: () => import('@/views/user/add-user/index'),
         name: 'addUser',
         meta: { title: '新增用户', icon: 'el-icon-s-help' }
+      },
+      {
+        path: 'edit-role',
+        component: () => import('@/views/user/edit-role/index'),
+        name: 'EditRole',
+        meta: { title: '编辑权限', icon: 'el-icon-s-help' }
+      },
+      {
+        path: 'distribute-role',
+        component: () => import('@/views/user/distribute-role/index'),
+        name: 'distributeRole',
+        meta: { title: '分配权限', icon: 'el-icon-s-help' }
       }
     ]
   }
