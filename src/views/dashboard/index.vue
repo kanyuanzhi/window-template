@@ -13,6 +13,9 @@ export default {
     ...mapGetters([
       'name'
     ])
+  },
+  created: function (params) {
+    this.$message("dashboard")
   }
 }
 </script>
