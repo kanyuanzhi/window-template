@@ -49,9 +49,6 @@ export default {
       }
     }
   },
-  created: function (params) {
-    this.$message("python")
-  },
   methods: {
     onSubmit() {
       this.$refs.form.validate(valid => {
