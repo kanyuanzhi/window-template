@@ -8,3 +8,11 @@ export function add(data) {
   })
 }
 
+export function process(pageWidth) {
+  return request({
+    url: '/process',
+    method: 'get',
+    params: { pageWidth }
+  })
+}
+

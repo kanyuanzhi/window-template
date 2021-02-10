@@ -57,12 +57,21 @@ export const constantRoutes = [
   {
     path: '/python',
     component: Layout,
+    redirect: '/python/test',
+    name: 'python',
+    meta: { title: 'python操作', icon: 'el-icon-s-help' },
     children: [
       {
-        path: 'index',
-        name: 'python',
+        path: 'test',
+        name: 'test',
         component: () => import('@/views/python/index'),
         meta: { title: 'python测试', icon: 'form' }
+      },
+      {
+        path: 'process',
+        name: 'process',
+        component: () => import('@/views/python/process/index'),
+        meta: { title: '图片处理', icon: 'form' }
       }
     ]
   },
