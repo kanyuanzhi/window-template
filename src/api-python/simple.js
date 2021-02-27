@@ -8,11 +8,18 @@ export function add(data) {
   })
 }
 
-export function process(pageWidth) {
+export function getImage(pageWidth) {
   return request({
-    url: '/process',
+    url: '/get-image',
     method: 'get',
     params: { pageWidth }
   })
 }
 
+export function cropImage(data) {
+  return request({
+    url: '/crop-image',
+    method: 'post',
+    data
+  })
+}
