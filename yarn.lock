@@ -4175,6 +4175,13 @@ ecc-jsbn@~0.1.1:
     jsbn "~0.1.0"
     safer-buffer "^2.1.0"
 
+echarts@4.2.1:
+  version "4.2.1"
+  resolved "https://registry.npm.taobao.org/echarts/download/echarts-4.2.1.tgz?cache=0&sync_timestamp=1612592564808&other_urls=https%3A%2F%2Fregistry.npm.taobao.org%2Fecharts%2Fdownload%2Fecharts-4.2.1.tgz#9a8ea3b03354f86f824d97625c334cf16965ef03"
+  integrity sha1-mo6jsDNU+G+CTZdiXDNM8Wll7wM=
+  dependencies:
+    zrender "4.0.7"
+
 editorconfig@^0.15.3:
   version "0.15.3"
   resolved "https://registry.npm.taobao.org/editorconfig/download/editorconfig-0.15.3.tgz#bef84c4e75fb8dcb0ce5cee8efd51c15999befc5"
@@ -4221,6 +4228,11 @@ electron-builder@^22.2.0:
     sanitize-filename "^1.6.3"
     update-notifier "^4.1.1"
     yargs "^16.0.3"
+
+electron-cookies@1.1.0:
+  version "1.1.0"
+  resolved "https://registry.npm.taobao.org/electron-cookies/download/electron-cookies-1.1.0.tgz#7935a82fd0e0e883d981935d5e64b6dd302f4315"
+  integrity sha1-eTWoL9Dg6IPZgZNdXmS23TAvQxU=
 
 electron-devtools-installer@^3.1.0:
   version "3.1.1"
@@ -7303,6 +7315,11 @@ loader-utils@^1.0.2, loader-utils@^1.1.0, loader-utils@^1.2.3, loader-utils@^1.4
     big.js "^5.2.2"
     emojis-list "^3.0.0"
     json5 "^1.0.1"
+
+localStorage@^1.0.4:
+  version "1.0.4"
+  resolved "https://registry.npm.taobao.org/localStorage/download/localStorage-1.0.4.tgz#57dfa28084385f81431accb8ae24b196398223f7"
+  integrity sha1-V9+igIQ4X4FDGsy4riSxljmCI/c=
 
 locate-path@^2.0.0:
   version "2.0.0"
@@ -12158,3 +12175,8 @@ yorkie@^2.0.0:
     is-ci "^1.0.10"
     normalize-path "^1.0.0"
     strip-indent "^2.0.0"
+
+zrender@4.0.7:
+  version "4.0.7"
+  resolved "https://registry.npm.taobao.org/zrender/download/zrender-4.0.7.tgz#15ae960822f5efed410995d37e5107fe3de10e6d"
+  integrity sha1-Fa6WCCL17+1BCZXTflEH/j3hDm0=

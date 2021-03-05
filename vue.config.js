@@ -119,5 +119,11 @@ module.exports = {
           config.optimization.runtimeChunk('single')
         }
       )
+  },
+  pluginOptions: {
+    electronBuilder: {
+      preload: 'src/preload.js',
+      nodeIntegration: true
+    }
   }
 }

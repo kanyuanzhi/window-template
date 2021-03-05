@@ -1,20 +1,23 @@
 'use strict'
 
-import { app, protocol, BrowserWindow } from 'electron'
-import { createProtocol } from 'vue-cli-plugin-electron-builder/lib'
+import {app, protocol, BrowserWindow, ipcMain} from 'electron'
+import {createProtocol} from 'vue-cli-plugin-electron-builder/lib'
 // import installExtension, { VUEJS_DEVTOOLS } from 'electron-devtools-installer'
 const isDevelopment = process.env.NODE_ENV !== 'production'
 
 // Scheme must be registered before the app is ready
 protocol.registerSchemesAsPrivileged([
-  { scheme: 'app', privileges: { secure: true, standard: true } }
+  {scheme: 'app', privileges: {secure: true, standard: true}}
 ])
+
+let mainWindow
+let viceWindow
 
 async function createWindow() {
   // Create the browser window.
-  const win = new BrowserWindow({
+  mainWindow = new BrowserWindow({
     width: 1200,
-    height: 800,
+    height: 870,
     webPreferences: {
       // Use pluginOptions.nodeIntegration, leave this alone
       // See nklayman.github.io/vue-cli-plugin-electron-builder/guide/security.html#node-integration for more info
@@ -25,12 +28,12 @@ async function createWindow() {
 
   if (process.env.WEBPACK_DEV_SERVER_URL) {
     // Load the url of the dev server if in development mode
-    await win.loadURL(process.env.WEBPACK_DEV_SERVER_URL)
-    if (!process.env.IS_TEST) win.webContents.openDevTools()
+    await mainWindow.loadURL(process.env.WEBPACK_DEV_SERVER_URL)
+    if (!process.env.IS_TEST) mainWindow.webContents.openDevTools()
   } else {
     createProtocol('app')
     // Load the index.html when not in development
-    win.loadURL('app://./index.html')
+    await mainWindow.loadURL('app://./index.html')
   }
 }
 
@@ -62,6 +65,33 @@ app.on('ready', async () => {
   //   }
   // }
   createWindow()
+})
+
+async function createViceWindow() {
+  viceWindow = new BrowserWindow({
+    width: 1000,
+    height: 800,
+    frame: true,
+    // parent: mainWindow,
+    webPreferences: {
+      nodeIntegration: true
+    }
+  })
+
+  if (process.env.WEBPACK_DEV_SERVER_URL) {
+    // Load the url of the dev server if in development mode
+    await viceWindow.loadURL(process.env.WEBPACK_DEV_SERVER_URL+'#/vice-operator')
+    // if (!process.env.IS_TEST) viceWindow.webContents.openDevTools()
+  } else {
+    // createProtocol('app')
+    // Load the index.html when not in development
+    await viceWindow.loadURL('app://./index.html'+'#/vice-operator')
+    viceWindow.on('closed', () => { viceWindow = null })
+  }
+}
+
+ipcMain.on('openViceWindow', e=>{
+  createViceWindow()
 })
 
 // Exit cleanly on request from parent process in development mode.

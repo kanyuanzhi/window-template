@@ -21,8 +21,10 @@
   "dependencies": {
     "axios": "0.18.1",
     "core-js": "3.6.5",
+    "echarts": "4.2.1",
     "element-ui": "2.13.2",
     "js-cookie": "2.2.0",
+    "localStorage": "^1.0.4",
     "normalize.css": "7.0.0",
     "nprogress": "0.2.0",
     "path-to-regexp": "2.4.0",
@@ -45,6 +47,7 @@
     "chalk": "2.4.2",
     "connect": "3.6.6",
     "electron": "^9.0.0",
+    "electron-cookies": "1.1.0",
     "electron-devtools-installer": "^3.1.0",
     "eslint": "6.7.2",
     "eslint-plugin-vue": "6.2.2",

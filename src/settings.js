@@ -1,6 +1,6 @@
 module.exports = {
 
-  title: 'Window Template',
+  title: '基于深度学习的金手指外观缺陷检测软件Ver1.0',
 
   /**
    * @type {boolean} true | false
@@ -12,5 +12,5 @@ module.exports = {
    * @type {boolean} true | false
    * @description Whether show the logo in sidebar
    */
-  sidebarLogo: true
+  sidebarLogo: false
 }

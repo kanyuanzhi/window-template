@@ -49,16 +49,40 @@ export const constantRoutes = [
     redirect: '/dashboard',
     children: [{
       path: 'dashboard',
-      name: 'Dashboard',
+      name: 'Welcome',
       component: () => import('@/views/dashboard/index'),
-      meta: { title: 'Dashboard', icon: 'dashboard' }
+      meta: { title: '欢迎界面', icon: 'dashboard' }
     }]
+  },
+  {
+    path: '/main-operator',
+    component: Layout,
+    children: [{
+      path: '/main',
+      name: 'main-operator',
+      component: () => import('@/views/operator/main'),
+      meta: { title: '主操作界面', icon: 'el-icon-s-home' }
+    }]
+  },
+  {
+    path: '/vice-operator',
+    component: () => import('@/views/operator/vice'),
+    name: 'vice-operator',
+    hidden: true,
+    meta: { title: '副操作界面', icon: 'el-icon-s-home' }
+    // children: [{
+    //   path: 'vice',
+    //   name: 'vice-operator',
+    //   component: () => import('@/views/operator/vice'),
+    //   meta: { title: '副操作界面', icon: 'el-icon-s-home' }
+    // }]
   },
   {
     path: '/python',
     component: Layout,
     redirect: '/python/test',
     name: 'python',
+    hidden: true,
     meta: { title: 'python操作', icon: 'el-icon-s-help' },
     children: [
       {
@@ -78,6 +102,7 @@ export const constantRoutes = [
   {
     path: '/form',
     component: Layout,
+    hidden: true,
     children: [
       {
         path: 'index',
@@ -132,10 +157,11 @@ export const asyncRoutes = [
   {
     path: 'external-link',
     component: Layout,
+    hidden: true,
     children: [
       {
         path: 'https://panjiachen.github.io/vue-element-admin-site/#/',
-        meta: { title: 'External Link', icon: 'link', role: ['super'] }
+        meta: { title: '副操作界面', icon: 'el-icon-house', role: ['super'] }
       }
     ]
   },
