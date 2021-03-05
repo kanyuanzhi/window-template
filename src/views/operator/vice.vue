@@ -13,12 +13,14 @@
       </el-col>
       <el-col :span="3">
         <el-row>
-            <el-col :span="24">
-              <el-button class="rejudge-button rejudge-button-pass" round :style="{height: buttonHeight + 'px'}">合格</el-button>
-            </el-col>
-            <el-col :span="24">
-              <el-button class="rejudge-button rejudge-button-nopass" round :style="{height: buttonHeight + 'px'}">不合格</el-button>
-            </el-col>
+          <el-col :span="24">
+            <el-button class="rejudge-button rejudge-button-pass" round :style="{height: buttonHeight + 'px'}">合格
+            </el-button>
+          </el-col>
+          <el-col :span="24">
+            <el-button class="rejudge-button rejudge-button-nopass" round :style="{height: buttonHeight + 'px'}">不合格
+            </el-button>
+          </el-col>
         </el-row>
       </el-col>
 
@@ -34,10 +36,6 @@
 // echarts.use(
 //   [BarChart]
 // );
-import StaticInformation from './components/StaticInformation'
-import ProductInformation from './components/ProductInformation'
-import RunProgram from './components/RunProgram'
-import Rejudge from './components/Rejudge'
 
 const liaopan = require('@/assets/test_images/liaopan.jpg')
 const result = require('@/assets/test_images/result.jpeg')
@@ -51,14 +49,14 @@ export default {
       src2: result,
       screenHeight: window.innerHeight,
       imgHeight: window.innerHeight - 60,
-      buttonHeight: (window.innerHeight - 60)/2
+      buttonHeight: (window.innerHeight - 60) / 2
     }
   },
   mounted() {
-    window.addEventListener('resize', this.onResize);
+    window.addEventListener('resize', this.onResize)
   },
   beforeDestroy() {
-    window.removeEventListener("resize", this.onResize);
+    window.removeEventListener('resize', this.onResize)
   },
   methods: {
     onResize() {
@@ -104,9 +102,11 @@ export default {
   color: white;
   font-weight: bold;
 }
+
 .rejudge-button-pass {
   background-color: #53c617;
 }
+
 .rejudge-button-nopass {
   background-color: #cd1524;
 }
