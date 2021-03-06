@@ -36,7 +36,6 @@ export default class Storage {
     const storage = this.storage
     const expired = storage.getItem(`${key}__expires__`) || Date.now + 1
     const now = Date.now()
-    console.log(storage)
 
     if (now >= expired) {
       this.removeItem(key)

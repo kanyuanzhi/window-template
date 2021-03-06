@@ -58,7 +58,7 @@ export const constantRoutes = [
     path: '/main-operator',
     component: Layout,
     children: [{
-      path: '/main',
+      path: 'main',
       name: 'main-operator',
       component: () => import('@/views/operator/main'),
       meta: { title: '主操作界面', icon: 'el-icon-s-home' }

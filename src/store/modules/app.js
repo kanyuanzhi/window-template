@@ -1,5 +1,5 @@
 // import Cookies from 'js-cookie'
-import Storage from '@/utils/Storage'
+import Storage from '@/utils/storage'
 const storage = new Storage()
 
 const state = {

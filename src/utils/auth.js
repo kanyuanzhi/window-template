@@ -2,7 +2,7 @@
 // import sessionStorage from 'sessionstorage'
 // import Cookies from 'electron-cookies'
 // import localStorage from 'localStorage'
-import Storage from '@/utils/Storage'
+import Storage from '@/utils/storage'
 
 const TokenKey = 'window_template_token'
 const storage = new Storage()
