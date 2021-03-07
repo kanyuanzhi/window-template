@@ -65,7 +65,7 @@ export default {
 <style scoped>
 .example {
   width: 100%;
-  height: 150px;
+  /*height: 150px;*/
 }
 
 .el-select {
@@ -79,7 +79,7 @@ export default {
 .product-description-wrapper {
   padding: 0 10px;
   line-height: 30px;
-  height: 100px;
+  /*height: 100px;*/
 }
 
 .el-divider__text {

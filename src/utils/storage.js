@@ -14,7 +14,6 @@ export default class Storage {
     * @ param {String} 	key 键
     * @ param {String} 	value 值，
     * @ param {String} 	expired 过期时间，以分钟为单位，非必须
-    * @ 由@IT·平头哥联盟-首席填坑官∙苏南 分享
     */
     const storage = this.storage
     // source[key] = JSON.stringify(value)
@@ -31,7 +30,6 @@ export default class Storage {
     * get 获取方法
     * @ param {String} 	key 键
     * @ param {String} 	expired 存储时为非必须字段，所以有可能取不到，默认为 Date.now+1
-    * @ 由@IT·平头哥联盟-首席填坑官∙苏南 分享
     */
     const storage = this.storage
     const expired = storage.getItem(`${key}__expires__`) || Date.now + 1
@@ -59,7 +57,6 @@ export default class Storage {
     * @ param {String} 	key 键
     * @ param {String} 	value 值，存储的值可能是数组/对象，不能直接存储，需要转换 JSON.stringify
     * @ param {String} 	expired 过期时间，以分钟为单位
-    * @ 由@IT·平头哥联盟-首席填坑官∙苏南 分享
     */
     const reg = new RegExp('__expires__')
     const data = this.storage

@@ -39,7 +39,7 @@ export default {
 <style scoped>
 .rejudge-button {
   width: 100%;
-  height: 171px;
+  height: 100%;
   margin-top: 5px;
   font-size: 35px;
   background-color: #304156;

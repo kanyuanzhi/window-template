@@ -2,17 +2,17 @@
   <div class="app-container">
     <el-row :gutter="5">
       <el-col :span="4">
-        <el-card class="box-card">
+        <el-card class="box-card" :style="{height: productionInformationHeight + 'px'}">
           <div slot="header" class="clearfix">
             <span>产品信息</span>
           </div>
-          <product-information />
+          <product-information/>
         </el-card>
-        <el-card class="box-card"  style="margin-top: 5px">
+        <el-card class="box-card" style="margin-top: 5px" :style="{height: runProgramHeight + 'px'}">
           <div slot="header" class="clearfix">
             <span>运行程序</span>
           </div>
-          <run-program />
+          <run-program/>
         </el-card>
       </el-col>
 
@@ -22,7 +22,7 @@
             <div slot="header" class="clearfix">
               <span>料盘显示</span>
             </div>
-            <el-image :src="src1" class="liaopan">
+            <el-image :src="src1" class="liaopan" :style="{height: liaopanHeight + 'px'}">
               <div slot="placeholder" class="image-slot">
                 <i class="el-icon-picture-outline"></i>
               </div>
@@ -34,7 +34,7 @@
             <div slot="header" class="clearfix">
               <span>结果显示</span>
             </div>
-            <el-image :src="src2" class="result">
+            <el-image :src="src2" class="result" :style="{height: resultHeight + 'px'}">
               <div slot="placeholder" class="image-slot">
                 <i class="el-icon-picture-outline"></i>
               </div>
@@ -45,15 +45,17 @@
       </el-col>
 
       <el-col :span="6">
-        <el-card class="box-card">
+        <el-card class="box-card" :style="{height: staticInformationHeight + 'px'}">
           <div slot="header" class="clearfix">
             <span>统计信息</span>
           </div>
           <div class="chart-wrapper">
-            <static-information />
+            <static-information/>
           </div>
         </el-card>
-        <rejudge/>
+        <div :style="{height: rejudgeButtonHeight + 'px'}">
+          <rejudge/>
+        </div>
       </el-col>
 
     </el-row>
@@ -87,11 +89,32 @@ export default {
   data() {
     return {
       src1: liaopan,
-      src2: result
+      src2: result,
+      screenHeight: window.innerHeight,
+      productionInformationHeight: (window.innerHeight - 100) * 0.7,
+      runProgramHeight: (window.innerHeight - 100) * 0.3,
+      liaopanHeight: (window.innerHeight - 200) * 0.3,
+      resultHeight: (window.innerHeight - 200) * 0.7,
+      staticInformationHeight: (window.innerHeight - 100) * 0.8,
+      rejudgeButtonHeight: (window.innerHeight - 100) * 0.2,
     }
   },
+  mounted() {
+    window.addEventListener('resize', this.onResize)
+  },
+  beforeDestroy() {
+    window.removeEventListener('resize', this.onResize)
+  },
   methods: {
-
+    onResize() {
+      this.screenHeight = window.innerHeight
+      this.productionInformationHeight = (this.screenHeight - 100) * 0.7
+      this.runProgramHeight = (this.screenHeight - 100) * 0.3
+      this.liaopanHeight = (this.screenHeight - 200) * 0.3
+      this.resultHeight = (this.screenHeight - 200) * 0.7
+      this.staticInformationHeight = (this.screenHeight - 100) * 0.8
+      this.rejudgeButtonHeight = (this.screenHeight - 100) * 0.2
+    }
   }
 }
 
@@ -101,20 +124,23 @@ export default {
 
 .liaopan {
   width: 100%;
-  height: 200px;
+  //height: 100%;
 }
+
 .result {
   width: 100%;
-  height: 411px;
+  //height: 100%;
 }
 
 .el-card__header {
   padding: 9px 5px !important;
 }
-.el-card__body{
+
+.el-card__body {
   padding: 5px !important;
 }
-.clearfix{
+
+.clearfix {
   font-size: 15px;
   text-align: center;
 }
