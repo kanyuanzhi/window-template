@@ -93,7 +93,7 @@
 </template>
 
 <script>
-import { fetchUsers, updateUserInfo, deleteUser } from '@/api/user'
+import { fetchUsers, updateUserInfo, deleteUser } from '@/api-local/user'
 
 export default {
   data() {
@@ -129,7 +129,7 @@ export default {
         updateUserInfo({ username: row.username, name: row.editedName, introduction: row.editedIntroduction }).then(response => {
           row.name = row.editedName
           row.introduction = row.editedIntroduction
-          this.$message(response.data)
+          // this.$message(response.data)
           resolve()
         }).catch(error => {
           reject(error)
@@ -144,9 +144,13 @@ export default {
     confirmDelete(row, index) {
       row.delete = false
       return new Promise((resolve, reject) => {
+        if (row.username === "super"){
+          this.$message("super用户不允许删除!")
+          return resolve()
+        }
         deleteUser(row.username).then(response => {
-          this.usersData.splice(index)
-          this.$message(response.data)
+          this.usersData.splice(index, 1)
+          this.$message(response.message)
           resolve()
         }).catch(error => {
           reject(error)

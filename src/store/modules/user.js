@@ -1,4 +1,4 @@
-import { login, logout, getInfo, register, changePassword } from '@/api/user'
+import { login, getInfo, logout, register, changePassword  } from '@/api-local/user'
 import { getToken, setToken, removeToken } from '@/utils/auth'
 import router, { resetRouter } from '@/router'
 
@@ -41,7 +41,11 @@ const actions = {
     const { username, password } = userInfo
     return new Promise((resolve, reject) => {
       login({ username: username.trim(), password: password }).then(response => {
-        const { data } = response
+        const { code, data, message } = response
+        if(code !== 20000){
+          alert(message)
+          reject()
+        }
         commit('SET_TOKEN', data.token)
         setToken(data.token)
         resolve()
@@ -96,10 +100,10 @@ const actions = {
     const { username, password, confirmPassword } = userRegister
     return new Promise((resolve, reject) => {
       register({ username: username.trim(), password: password.trim(), confirmPassword: confirmPassword.trim() }, state.token).then(response => {
-        const { data } = response
+        const { code, data, message } = response
         // commit('SET_TOKEN', data.token)
         // setToken(data.token)
-        resolve(data)
+        resolve(message)
       }).catch(error => {
         reject(error)
       })
@@ -110,8 +114,8 @@ const actions = {
   changePassword({ commit, state }, userChangePassword) {
     const { oldPassword, newPassword, confirmNewPassword } = userChangePassword
     return new Promise((resolve, reject) => {
-      changePassword({ old_password: oldPassword.trim(), new_password: newPassword.trim(), confirm_new_password: confirmNewPassword.trim() }, state.token).then(() => {
-        resolve()
+      changePassword({ old_password: oldPassword.trim(), new_password: newPassword.trim(), confirm_new_password: confirmNewPassword.trim() }, state.token).then((response) => {
+        resolve(response)
       }).catch(error => {
         reject(error)
       })

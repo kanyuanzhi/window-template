@@ -8,10 +8,11 @@
         <template slot-scope="scope">
           <template v-if="scope.row.edit">
             <el-checkbox-group v-model="scope.row.selectedRoles">
-              <el-checkbox label="super"></el-checkbox>
-              <el-checkbox label="admin"></el-checkbox>
-              <el-checkbox label="operator"></el-checkbox>
-              <el-checkbox label="guest"></el-checkbox>
+              <el-checkbox label="1"></el-checkbox>
+              <el-checkbox label="2"></el-checkbox>
+              <el-checkbox label="3"></el-checkbox>
+              <el-checkbox label="4"></el-checkbox>
+              <el-checkbox label="5"></el-checkbox>
             </el-checkbox-group>
           </template>
           <template v-else>
@@ -57,7 +58,7 @@
 </template>
 
 <script>
-import { fetchUsers, updateUserRoles } from '@/api/user'
+import { fetchUsers,updateUserRoles } from '@/api-local/user'
 
 export default {
   data() {

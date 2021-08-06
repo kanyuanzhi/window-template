@@ -62,15 +62,15 @@ export default {
       // this.$message('submit!')
       this.$refs.form.validate(valid => {
         if (valid) {
-          this.$store.dispatch('user/register', this.form).then(() => {
+          this.$store.dispatch('user/register', this.form).then((message) => {
             // this.$router.push({ path: this.redirect || '/' })
             // this.loading = false
-            this.$message('添加成功!')
-          }).catch(() => {
-            this.$message('添加失败!')
+            this.$message(message)
+          }).catch((message) => {
+            this.$message(message)
           })
         } else {
-          this.$message('err submit!')
+          this.$message('格式错误！')
           return false
         }
       })

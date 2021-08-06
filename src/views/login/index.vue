@@ -14,7 +14,7 @@
 
       <el-form-item prop="username">
         <span class="svg-container">
-          <svg-icon icon-class="user" />
+          <svg-icon icon-class="user"/>
         </span>
         <el-input
           ref="username"
@@ -29,7 +29,7 @@
 
       <el-form-item prop="password">
         <span class="svg-container">
-          <svg-icon icon-class="password" />
+          <svg-icon icon-class="password"/>
         </span>
         <el-input
           :key="passwordType"
@@ -54,7 +54,8 @@
         type="primary"
         style="width: 100%; margin-bottom: 30px"
         @click.native.prevent="handleLogin"
-        >Login</el-button
+      >Login
+      </el-button
       >
 
       <!-- <div class="tips">
@@ -66,7 +67,41 @@
 </template>
 
 <script>
-import { validUsername } from '@/utils/validate'
+import {validUsername} from '@/utils/validate'
+import Dexie from 'dexie'
+
+Dexie.debug = true; // In production, set to false to increase performance a little.
+
+let db = new Dexie("projectDatabase")
+db.version(1).stores({roles: "++id,key,name,introduction", users: "++id,username,password,roles,token,name,introduction"})
+
+db.transaction('rw', db.users, async () => {
+  if ((await db.users.where({username: "super"}).count()) === 0) {
+    await db.users.add({
+      username: "super",
+      password: "123456",
+      roles: ["1", "2", "3", "4", "5"],
+      token: "qazwsxedc",
+      name: "",
+      introduction: ""
+    })
+  }
+}).catch(e => {
+  console.error(e.stack);
+})
+
+db.transaction('rw', db.roles, async () => {
+  if ((await db.roles.count()) === 0) {
+    await db.roles.add({key: "1", name:"1权限", introduction:""})
+    await db.roles.add({key: "2", name:"1权限", introduction:""})
+    await db.roles.add({key: "3", name:"1权限", introduction:""})
+    await db.roles.add({key: "4", name:"1权限", introduction:""})
+    await db.roles.add({key: "5", name:"1权限", introduction:""})
+  }
+}).catch(e => {
+  console.error(e.stack);
+})
+
 
 export default {
   name: 'Login',
@@ -91,8 +126,8 @@ export default {
         password: '123456'
       },
       loginRules: {
-        username: [{ required: true, trigger: 'blur', validator: validateUsername }],
-        password: [{ required: true, trigger: 'blur', validator: validatePassword }]
+        username: [{required: true, trigger: 'blur', validator: validateUsername}],
+        password: [{required: true, trigger: 'blur', validator: validatePassword}]
       },
       loading: false,
       passwordType: 'password',
@@ -123,7 +158,7 @@ export default {
         if (valid) {
           this.loading = true
           this.$store.dispatch('user/login', this.loginForm).then(() => {
-            this.$router.push({ path: this.redirect || '/' })
+            this.$router.push({path: this.redirect || '/'})
             this.loading = false
           }).catch(() => {
             this.loading = false

@@ -66,7 +66,7 @@
 </template>
 
 <script>
-import { fetchRoles, updateRole } from '@/api/user'
+import { fetchRoles, updateRole } from '@/api-local/user'
 
 export default {
   data() {
@@ -82,6 +82,7 @@ export default {
     async getRoles() {
       this.listLoading = true
       const { data } = await fetchRoles()
+      console.log(data)
       this.rolesData = data.map(v => {
         this.$set(v, 'edit', false)
         v.editedName = v.name
@@ -101,7 +102,7 @@ export default {
         updateRole({ key: row.key, name: row.editedName, introduction: row.editedIntroduction }).then((response) => {
           row.name = row.editedName
           row.introduction = row.editedIntroduction
-          this.$message(response.data)
+          this.$message(response.message)
           resolve()
         }).catch(error => {
           reject(error)
