@@ -8,7 +8,13 @@ import getPageTitle from '@/utils/get-page-title'
 
 NProgress.configure({ showSpinner: false }) // NProgress Configuration
 
-const whiteList = ['/login'] // no redirect whitelist
+// no redirect whitelist
+const whiteList = [
+  '/login',
+  '/fljh-lsyjl-project1_report',
+  '/fljh-lsyjl-project2_report',
+  '/fljh-lsyjl-project3_report',
+]
 
 router.beforeEach(async (to, from, next) => {
   // start progress bar
@@ -58,9 +64,10 @@ router.beforeEach(async (to, from, next) => {
   } else {
     /* has no token*/
     console.log('has no token')
-
+    console.log(to.path)
     if (whiteList.indexOf(to.path) !== -1) {
       // in the free login whitelist, go directly
+      console.log(to.path)
       next()
     } else {
       // other pages that do not have permission to access are redirected to the login page.

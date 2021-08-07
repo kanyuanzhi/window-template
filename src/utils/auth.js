@@ -1,4 +1,4 @@
-import Cookies from 'js-cookie'
+// import Cookies from 'js-cookie'
 import sessionStorage from 'sessionstorage'
 
 const TokenKey = 'window_template_token'

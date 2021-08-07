@@ -27,6 +27,7 @@
     "js-cookie": "2.2.0",
     "localStorage": "^1.0.4",
     "lodash-id": "^0.14.1",
+    "mathjs": "^9.4.4",
     "normalize.css": "7.0.0",
     "nprogress": "0.2.0",
     "path-to-regexp": "2.4.0",
