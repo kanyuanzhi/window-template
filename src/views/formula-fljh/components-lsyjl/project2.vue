@@ -2,52 +2,52 @@
   <div>
     <el-row :gutter="20">
       <el-col :span="16">
-        <el-form ref="form" :model="form" label-width="70px" label-position="right">
+        <el-form ref="form" label-width="70px" label-position="right">
           <el-row :gutter="20">
             <el-col :span="12">
               <el-form-item label="P(MPa)" size="small">
-                <el-input v-model="form.P" placeholder="系统压力"/>
+                <el-input v-model="input.P" placeholder="系统压力"/>
               </el-form-item>
               <el-form-item label="Mf(N·m)" size="small">
-                <el-input v-model="form.Mf" placeholder="系统外载荷弯矩"/>
+                <el-input v-model="input.Mf" placeholder="系统外载荷弯矩"/>
               </el-form-item>
               <el-form-item label="Fa(N)" size="small">
-                <el-input v-model="form.Fa" placeholder="系统外载荷轴向力"/>
+                <el-input v-model="input.Fa" placeholder="系统外载荷轴向力"/>
               </el-form-item>
             </el-col>
             <el-col :span="12">
               <el-form-item label="m" size="small">
-                <el-input v-model="form.m" placeholder="垫片系数"/>
+                <el-input v-model="input.m" placeholder="垫片系数"/>
               </el-form-item>
             </el-col>
           </el-row>
           <el-row :gutter="20">
             <el-col :span="12">
               <el-form-item label="Ec(Pa)" size="small">
-                <el-input v-model="form.Ec" placeholder="室温下的弹性模量"/>
+                <el-input v-model="input.Ec" placeholder="室温下的弹性模量"/>
               </el-form-item>
               <el-form-item label="Eh(Pa)" size="small">
-                <el-input v-model="form.Eh" placeholder="工作温度下的弹性模量"/>
+                <el-input v-model="input.Eh" placeholder="工作温度下的弹性模量"/>
               </el-form-item>
             </el-col>
             <el-col :span="12">
               <el-form-item label="Ps(MPa)" size="small">
-                <el-input v-model="form.Ps" placeholder="系统工作压力"/>
+                <el-input v-model="input.Ps" placeholder="系统工作压力"/>
               </el-form-item>
               <el-form-item label="FT(N)" size="small">
-                <el-input v-model="form.FT" placeholder="运行工况下克服法兰相对切向位移所需的力"/>
+                <el-input v-model="input.FT" placeholder="运行工况下克服法兰相对切向位移所需的力"/>
               </el-form-item>
             </el-col>
           </el-row>
           <el-row :gutter="20">
             <el-col :span="12">
               <el-form-item label="Dj(mm)" size="small">
-                <el-input v-model="form.Dj" placeholder="垫片平均直径"/>
+                <el-input v-model="project1_output.Dj" placeholder="垫片平均直径" disabled/>
               </el-form-item>
             </el-col>
             <el-col :span="12">
               <el-form-item label="Fj(N)" size="small">
-                <el-input v-model="form.Fj" placeholder="压紧密封垫圈所需的力"/>
+                <el-input v-model="project1_output.Fj" placeholder="压紧密封垫圈所需的力" disabled/>
               </el-form-item>
             </el-col>
           </el-row>
@@ -122,7 +122,7 @@
     </el-row>
     <el-divider>输出报告</el-divider>
     <el-row>
-      <el-form ref="form" :model="form" label-position="right">
+      <el-form ref="form" label-position="right">
         <el-form-item align="middle">
           <el-button type="primary" @click="print" size="medium">输出报告</el-button>
         </el-form-item>
@@ -133,48 +133,32 @@
 
 <script>
 import {pi, pow, max} from "mathjs";
+import {generate_report, clear_parameters} from "@/utils/common"
 
 export default {
   name: "project2",
   data() {
     return {
-      form: {
-        P: "",
-        Mf: "",
-        Fa: "",
-        m: "",
-        Ec: "",
-        Eh: "",
-        Ps: "",
-        FT: "",
-        Dj: "",
-        Fj: "",
-      },
-      result: [{
-        Peq: "--",
-        FF: "--",
-        FM: "--",
-        FS: "--",
-        FS0: "--",
-        FS_: "--",
-        FS0_: "--",
-        FSi: "--"
-      }],
+      input: this.$store.getters.lsyjl.project2.input,
+      output: this.$store.getters.lsyjl.project2.output,
+      project1_output: this.$store.getters.lsyjl.project1.output,
+      result: [this.$store.getters.lsyjl.project2.output],
       src: require("@/assets/model_images/fljh.png")
     }
   },
   methods: {
     compute() {
-      const P = parseFloat(this.form.P)
-      const Mf = parseFloat(this.form.Mf)
-      const Fa = parseFloat(this.form.Fa)
-      const m = parseFloat(this.form.m)
-      const Ec = parseFloat(this.form.Ec)
-      const Eh = parseFloat(this.form.Eh)
-      const Ps = parseFloat(this.form.Ps)
-      const FT = parseFloat(this.form.FT)
-      const Dj = parseFloat(this.form.Dj)
-      const Fj = parseFloat(this.form.Fj)
+      const P = parseFloat(this.input.P)
+      const Mf = parseFloat(this.input.Mf)
+      const Fa = parseFloat(this.input.Fa)
+      const m = parseFloat(this.input.m)
+      const Ec = parseFloat(this.input.Ec)
+      const Eh = parseFloat(this.input.Eh)
+      const Ps = parseFloat(this.input.Ps)
+      const FT = parseFloat(this.input.FT)
+
+      const Dj = parseFloat(this.project1_output.Dj)
+      const Fj = parseFloat(this.project1_output.Fj)
 
       const Peq = 16 * Mf / (pi * pow(Dj, 3) + 4 * Fa / (pi * pow(Dj, 2)))
       const FF = pi / 4 * pow(Dj, 2) * (P + Peq)
@@ -185,42 +169,20 @@ export default {
       const FS0_ = Ec / Eh * FS_
       const FSi = max(Fj, FS0, FS0_)
 
-      this.result[0].Peq = Peq
-      this.result[0].FF = FF
-      this.result[0].FM = FM
-      this.result[0].FS = FS
-      this.result[0].FS0 = FS0
-      this.result[0].FS_ = FS_
-      this.result[0].FS0_ = FS0_
-      this.result[0].FSi = FSi
+      this.output.Peq = Peq
+      this.output.FF = FF
+      this.output.FM = FM
+      this.output.FS = FS
+      this.output.FS0 = FS0
+      this.output.FS_ = FS_
+      this.output.FS0_ = FS0_
+      this.output.FSi = FSi
     },
     print() {
-      let routeUrl = this.$router.resolve({
-        name: "fljh-lsyjl-project2_report",
-        query: {result: JSON.stringify(this.result)}
-      });
-      window.open(routeUrl.href, '_blank');
+      generate_report("fljh-lsyjl-project2_report", this.output)
     },
     clean() {
-      this.form.P = ""
-      this.form.Mf = ""
-      this.form.Fa = ""
-      this.form.m = ""
-      this.form.Ec = ""
-      this.form.Eh = ""
-      this.form.Ps = ""
-      this.form.FT = ""
-      this.form.Dj = ""
-      this.form.Fj = ""
-
-      this.result[0].Peq = "--"
-      this.result[0].FF = "--"
-      this.result[0].FM = "--"
-      this.result[0].FS = "--"
-      this.result[0].FS0 = "--"
-      this.result[0].FS_ = "--"
-      this.result[0].FS0_ = "--"
-      this.result[0].FSi = "--"
+      clear_parameters(this.input, this.output)
     }
   }
 }

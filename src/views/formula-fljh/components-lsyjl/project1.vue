@@ -2,16 +2,16 @@
   <div>
     <el-row :gutter="20">
       <el-col :span="16">
-        <el-form ref="form" :model="form" label-width="70px" label-position="right">
+        <el-form ref="input" :model="input" label-width="70px" label-position="right">
           <el-row :gutter="20">
             <el-col :span="12">
               <el-form-item label="Di(mm)" size="small">
-                <el-input v-model="form.Di" placeholder="法兰垫片内径"/>
+                <el-input v-model="input.Di" placeholder="法兰垫片内径"/>
               </el-form-item>
             </el-col>
             <el-col :span="12">
               <el-form-item label="Do(mm)" size="small">
-                <el-input v-model="form.Do" placeholder="法兰垫片外径"/>
+                <el-input v-model="input.Do" placeholder="法兰垫片外径"/>
               </el-form-item>
             </el-col>
           </el-row>
@@ -19,7 +19,7 @@
           <el-row :gutter="20">
             <el-col :span="12">
               <el-form-item label="y" size="small">
-                <el-input v-model="form.y" placeholder="垫片密封比压力"/>
+                <el-input v-model="input.y" placeholder="垫片密封比压力"/>
               </el-form-item>
             </el-col>
           </el-row>
@@ -54,7 +54,7 @@
     </el-row>
     <el-divider>输出报告</el-divider>
     <el-row>
-      <el-form ref="form" :model="form" label-position="right">
+      <el-form ref="form" label-position="right">
         <el-form-item align="middle">
           <el-button type="primary" @click="print" size="medium">输出报告</el-button>
         </el-form-item>
@@ -64,44 +64,34 @@
 </template>
 
 <script>
-import {pi, pow} from "mathjs";
+import {pi, pow} from "mathjs"
+import {generate_report, clear_parameters} from "@/utils/common"
 
 export default {
   name: "project1",
   data() {
     return {
-      form: {
-        Di: "",
-        Do: "",
-        y: "",
-      },
-      result: [{Dj: "--", Fj: "--"}]
+      input: this.$store.getters.lsyjl.project1.input,
+      output: this.$store.getters.lsyjl.project1.output,
+      result: [this.$store.getters.lsyjl.project1.output]
     }
   },
   methods: {
     compute() {
-      const Di = parseFloat(this.form.Di)
-      const Do = parseFloat(this.form.Do)
-      const y = parseFloat(this.form.y)
+      const Di = parseFloat(this.input.Di)
+      const Do = parseFloat(this.input.Do)
+      const y = parseFloat(this.input.y)
       const Dj = (Di + Do) / 2
       const Fj = pi / 4 * pow(Dj, 2) * y
 
-      this.result[0].Dj = Dj
-      this.result[0].Fj = Fj
+      this.output.Dj = Dj
+      this.output.Fj = Fj
     },
     print() {
-      let routeUrl = this.$router.resolve({
-        name: "fljh-lsyjl-project1_report",
-        query: {result: JSON.stringify(this.result)}
-      });
-      window.open(routeUrl.href, '_blank');
+      generate_report("fljh-lsyjl-project1_report", this.output)
     },
     clean() {
-      this.form.Di = ""
-      this.form.Do = ""
-      this.form.y = ""
-      this.result[0].Dj = "--"
-      this.result[0].Fj = "--"
+      clear_parameters(this.input, this.output)
     }
   }
 }

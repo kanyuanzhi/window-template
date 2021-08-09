@@ -1,5 +1,5 @@
 <template>
-  <div v-loading.fullscreen.lock="fullscreenLoading">
+  <div v-loading.fullscreen.lock="fullscreenLoading" class="app-container">
     <el-row>
       <el-col :span="24">
         <el-table
@@ -42,11 +42,11 @@ export default {
         this.$nextTick(() => {
           window.print()
         })
-      }, 1000)
+      }, 500)
     },
     getRouterParams() {
-      this.result = JSON.parse(this.$route.query.result)
-      console.log(this.result)
+      console.log(this.$route.query.output)
+      this.result = [JSON.parse(this.$route.query.output)]
     }
   }
 }
