@@ -45,7 +45,6 @@ export default {
       }, 500)
     },
     getRouterParams() {
-      console.log(this.$route.query.output)
       this.result = [JSON.parse(this.$route.query.output)]
     }
   }

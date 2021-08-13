@@ -12,7 +12,7 @@ const state = {
       }
     },
     project2: {
-      input:{
+      input: {
         P: "",
         Mf: "",
         Fa: "",
@@ -22,7 +22,7 @@ const state = {
         Ps: "",
         FT: "",
       },
-      output:{
+      output: {
         Peq: "--",
         FF: "--",
         FM: "--",
@@ -34,9 +34,53 @@ const state = {
       }
     },
     project3: {
-
+      input: {
+        d: "",
+        S: "",
+        P: "",
+        f: "",
+        f_: "",
+        n: "",
+        SB: "",
+        SB_model: 1,
+        PV: "",
+      },
+      output: {
+        r: "--",
+        Rma: "--",
+        SB: "--",
+        CS: "--"
+      }
     },
   },
+  lsjh: {
+    project1: {
+      input: {
+        Pc: "",
+        Dj: "",
+        m: "",
+        SB: "",
+        T: "",
+        cailiao_type:"",
+        S: "",
+        Sy: "",
+        Ec: "",
+        Eh: "",
+        FSi: "",
+        Pe: "",
+      },
+      output: {
+        FSPc: "--",
+        SA_sheji: "--",
+        SA_yunxing: "--",
+        SA_shiyan: "--",
+        FSPe: "--",
+        conclusion_sheji: "--",
+        conclusion_yunxing: "--",
+        conclusion_shiyan: "--",
+      }
+    }
+  }
 }
 
 const mutations = {}

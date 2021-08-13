@@ -10,5 +10,6 @@ const getters = {
   permission_routes: state => state.permission.routes,
 
   lsyjl: state => state.parameter_fllsjh.lsyjl,
+  lsjh: state => state.parameter_fllsjh.lsjh,
 }
 export default getters

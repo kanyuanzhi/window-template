@@ -47,3 +47,8 @@
 .el-range-separator {
   box-sizing: content-box;
 }
+
+
+.el-input__inner::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+}

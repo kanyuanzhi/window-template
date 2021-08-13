@@ -12,5 +12,11 @@ module.exports = {
    * @type {boolean} true | false
    * @description Whether show the logo in sidebar
    */
-  sidebarLogo: true
+  sidebarLogo: true,
+
+  /**
+   * @type {int}
+   * @description 计算结果保留小数点后位数
+   */
+  precision: 4,
 }

@@ -1,12 +1,15 @@
-import Cookies from 'js-cookie'
+// import Cookies from 'js-cookie'
+import sessionStorage from 'sessionstorage'
 
 const state = {
   sidebar: {
-    opened: Cookies.get('sidebarStatus') ? !!+Cookies.get('sidebarStatus') : true,
+    // opened: Cookies.get('sidebarStatus') ? !!+Cookies.get('sidebarStatus') : true,
+    opened: sessionStorage.getItem('sidebarStatus') ? !!+sessionStorage.getItem('sidebarStatus') : true,
     withoutAnimation: false
   },
   device: 'desktop',
-  size: Cookies.get('size') || 'medium'
+  // size: Cookies.get('size') || 'medium'
+  size: sessionStorage.getItem('size') || 'medium'
 }
 
 const mutations = {
@@ -14,13 +17,16 @@ const mutations = {
     state.sidebar.opened = !state.sidebar.opened
     state.sidebar.withoutAnimation = false
     if (state.sidebar.opened) {
-      Cookies.set('sidebarStatus', 1)
+      // Cookies.set('sidebarStatus', 1)
+      sessionStorage.setItem('sidebarStatus', 1)
     } else {
-      Cookies.set('sidebarStatus', 0)
+      // Cookies.set('sidebarStatus', 0)
+      sessionStorage.setItem('sidebarStatus', 0)
     }
   },
   CLOSE_SIDEBAR: (state, withoutAnimation) => {
-    Cookies.set('sidebarStatus', 0)
+    // Cookies.set('sidebarStatus', 0)
+    sessionStorage.setItem('sidebarStatus', 0)
     state.sidebar.opened = false
     state.sidebar.withoutAnimation = withoutAnimation
   },

@@ -6,20 +6,19 @@
           <el-row :gutter="20">
             <el-col :span="12">
               <el-form-item label="Di(mm)" size="small">
-                <el-input v-model="input.Di" placeholder="法兰垫片内径"/>
+                <el-input v-model="input.Di" placeholder="法兰垫片内径" type="number"/>
               </el-form-item>
             </el-col>
             <el-col :span="12">
               <el-form-item label="Do(mm)" size="small">
-                <el-input v-model="input.Do" placeholder="法兰垫片外径"/>
+                <el-input v-model="input.Do" placeholder="法兰垫片外径" type="number"/>
               </el-form-item>
             </el-col>
           </el-row>
-
           <el-row :gutter="20">
             <el-col :span="12">
               <el-form-item label="y" size="small">
-                <el-input v-model="input.y" placeholder="垫片密封比压力"/>
+                <el-input v-model="input.y" placeholder="垫片密封比压力" type="number"/>
               </el-form-item>
             </el-col>
           </el-row>
@@ -78,9 +77,9 @@ export default {
   },
   methods: {
     compute() {
-      const Di = parseFloat(this.input.Di)
-      const Do = parseFloat(this.input.Do)
-      const y = parseFloat(this.input.y)
+      const Di = this.input.Di
+      const Do = this.input.Do
+      const y = this.input.y
       const Dj = (Di + Do) / 2
       const Fj = pi / 4 * pow(Dj, 2) * y
 

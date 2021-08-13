@@ -6,48 +6,48 @@
           <el-row :gutter="20">
             <el-col :span="12">
               <el-form-item label="P(MPa)" size="small">
-                <el-input v-model="input.P" placeholder="系统压力"/>
+                <el-input type="number" v-model="input.P" placeholder="系统压力"/>
               </el-form-item>
               <el-form-item label="Mf(N·m)" size="small">
-                <el-input v-model="input.Mf" placeholder="系统外载荷弯矩"/>
+                <el-input type="number" v-model="input.Mf" placeholder="系统外载荷弯矩"/>
               </el-form-item>
               <el-form-item label="Fa(N)" size="small">
-                <el-input v-model="input.Fa" placeholder="系统外载荷轴向力"/>
+                <el-input type="number" v-model="input.Fa" placeholder="系统外载荷轴向力"/>
               </el-form-item>
             </el-col>
             <el-col :span="12">
               <el-form-item label="m" size="small">
-                <el-input v-model="input.m" placeholder="垫片系数"/>
+                <el-input type="number" v-model="input.m" placeholder="垫片系数"/>
               </el-form-item>
             </el-col>
           </el-row>
           <el-row :gutter="20">
             <el-col :span="12">
               <el-form-item label="Ec(Pa)" size="small">
-                <el-input v-model="input.Ec" placeholder="室温下的弹性模量"/>
+                <el-input type="number" v-model="input.Ec" placeholder="室温下的弹性模量"/>
               </el-form-item>
               <el-form-item label="Eh(Pa)" size="small">
-                <el-input v-model="input.Eh" placeholder="工作温度下的弹性模量"/>
+                <el-input type="number" v-model="input.Eh" placeholder="工作温度下的弹性模量"/>
               </el-form-item>
             </el-col>
             <el-col :span="12">
               <el-form-item label="Ps(MPa)" size="small">
-                <el-input v-model="input.Ps" placeholder="系统工作压力"/>
+                <el-input type="number" v-model="input.Ps" placeholder="系统工作压力"/>
               </el-form-item>
               <el-form-item label="FT(N)" size="small">
-                <el-input v-model="input.FT" placeholder="运行工况下克服法兰相对切向位移所需的力"/>
+                <el-input type="number" v-model="input.FT" placeholder="运行工况下克服法兰相对切向位移所需的力"/>
               </el-form-item>
             </el-col>
           </el-row>
           <el-row :gutter="20">
             <el-col :span="12">
               <el-form-item label="Dj(mm)" size="small">
-                <el-input v-model="project1_output.Dj" placeholder="垫片平均直径" disabled/>
+                <el-input type="number" v-model="project1_output.Dj" placeholder="垫片平均直径" disabled/>
               </el-form-item>
             </el-col>
             <el-col :span="12">
               <el-form-item label="Fj(N)" size="small">
-                <el-input v-model="project1_output.Fj" placeholder="压紧密封垫圈所需的力" disabled/>
+                <el-input type="number" v-model="project1_output.Fj" placeholder="压紧密封垫圈所需的力" disabled/>
               </el-form-item>
             </el-col>
           </el-row>
@@ -148,17 +148,17 @@ export default {
   },
   methods: {
     compute() {
-      const P = parseFloat(this.input.P)
-      const Mf = parseFloat(this.input.Mf)
-      const Fa = parseFloat(this.input.Fa)
-      const m = parseFloat(this.input.m)
-      const Ec = parseFloat(this.input.Ec)
-      const Eh = parseFloat(this.input.Eh)
-      const Ps = parseFloat(this.input.Ps)
-      const FT = parseFloat(this.input.FT)
+      const P = this.input.P
+      const Mf = this.input.Mf
+      const Fa = this.input.Fa
+      const m = this.input.m
+      const Ec = this.input.Ec
+      const Eh = this.input.Eh
+      const Ps = this.input.Ps
+      const FT = this.input.FT
 
-      const Dj = parseFloat(this.project1_output.Dj)
-      const Fj = parseFloat(this.project1_output.Fj)
+      const Dj = this.project1_output.Dj
+      const Fj = this.project1_output.Fj
 
       const Peq = 16 * Mf / (pi * pow(Dj, 3) + 4 * Fa / (pi * pow(Dj, 2)))
       const FF = pi / 4 * pow(Dj, 2) * (P + Peq)
