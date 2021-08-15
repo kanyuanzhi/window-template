@@ -42,7 +42,6 @@ export const constantRoutes = [
     component: () => import('@/views/404'),
     hidden: true
   },
-
   {
     path: '/',
     component: Layout,
@@ -115,22 +114,56 @@ export const constantRoutes = [
 
 export const asyncRoutes = [
   {
-    path: '/formula-lslj',
+    path: '/calculation-falan',
     component: Layout,
-    name: 'luoshuanliju',
-    meta: {title: '螺栓力矩', icon: 'el-icon-s-help', role: ['1']},
+    redirect: 'noRedirect',
+    name: 'falan',
+    meta: {title: '法兰', icon: 'el-icon-s-help', role: ['1']},
     children: [
       {
-        path: 'lslj1',
-        name: 'luoshuanliju1',
-        component: () => import('@/views/formula-lslj/lslj1'),
-        meta: {title: '螺栓力矩1', icon: 'form'}
+        path: 'rcc-m',
+        name: 'rcc-m',
+        redirect: 'noRedirect',
+        component: () => import('@/views/calculation-falan/rcc-m'),
+        meta: {title: 'RCC-M'},
+        children: [
+          {
+            path: 'luoshuan-yujingli',
+            component: () => import('@/views/calculation-falan/rcc-m/luoshuan-yujingli'),
+            name: 'luoshuan-yujingli',
+            meta: {title: '螺栓预紧力'}
+          },
+          {
+            path: 'luoshuan-jiaohe',
+            component: () => import('@/views/calculation-falan/rcc-m/luoshuan-jiaohe'),
+            name: 'luoshuan-jiaohe',
+            meta: {title: '螺栓校核'}
+          },
+          {
+            path: 'falan-yingli',
+            component: () => import('@/views/nested/menu1/menu1-2/menu1-2-1'),
+            name: 'falan-yingli',
+            meta: {title: '法兰应力'}
+          },
+        ]
       },
       {
-        path: 'lslj2',
-        name: 'luoshuanliju2',
+        path: 'gb150-kuanmian-banshi',
+        name: 'gb150-kuanmian-banshi',
         component: () => import('@/views/formula-lslj/lslj2'),
-        meta: {title: '螺栓力矩2', icon: 'form'}
+        meta: {title: 'GB150宽面板式', icon: 'form'}
+      },
+      {
+        path: 'gb150-kuanmian-daijing',
+        name: 'gb150-kuanmian-daijing',
+        component: () => import('@/views/formula-lslj/lslj2'),
+        meta: {title: 'GB150宽面带颈', icon: 'form'}
+      },
+      {
+        path: 'gb150-zhaimian',
+        name: 'gb150-zhaimian',
+        component: () => import('@/views/formula-lslj/lslj2'),
+        meta: {title: 'GB150窄面', icon: 'form'}
       }
     ]
   },

@@ -4406,10 +4406,10 @@ electron@^9.4.4:
     "@types/node" "^12.0.12"
     extract-zip "^1.0.3"
 
-element-ui@2.13.2:
-  version "2.13.2"
-  resolved "https://registry.nlark.com/element-ui/download/element-ui-2.13.2.tgz?cache=0&sync_timestamp=1628057164000&other_urls=https%3A%2F%2Fregistry.nlark.com%2Felement-ui%2Fdownload%2Felement-ui-2.13.2.tgz"
-  integrity sha1-WCv0eqqqr+I+oZWPriF6aHrQZEc=
+element-ui@2.15.5:
+  version "2.15.5"
+  resolved "https://registry.nlark.com/element-ui/download/element-ui-2.15.5.tgz#dfb376dc5cd60adab21c991bd4fac3e67e5300f4"
+  integrity sha1-37N23FzWCtqyHJkb1PrD5n5TAPQ=
   dependencies:
     async-validator "~1.8.1"
     babel-helper-vue-jsx-merge-props "^2.0.0"
