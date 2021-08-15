@@ -56,6 +56,9 @@
 .el-descriptions-item__content{
   width: 100px;
 }
+.el-descriptions-item__label{
+  width: 15%;
+}
 
 .demonstration{
   display: block;
@@ -65,6 +68,7 @@
   text-align: center;
 }
 
-.block{
-  //text-align: center;
+.el-image-block{
+  margin-left: 20px;
+  margin-right: 10px;
 }

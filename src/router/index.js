@@ -140,10 +140,49 @@ export const asyncRoutes = [
             meta: {title: '螺栓校核'}
           },
           {
-            path: 'falan-yingli',
-            component: () => import('@/views/nested/menu1/menu1-2/menu1-2-1'),
-            name: 'falan-yingli',
-            meta: {title: '法兰应力'}
+            path: 'falan-yingli-1',
+            component: () => import('@/views/calculation-falan/rcc-m/falan-yingli-1'),
+            name: 'falan-yingli-1',
+            meta: {title: '法兰应力-第一步'}
+          },
+          {
+            path: 'falan-yingli-2',
+            component: () => import('@/views/calculation-falan/rcc-m/falan-yingli-2'),
+            name: 'falan-yingli-2',
+            redirect: 'noRedirect',
+            meta: {title: '法兰应力-第二步'},
+            children: [
+              {
+                path: 'jieben-jisuan',
+                component: () => import('@/views/calculation-falan/rcc-m/falan-yingli-2/jiben-jisuan'),
+                name: 'jieben-jisuan',
+                meta: {title: '基本计算'}
+              },
+              {
+                path: 'falan-jiaohe-sheji',
+                component: () => import('@/views/calculation-falan/rcc-m/falan-yingli-2/falan-jiaohe-sheji'),
+                name: 'falan-jiaohe-sheji',
+                meta: {title: '法兰校核-设计工况'}
+              },
+              {
+                path: 'falan-jiaohe-yunxing',
+                component: () => import('@/views/calculation-falan/rcc-m/falan-yingli-2/falan-jiaohe-sheji'),
+                name: 'falan-xishu-yunxing',
+                meta: {title: '法兰校核-运行工况'}
+              },
+              {
+                path: 'falan-jiaohe-jinji',
+                component: () => import('@/views/calculation-falan/rcc-m/falan-yingli-2/falan-jiaohe-sheji'),
+                name: 'falan-jiaohe-jinji',
+                meta: {title: '法兰校核-紧急工况'}
+              },
+              {
+                path: 'falan-jiaohe-shigu',
+                component: () => import('@/views/calculation-falan/rcc-m/falan-yingli-2/falan-jiaohe-sheji'),
+                name: 'falan-jiaohe-shigu',
+                meta: {title: '法兰校核-事故工况'}
+              },
+            ]
           },
         ]
       },
@@ -151,19 +190,19 @@ export const asyncRoutes = [
         path: 'gb150-kuanmian-banshi',
         name: 'gb150-kuanmian-banshi',
         component: () => import('@/views/formula-lslj/lslj2'),
-        meta: {title: 'GB150宽面板式', icon: 'form'}
+        meta: {title: 'GB150宽面板式'}
       },
       {
         path: 'gb150-kuanmian-daijing',
         name: 'gb150-kuanmian-daijing',
         component: () => import('@/views/formula-lslj/lslj2'),
-        meta: {title: 'GB150宽面带颈', icon: 'form'}
+        meta: {title: 'GB150宽面带颈'}
       },
       {
         path: 'gb150-zhaimian',
         name: 'gb150-zhaimian',
         component: () => import('@/views/formula-lslj/lslj2'),
-        meta: {title: 'GB150窄面', icon: 'form'}
+        meta: {title: 'GB150窄面'}
       }
     ]
   },

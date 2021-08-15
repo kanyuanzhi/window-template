@@ -1,7 +1,7 @@
 <template>
   <div class="app-container">
     <el-row :gutter="10">
-      <el-col :span="18">
+      <el-col :span="20">
         <el-form label-width="70px">
           <el-divider>压紧密封垫圈需要的力Fj</el-divider>
           <el-row :gutter="10">
@@ -109,13 +109,13 @@
           </el-row>
         </el-form>
       </el-col>
-      <el-col :span="6">
+      <el-col :span="4">
         <div class="demo-image__placeholder">
-          <div class="block">
-            <el-image :src="img_luomu">
-              <div slot="placeholder" class="image-slot">
-                加载中<span class="dot">...</span>
-              </div>
+          <div class="el-image-block">
+            <el-image :src="img_luomu" :preview-src-list="[img_luomu]">
+<!--              <div slot="placeholder" class="image-slot">-->
+<!--                加载中<span class="dot">...</span>-->
+<!--              </div>-->
             </el-image>
             <span class="demonstration">螺母示意图</span>
           </div>
@@ -249,6 +249,7 @@ export default {
       this.input.n = ""
       this.input.PV = ""
 
+      this.output.Dj = "--"
       this.output.Dj = "--"
       this.output.Fj = "--"
 

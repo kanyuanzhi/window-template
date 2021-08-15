@@ -1,7 +1,7 @@
 <template>
   <div class="app-container">
     <el-row :gutter="10">
-      <el-col :span="18">
+      <el-col :span="20">
         <el-form label-width="70px">
           <!--          <el-row :gutter="10">-->
           <!--            <el-col :span="8">-->
@@ -18,8 +18,8 @@
 
           <el-row :gutter="10">
             <el-col :span="8">
-              <el-form-item label="材料种类" size="small">
-                <el-radio-group v-model="input.material_type" @change="MaterialTypeChange">
+              <el-form-item label="螺栓材料" size="small">
+                <el-radio-group v-model="input.bolt_material" @change="boltMaterialChange">
                   <el-radio :label="1">1类</el-radio>
                   <el-radio :label="2">2类</el-radio>
                   <el-radio :label="3">3类</el-radio>
@@ -104,7 +104,7 @@
           </el-row>
         </el-form>
       </el-col>
-<!--      <el-col :span="6">-->
+<!--      <el-col :span="4">-->
 <!--        <div class="demo-image__placeholder">-->
 <!--          <div class="block">-->
 <!--            <el-image :src="img_luomu">-->
@@ -213,7 +213,7 @@ export default {
     clean() {
       this.input.SB = this.output.SB // SB的初始状态为螺栓预紧力中SB的公式计算值
       this.input.SB_is_calculated = true
-      this.input.material_type = ""
+      this.input.bolt_material = ""
 
       this.input.Pc = ""
       this.input.T_2_1 = ""
@@ -243,7 +243,7 @@ export default {
         this.input.SB = this.output.SB
       }
     },
-    MaterialTypeChange(val) {
+    boltMaterialChange(val) {
       if (this.input.S_2_1_is_calculated && this.input.S_2_2_is_calculated) {
         const T_2_1 = this.input.T_2_1
         const T_2_2 = this.input.T_2_2
@@ -267,8 +267,8 @@ export default {
     },
     T_2_1Change(val) {
       if (this.input.S_2_1_is_calculated) {
-        const material_type = this.input.material_type
-        switch (material_type) {
+        const bolt_material = this.input.bolt_material
+        switch (bolt_material) {
           case 1:
             this.input.S_2_1 = 1 * val
             return
@@ -285,8 +285,8 @@ export default {
     },
     T_2_2Change(val) {
       if (this.input.S_2_2_is_calculated) {
-        const material_type = this.input.material_type
-        switch (material_type) {
+        const bolt_material = this.input.bolt_material
+        switch (bolt_material) {
           case 1:
             this.input.S_2_2 = 1 * val
             return
@@ -304,8 +304,8 @@ export default {
     S_2_1IsCalculatedChange(val) {
       if (val){
         const T_2_1 = this.input.T_2_1
-        const material_type = this.input.material_type
-        switch (material_type) {
+        const bolt_material = this.input.bolt_material
+        switch (bolt_material) {
           case 1:
             this.input.S_2_1 = 1 * T_2_1
             return
@@ -323,8 +323,8 @@ export default {
     S_2_2IsCalculatedChange(val) {
       if (val){
         const T_2_2 = this.input.T_2_2
-        const material_type = this.input.material_type
-        switch (material_type) {
+        const bolt_material = this.input.bolt_material
+        switch (bolt_material) {
           case 1:
             this.input.S_2_2 = 1 * T_2_2
             return
