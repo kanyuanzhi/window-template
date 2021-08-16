@@ -68,39 +68,39 @@
 
 <script>
 import {validUsername} from '@/utils/validate'
-import Dexie from 'dexie'
+// import Dexie from 'dexie'
 
-Dexie.debug = true; // In production, set to false to increase performance a little.
+// Dexie.debug = true; // In production, set to false to increase performance a little.
+//
+// let db = new Dexie("projectDatabase")
+// db.version(1).stores({roles: "++id,key,name,introduction", users: "++id,username,password,roles,token,name,introduction"})
 
-let db = new Dexie("projectDatabase")
-db.version(1).stores({roles: "++id,key,name,introduction", users: "++id,username,password,roles,token,name,introduction"})
-
-db.transaction('rw', db.users, async () => {
-  if ((await db.users.where({username: "super"}).count()) === 0) {
-    await db.users.add({
-      username: "super",
-      password: "123456",
-      roles: ["1", "2", "3", "4", "5"],
-      token: "qazwsxedc",
-      name: "",
-      introduction: ""
-    })
-  }
-}).catch(e => {
-  console.error(e.stack);
-})
-
-db.transaction('rw', db.roles, async () => {
-  if ((await db.roles.count()) === 0) {
-    await db.roles.add({key: "1", name:"1权限", introduction:""})
-    await db.roles.add({key: "2", name:"1权限", introduction:""})
-    await db.roles.add({key: "3", name:"1权限", introduction:""})
-    await db.roles.add({key: "4", name:"1权限", introduction:""})
-    await db.roles.add({key: "5", name:"1权限", introduction:""})
-  }
-}).catch(e => {
-  console.error(e.stack);
-})
+// db.transaction('rw', db.users, async () => {
+//   if ((await db.users.where({username: "super"}).count()) === 0) {
+//     await db.users.add({
+//       username: "super",
+//       password: "123456",
+//       roles: ["1", "2", "3", "4", "5"],
+//       token: "qazwsxedc",
+//       name: "",
+//       introduction: ""
+//     })
+//   }
+// }).catch(e => {
+//   console.error(e.stack);
+// })
+//
+// db.transaction('rw', db.roles, async () => {
+//   if ((await db.roles.count()) === 0) {
+//     await db.roles.add({key: "1", name:"1权限", introduction:""})
+//     await db.roles.add({key: "2", name:"1权限", introduction:""})
+//     await db.roles.add({key: "3", name:"1权限", introduction:""})
+//     await db.roles.add({key: "4", name:"1权限", introduction:""})
+//     await db.roles.add({key: "5", name:"1权限", introduction:""})
+//   }
+// }).catch(e => {
+//   console.error(e.stack);
+// })
 
 
 export default {

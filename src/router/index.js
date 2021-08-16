@@ -118,7 +118,7 @@ export const asyncRoutes = [
     component: Layout,
     redirect: 'noRedirect',
     name: 'falan',
-    meta: {title: '法兰', icon: 'el-icon-s-help', role: ['1']},
+    meta: {title: '法兰', icon: 'el-icon-s-help', role: ['super', 'falan']},
     children: [
       {
         path: 'rcc-m',
@@ -210,7 +210,7 @@ export const asyncRoutes = [
     path: '/formula-thdj',
     component: Layout,
     name: 'tanhuangdiaojia',
-    meta: {title: '弹簧吊架', icon: 'el-icon-s-help', role: ['2']},
+    meta: {title: '弹簧吊架', icon: 'el-icon-s-help', role: ['super']},
     children: [
       {
         path: 'thdj1',
@@ -230,7 +230,7 @@ export const asyncRoutes = [
     path: '/formula-gdkj',
     component: Layout,
     name: 'guandaokuaju',
-    meta: {title: '管道跨距', icon: 'el-icon-s-help', role: ['3']},
+    meta: {title: '管道跨距', icon: 'el-icon-s-help', role: ['super']},
     children: [
       {
         path: 'gdkj1',
@@ -250,7 +250,7 @@ export const asyncRoutes = [
     path: '/formula-fljh',
     component: Layout,
     name: 'falanjiaohe',
-    meta: {title: '法兰校核', icon: 'el-icon-s-help', role: ['4']},
+    meta: {title: '法兰校核', icon: 'el-icon-s-help', role: ['super']},
     children: [
       {
         path: 'lsyjl',
@@ -276,7 +276,7 @@ export const asyncRoutes = [
     path: '/formula-gdjb',
     component: Layout,
     name: 'guandaojianbo',
-    meta: {title: '管道减薄', icon: 'el-icon-s-help', role: ['5']},
+    meta: {title: '管道减薄', icon: 'el-icon-s-help', role: ['super']},
     children: [
       {
         path: 'gdjb1',

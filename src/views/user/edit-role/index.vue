@@ -40,14 +40,14 @@
               icon="el-icon-refresh"
               type="warning"
               @click="cancelEdit(scope.row)"
-              >取消</el-button
+            >取消</el-button
             >
             <el-button
               size="small"
               icon="el-icon-circle-check"
               type="success"
               @click="confirmEdit(scope.row)"
-              >确认</el-button
+            >确认</el-button
             >
           </template>
           <template v-else>
@@ -56,7 +56,7 @@
               size="small"
               icon="el-icon-edit"
               @click="scope.row.edit = !scope.row.edit"
-              >编辑</el-button
+            >编辑</el-button
             >
           </template>
         </template>
@@ -66,7 +66,7 @@
 </template>
 
 <script>
-import { fetchRoles, updateRole } from '@/api-local/user'
+import { fetchRoles, updateRole } from '@/api/user'
 
 export default {
   data() {
@@ -82,7 +82,6 @@ export default {
     async getRoles() {
       this.listLoading = true
       const { data } = await fetchRoles()
-      console.log(data)
       this.rolesData = data.map(v => {
         this.$set(v, 'edit', false)
         v.editedName = v.name
@@ -102,7 +101,7 @@ export default {
         updateRole({ key: row.key, name: row.editedName, introduction: row.editedIntroduction }).then((response) => {
           row.name = row.editedName
           row.introduction = row.editedIntroduction
-          this.$message(response.message)
+          this.$message(response.data)
           resolve()
         }).catch(error => {
           reject(error)

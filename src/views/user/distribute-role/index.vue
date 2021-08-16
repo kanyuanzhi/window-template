@@ -8,11 +8,10 @@
         <template slot-scope="scope">
           <template v-if="scope.row.edit">
             <el-checkbox-group v-model="scope.row.selectedRoles">
-              <el-checkbox label="1"></el-checkbox>
-              <el-checkbox label="2"></el-checkbox>
-              <el-checkbox label="3"></el-checkbox>
-              <el-checkbox label="4"></el-checkbox>
-              <el-checkbox label="5"></el-checkbox>
+              <el-checkbox label="super"></el-checkbox>
+              <el-checkbox label="admin"></el-checkbox>
+              <el-checkbox label="operator"></el-checkbox>
+              <el-checkbox label="guest"></el-checkbox>
             </el-checkbox-group>
           </template>
           <template v-else>
@@ -29,14 +28,14 @@
               icon="el-icon-refresh"
               type="warning"
               @click="cancelEdit(scope.row)"
-              >取消</el-button
+            >取消</el-button
             >
             <el-button
               size="small"
               icon="el-icon-circle-check"
               type="success"
               @click="confirmEdit(scope.row)"
-              >确认</el-button
+            >确认</el-button
             >
           </template>
           <template v-else>
@@ -48,7 +47,7 @@
               size="small"
               icon="el-icon-edit"
               @click="scope.row.edit = !scope.row.edit"
-              >编辑</el-button
+            >编辑</el-button
             >
           </template>
         </template>
@@ -58,7 +57,7 @@
 </template>
 
 <script>
-import { fetchUsers,updateUserRoles } from '@/api-local/user'
+import { fetchUsers, updateUserRoles } from '@/api/user'
 
 export default {
   data() {

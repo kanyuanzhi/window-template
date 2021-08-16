@@ -54,17 +54,16 @@ export default {
       // this.$message('submit!')
       this.$refs.form.validate(valid => {
         if (valid) {
-          this.$store.dispatch('user/changePassword', this.form).then((response) => {
-            const { code, data, message } = response
-            this.$message(message)
-            if(code===20000){
-              this.logout()
-            }
+          this.$store.dispatch('user/changePassword', this.form).then(() => {
+            // this.$router.push({ path: this.redirect || '/' })
+            // this.loading = false
+            this.$message('修改成功，请重新登录！')
+            this.logout()
           }).catch(() => {
             this.$message('修改失败！')
           })
         } else {
-          this.$message('格式错误!')
+          this.$message('err submit!')
           return false
         }
       })

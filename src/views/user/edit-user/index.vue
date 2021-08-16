@@ -40,14 +40,14 @@
               icon="el-icon-refresh"
               type="warning"
               @click="cancelEdit(scope.row)"
-              >取消</el-button
+            >取消</el-button
             >
             <el-button
               size="small"
               icon="el-icon-circle-check"
               type="success"
               @click="confirmEdit(scope.row)"
-              >确认</el-button
+            >确认</el-button
             >
           </template>
           <template v-if="!scope.row.edit && scope.row.delete">
@@ -57,14 +57,14 @@
               icon="el-icon-refresh"
               type="warning"
               @click="cancelDelete(scope.row)"
-              >取消</el-button
+            >取消</el-button
             >
             <el-button
               size="small"
               icon="el-icon-circle-check"
               type="success"
               @click="confirmDelete(scope.row, scope.$index)"
-              >确认</el-button
+            >确认</el-button
             >
           </template>
           <template v-if="!scope.row.edit && !scope.row.delete">
@@ -76,14 +76,14 @@
               size="small"
               icon="el-icon-edit"
               @click="scope.row.edit = !scope.row.edit"
-              >编辑</el-button
+            >编辑</el-button
             >
             <el-button
               type="danger"
               size="small"
               icon="el-icon-edit"
               @click="scope.row.delete = !scope.row.delete"
-              >删除</el-button
+            >删除</el-button
             >
           </template>
         </template>
@@ -93,7 +93,7 @@
 </template>
 
 <script>
-import { fetchUsers, updateUserInfo, deleteUser } from '@/api-local/user'
+import { fetchUsers, updateUserInfo, deleteUser } from '@/api/user'
 
 export default {
   data() {
@@ -129,7 +129,7 @@ export default {
         updateUserInfo({ username: row.username, name: row.editedName, introduction: row.editedIntroduction }).then(response => {
           row.name = row.editedName
           row.introduction = row.editedIntroduction
-          // this.$message(response.data)
+          this.$message(response.data)
           resolve()
         }).catch(error => {
           reject(error)
@@ -144,13 +144,9 @@ export default {
     confirmDelete(row, index) {
       row.delete = false
       return new Promise((resolve, reject) => {
-        if (row.username === "super"){
-          this.$message("super用户不允许删除!")
-          return resolve()
-        }
         deleteUser(row.username).then(response => {
-          this.usersData.splice(index, 1)
-          this.$message(response.message)
+          this.usersData.splice(index)
+          this.$message(response.data)
           resolve()
         }).catch(error => {
           reject(error)

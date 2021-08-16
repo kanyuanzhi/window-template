@@ -1,4 +1,5 @@
-import { login, getInfo, logout, register, changePassword  } from '@/api-local/user'
+// import { login, getInfo, logout, register, changePassword  } from '@/api-local/user'
+import { login, getInfo, logout, register, changePassword  } from '@/api/user'
 import { getToken, setToken, removeToken } from '@/utils/auth'
 import router, { resetRouter } from '@/router'
 
