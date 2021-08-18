@@ -114,6 +114,81 @@ export const constantRoutes = [
 
 export const asyncRoutes = [
   {
+    path: '/calculation-flange',
+    component: Layout,
+    redirect: 'noRedirect',
+    name: 'Flange',
+    meta: {title: '法兰校核', icon: 'el-icon-s-help', role: ['super']},
+    children: [
+      {
+        path: 'rcc-m',
+        name: 'rcc-m',
+        redirect: 'noRedirect',
+        component: () => import('@/views/calculation-flange/rcc-m'),
+        meta: {title: 'RCC-M'},
+        children: [
+          {
+            path: 'general',
+            component: () => import('@/views/calculation-flange/rcc-m/general'),
+            name: 'General',
+            meta: {title: '通用参数'}
+          },
+          {
+            path: 'design',
+            name: 'Design',
+            redirect: 'noRedirect',
+            component: () => import('@/views/calculation-flange/rcc-m/design'),
+            meta: {title: '设计工况'},
+            children: [
+              {
+                path: 'bolt-check',
+                component: () => import('@/views/calculation-flange/rcc-m/design/bolt-check'),
+                name: 'BoltCheck',
+                meta: {title: '螺栓校核'},
+              },
+              {
+                path: 'flange',
+                component: () => import('@/views/calculation-flange/rcc-m/general'),
+                name: 'Flange',
+                meta: {title: '法兰校核'},
+              }
+            ]
+          },
+          {
+            path: 'running',
+            component: () => import('@/views/calculation-flange/rcc-m/general'),
+            name: 'Running',
+            meta: {title: '运行工况'}
+          },
+          {
+            path: 'Emergency',
+            component: () => import('@/views/calculation-flange/rcc-m/general'),
+            name: 'Emergency',
+            meta: {title: '紧急工况'}
+          },
+          {
+            path: 'accident',
+            component: () => import('@/views/calculation-flange/rcc-m/general'),
+            name: 'Accident',
+            meta: {title: '事故工况'}
+          },
+          {
+            path: 'report',
+            component: () => import('@/views/calculation-flange/rcc-m/general'),
+            name: 'Report',
+            meta: {title: '校核报告'}
+          },
+        ]
+      },
+      {
+        path: 'gb150-kuanmian-banshi',
+        name: 'gb150-kuanmian-banshi',
+        // component: () => import('@/views/formula-lslj/lslj2'),
+        meta: {title: 'GB150宽面板式'}
+      },
+    ]
+  },
+  {
     path: '/calculation-falan',
     component: Layout,
     redirect: 'noRedirect',
@@ -129,7 +204,7 @@ export const asyncRoutes = [
         children: [
           {
             path: 'luoshuan-yujingli',
-            component: () => import('@/views/calculation-falan/rcc-m/luoshuan-yujingli'),
+            component: () => import('@/views/calculation-flange/rcc-m/general'),
             name: 'luoshuan-yujingli',
             meta: {title: '螺栓预紧力'}
           },
@@ -186,110 +261,6 @@ export const asyncRoutes = [
           },
         ]
       },
-      {
-        path: 'gb150-kuanmian-banshi',
-        name: 'gb150-kuanmian-banshi',
-        component: () => import('@/views/formula-lslj/lslj2'),
-        meta: {title: 'GB150宽面板式'}
-      },
-      {
-        path: 'gb150-kuanmian-daijing',
-        name: 'gb150-kuanmian-daijing',
-        component: () => import('@/views/formula-lslj/lslj2'),
-        meta: {title: 'GB150宽面带颈'}
-      },
-      {
-        path: 'gb150-zhaimian',
-        name: 'gb150-zhaimian',
-        component: () => import('@/views/formula-lslj/lslj2'),
-        meta: {title: 'GB150窄面'}
-      }
-    ]
-  },
-  {
-    path: '/formula-thdj',
-    component: Layout,
-    name: 'tanhuangdiaojia',
-    meta: {title: '弹簧吊架', icon: 'el-icon-s-help', role: ['super']},
-    children: [
-      {
-        path: 'thdj1',
-        name: 'tanhuangdiaojia1',
-        component: () => import('@/views/formula-thdj/thdj1'),
-        meta: {title: '弹簧吊架1', icon: 'form'}
-      },
-      {
-        path: 'thdj2',
-        name: 'tanhuangdiaojia2',
-        component: () => import('@/views/formula-thdj/thdj2'),
-        meta: {title: '弹簧吊架2', icon: 'form'}
-      }
-    ]
-  },
-  {
-    path: '/formula-gdkj',
-    component: Layout,
-    name: 'guandaokuaju',
-    meta: {title: '管道跨距', icon: 'el-icon-s-help', role: ['super']},
-    children: [
-      {
-        path: 'gdkj1',
-        name: 'guandaokuaju1',
-        component: () => import('@/views/formula-gdkj/gdkj1'),
-        meta: {title: '管道跨距1', icon: 'form'}
-      },
-      {
-        path: 'gdkj2',
-        name: 'guandaokuaju2',
-        component: () => import('@/views/formula-gdkj/gdkj2'),
-        meta: {title: '管道跨距2', icon: 'form'}
-      }
-    ]
-  },
-  {
-    path: '/formula-fljh',
-    component: Layout,
-    name: 'falanjiaohe',
-    meta: {title: '法兰校核', icon: 'el-icon-s-help', role: ['super']},
-    children: [
-      {
-        path: 'lsyjl',
-        name: 'luoshuanyujili',
-        component: () => import('@/views/formula-fljh/lsyjl'),
-        meta: {title: '螺栓预紧力', icon: 'form'}
-      },
-      {
-        path: 'lsjh',
-        name: 'luoshuanjiaohe',
-        component: () => import('@/views/formula-fljh/lsjh'),
-        meta: {title: '螺栓校核', icon: 'form'}
-      },
-      {
-        path: 'flyl',
-        name: 'falanyingli',
-        component: () => import('@/views/formula-fljh/flyl'),
-        meta: {title: '法兰应力', icon: 'form'}
-      }
-    ]
-  },
-  {
-    path: '/formula-gdjb',
-    component: Layout,
-    name: 'guandaojianbo',
-    meta: {title: '管道减薄', icon: 'el-icon-s-help', role: ['super']},
-    children: [
-      {
-        path: 'gdjb1',
-        name: 'guandaojianbo1',
-        component: () => import('@/views/formula-gdjb/gdjb1'),
-        meta: {title: '管道减薄1', icon: 'form'}
-      },
-      {
-        path: 'gdjb2',
-        name: 'guandaojianbo2',
-        component: () => import('@/views/formula-gdjb/gdjb2'),
-        meta: {title: '管道减薄2', icon: 'form'}
-      }
     ]
   },
 

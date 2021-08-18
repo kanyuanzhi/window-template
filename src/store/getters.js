@@ -14,5 +14,11 @@ const getters = {
 
   falan_rcc_m_input: state => state.parameter_falan_rcc_m.input,
   falan_rcc_m_output: state => state.parameter_falan_rcc_m.output,
+
+  flange_rccm_general_input: state => state.parameter_flange_rccm.general.input,
+  flange_rccm_general_output: state => state.parameter_flange_rccm.general.output,
+
+  flange_rccm_design_input: state => state.parameter_flange_rccm.design.input,
+  flange_rccm_design_output: state => state.parameter_flange_rccm.design.output,
 }
 export default getters
