@@ -134,43 +134,22 @@ export const asyncRoutes = [
             meta: {title: '通用参数'}
           },
           {
-            path: 'design',
-            name: 'Design',
-            redirect: 'noRedirect',
-            component: () => import('@/views/calculation-flange/rcc-m/design'),
-            meta: {title: '设计工况'},
-            children: [
-              {
-                path: 'bolt-check',
-                component: () => import('@/views/calculation-flange/rcc-m/design/bolt-check'),
-                name: 'BoltCheck',
-                meta: {title: '螺栓校核'},
-              },
-              {
-                path: 'flange',
-                component: () => import('@/views/calculation-flange/rcc-m/general'),
-                name: 'Flange',
-                meta: {title: '法兰校核'},
-              }
-            ]
+            path: 'condition',
+            component: () => import('@/views/calculation-flange/rcc-m/condition'),
+            name: 'Condition',
+            meta: {title: '工况参数'}
           },
           {
-            path: 'running',
-            component: () => import('@/views/calculation-flange/rcc-m/general'),
-            name: 'Running',
-            meta: {title: '运行工况'}
+            path: 'bolt-check',
+            component: () => import('@/views/calculation-flange/rcc-m/bolt-check'),
+            name: 'BoltCheck',
+            meta: {title: '螺栓校核'}
           },
           {
-            path: 'Emergency',
-            component: () => import('@/views/calculation-flange/rcc-m/general'),
-            name: 'Emergency',
-            meta: {title: '紧急工况'}
-          },
-          {
-            path: 'accident',
-            component: () => import('@/views/calculation-flange/rcc-m/general'),
-            name: 'Accident',
-            meta: {title: '事故工况'}
+            path: 'flange-check',
+            component: () => import('@/views/calculation-flange/rcc-m/flange-check'),
+            name: 'FlangeCheck',
+            meta: {title: '法兰校核'}
           },
           {
             path: 'report',

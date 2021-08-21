@@ -2,7 +2,7 @@
   <div class="app-container">
     <el-row :gutter="10">
       <el-col :span="20">
-        <el-form label-width="70px">
+        <el-form label-width="80px">
 
           <el-card class="box-card" shadow="hover">
             <div slot="header" class="clearfix">
@@ -10,35 +10,38 @@
               <el-button @click="clean1" style="float: right;padding: 0;" type="text" size="medium"
                          icon="el-icon-delete">清空
               </el-button>
+              <el-button @click="calculate" style="float: right;padding: 0 20px 0 0;" type="text" size="medium"
+                         icon="el-icon-video-play">计算
+              </el-button>
             </div>
             <el-row :gutter="10">
               <el-col :span="6">
-                <custom-el-input label="m" placeholder="垫片系数" :input="general_input" para="m"></custom-el-input>
+                <custom-el-input :para="general_input.m"></custom-el-input>
               </el-col>
               <el-col :span="6">
-                <custom-el-input label="y(MPa)" placeholder="垫片密封比压力" :input="general_input" para="y"></custom-el-input>
+                <custom-el-input :para="general_input.y"></custom-el-input>
               </el-col>
               <el-col :span="6">
-                <custom-el-input label="Do(mm)" placeholder="垫片外径" :input="general_input" para="Do"></custom-el-input>
+                <custom-el-input :para="general_input.Do"></custom-el-input>
               </el-col>
               <el-col :span="6">
-                <custom-el-input label="Di(mm)" placeholder="垫片内径" :input="general_input" para="Di"></custom-el-input>
+                <custom-el-input :para="general_input.Di"></custom-el-input>
               </el-col>
             </el-row>
             <el-row :gutter="10">
               <el-col :span="6">
-                <custom-el-input label="b0(mm)" placeholder="基本密封宽度" :input="general_input" para="b0"></custom-el-input>
+                <custom-el-input :para="general_input.b0"></custom-el-input>
               </el-col>
               <el-col :span="6">
-                <custom-el-input label="b(mm)" placeholder="有效密封宽度" :input="general_input" para="b"></custom-el-input>
+                <custom-el-input :para="general_input.b"></custom-el-input>
               </el-col>
             </el-row>
             <el-divider class="custom-el-divider--horizontal">计算结果</el-divider>
             <el-row :gutter="10">
-              <el-col :span="12">
+              <el-col :span="16">
                 <el-descriptions :column="2">
-                  <el-descriptions-item label="垫片平均直径Dj(mm)">{{ general_output.Dj }}</el-descriptions-item>
-                  <el-descriptions-item label="压紧密封垫圈所需的力Fj(N)">{{ general_output.Fj }}</el-descriptions-item>
+                  <el-descriptions-item :label="Label(general_output.Dj)">{{ general_output.Dj.value }}</el-descriptions-item>
+                  <el-descriptions-item :label="Label(general_output.Fj)">{{ general_output.Fj.value }}</el-descriptions-item>
                 </el-descriptions>
               </el-col>
             </el-row>
@@ -49,24 +52,27 @@
               <el-button @click="clean2" style="float: right;padding: 0;" type="text" size="medium"
                          icon="el-icon-delete">清空
               </el-button>
+              <el-button @click="calculate" style="float: right;padding: 0 20px 0 0;" type="text" size="medium"
+                         icon="el-icon-video-play">计算
+              </el-button>
             </div>
             <el-row :gutter="10">
               <el-col :span="6">
-                <custom-el-input label="d(mm)" placeholder="螺栓公称直径" :input="general_input" para="d"></custom-el-input>
+                <custom-el-input :para="general_input.d"></custom-el-input>
               </el-col>
               <el-col :span="6">
-                <custom-el-input label="n" placeholder="螺栓数量" :input="general_input" para="n"></custom-el-input>
+                <custom-el-input :para="general_input.n"></custom-el-input>
               </el-col>
               <el-col :span="6">
-                <custom-el-input label="P(mm)" placeholder="螺栓截距" :input="general_input" para="P"></custom-el-input>
+                <custom-el-input :para="general_input.P"></custom-el-input>
               </el-col>
             </el-row>
             <el-divider class="custom-el-divider--horizontal">计算结果</el-divider>
             <el-row :gutter="10">
-              <el-col :span="12">
+              <el-col :span="16">
                 <el-descriptions :column="2">
-                  <el-descriptions-item label="单个螺栓面积S(mm2)">{{ general_output.S }}</el-descriptions-item>
-                  <el-descriptions-item label="整体螺栓面积SB(mm2)">{{ general_output.SB }}</el-descriptions-item>
+                  <el-descriptions-item :label="Label(general_output.S)">{{ general_output.S.value }}</el-descriptions-item>
+                  <el-descriptions-item :label="Label(general_output.SB)">{{ general_output.SB.value }}</el-descriptions-item>
                 </el-descriptions>
               </el-col>
             </el-row>
@@ -77,13 +83,16 @@
               <el-button @click="clean3" style="float: right;padding: 0;" type="text" size="medium"
                          icon="el-icon-delete">清空
               </el-button>
+              <el-button @click="calculate" style="float: right;padding: 0 20px 0 0;" type="text" size="medium"
+                         icon="el-icon-video-play">计算
+              </el-button>
             </div>
             <el-row :gutter="10">
               <el-col :span="6">
-                <custom-el-input label="A(mm)" placeholder="法兰外径" :input="general_input" para="A"></custom-el-input>
+                <custom-el-input :para="general_input.A"></custom-el-input>
               </el-col>
               <el-col :span="6">
-                <custom-el-input label="B(mm)" placeholder="法兰内径" :input="general_input" para="B"></custom-el-input>
+                <custom-el-input :para="general_input.B"></custom-el-input>
               </el-col>
             </el-row>
           </el-card>
@@ -93,39 +102,40 @@
               <el-button @click="clean4" style="float: right;padding: 0;" type="text" size="medium"
                          icon="el-icon-delete">清空
               </el-button>
+              <el-button @click="calculate" style="float: right;padding: 0 20px 0 0;" type="text" size="medium"
+                         icon="el-icon-video-play">计算
+              </el-button>
             </div>
             <el-row :gutter="10">
               <el-col :span="6">
-                <custom-el-input label="g0(mm)" placeholder="法兰颈最薄处的厚度" :input="general_input"
-                                 para="g0"></custom-el-input>
+                <custom-el-input :para="general_input.g0"></custom-el-input>
               </el-col>
               <el-col :span="6">
-                <custom-el-input label="g1(mm)" placeholder="法兰颈最厚处的厚度" :input="general_input"
-                                 para="g1"></custom-el-input>
+                <custom-el-input :para="general_input.g1"></custom-el-input>
               </el-col>
               <el-col :span="6">
-                <custom-el-input label="h(mm)" placeholder="法兰颈长度" :input="general_input" para="h"></custom-el-input>
+                <custom-el-input :para="general_input.h"></custom-el-input>
               </el-col>
               <el-col :span="6">
-                <custom-el-input label="Ep(mm)" placeholder="法兰盘厚度" :input="general_input" para="Ep"></custom-el-input>
+                <custom-el-input :para="general_input.Ep"></custom-el-input>
               </el-col>
             </el-row>
             <el-row :gutter="10">
               <el-col :span="6">
-                <custom-el-input label="C(mm)" placeholder="螺栓节圆直径" :input="general_input" para="C"></custom-el-input>
+                <custom-el-input :para="general_input.C"></custom-el-input>
               </el-col>
             </el-row>
             <el-divider class="custom-el-divider--horizontal">计算结果</el-divider>
             <el-row :gutter="10">
               <el-col :span="24">
-                <el-descriptions :column="2">
-                  <el-descriptions-item label="力矩修正系数C0">{{ general_output.C0 }}</el-descriptions-item>
-                  <el-descriptions-item label="R=0.5(C-B)-g1">{{ general_output.R }}</el-descriptions-item>
+                <el-descriptions :column="3">
+                  <el-descriptions-item :label="Label(general_output.C0)">{{ general_output.C0.value }}</el-descriptions-item>
+                  <el-descriptions-item :label="Label(general_output.R)">{{ general_output.R.value }}</el-descriptions-item>
                 </el-descriptions>
                 <el-descriptions :column="3">
-                  <el-descriptions-item label="支撑载荷HD与HD'的轴到节圆的距离hd(mm)">{{ general_output.hd }}</el-descriptions-item>
-                  <el-descriptions-item label="支撑载荷HG的轴到节圆的距离hg(mm)">{{ general_output.hg }}</el-descriptions-item>
-                  <el-descriptions-item label="支撑载荷HT与HT的轴到节圆的距离ht(mm)">{{ general_output.ht }}</el-descriptions-item>
+                  <el-descriptions-item :label="Label(general_output.hd)">{{ general_output.hd.value }}</el-descriptions-item>
+                  <el-descriptions-item :label="Label(general_output.hg)">{{ general_output.hg.value }}</el-descriptions-item>
+                  <el-descriptions-item :label="Label(general_output.ht)">{{ general_output.ht.value }}</el-descriptions-item>
                 </el-descriptions>
               </el-col>
             </el-row>
@@ -136,37 +146,39 @@
               <el-button @click="clean5" style="float: right;padding: 0;" type="text" size="medium"
                          icon="el-icon-delete">清空
               </el-button>
+              <el-button @click="calculate" style="float: right;padding: 0 20px 0 0;" type="text" size="medium"
+                         icon="el-icon-video-play">计算
+              </el-button>
             </div>
-
             <el-row :gutter="10">
               <el-col :span="6">
-                <custom-el-input label="ν" placeholder="法兰材料泊松比" :input="general_input" para="nu"></custom-el-input>
+                <custom-el-input :para="general_input.nu"></custom-el-input>
               </el-col>
               <el-col :span="6">
-                <custom-el-input label="λ" placeholder="法兰形式系数λ" :input="general_input" para="lam"></custom-el-input>
+                <custom-el-input :para="general_input.lam"></custom-el-input>
               </el-col>
               <el-col :span="6">
-                <custom-el-input label="F" placeholder="法兰形式系数F" :input="general_input" para="F"></custom-el-input>
+                <custom-el-input :para="general_input.F"></custom-el-input>
               </el-col>
               <el-col :span="6">
-                <custom-el-input label="V" placeholder="法兰形式系数V" :input="general_input" para="V"></custom-el-input>
+                <custom-el-input :para="general_input.V"></custom-el-input>
               </el-col>
             </el-row>
             <el-divider class="custom-el-divider--horizontal">计算结果</el-divider>
             <el-row :gutter="10">
               <el-col :span="24">
                 <el-descriptions :column="4">
-                  <el-descriptions-item label="系数h0">{{ general_output.h0 }}</el-descriptions-item>
-                  <el-descriptions-item label="系数h/h0">{{ general_output.h_h0 }}</el-descriptions-item>
-                  <el-descriptions-item label="系数g1/g0">{{ general_output.g1_g0 }}</el-descriptions-item>
-                  <el-descriptions-item label="法兰形式系数K">{{ general_output.K }}</el-descriptions-item>
-                  <el-descriptions-item label="法兰形式系数T">{{ general_output.T }}</el-descriptions-item>
-                  <el-descriptions-item label="法兰形式系数Y">{{ general_output.Y }}</el-descriptions-item>
-                  <el-descriptions-item label="法兰形式系数U">{{ general_output.U }}</el-descriptions-item>
-                  <el-descriptions-item label="法兰形式系数Z">{{ general_output.Z }}</el-descriptions-item>
-                  <el-descriptions-item label="系数e">{{ general_output.e_ }}</el-descriptions-item>
-                  <el-descriptions-item label="法兰形式系数L">{{ general_output.L }}</el-descriptions-item>
-                  <el-descriptions-item label="系数B1">{{ general_output.B1 }}</el-descriptions-item>
+                  <el-descriptions-item :label="Label(general_output.h0)">{{ general_output.h0.value }}</el-descriptions-item>
+                  <el-descriptions-item :label="Label(general_output.h_h0)">{{ general_output.h_h0.value }}</el-descriptions-item>
+                  <el-descriptions-item :label="Label(general_output.g1_g0)">{{ general_output.g1_g0.value }}</el-descriptions-item>
+                  <el-descriptions-item :label="Label(general_output.K)">{{ general_output.K.value }}</el-descriptions-item>
+                  <el-descriptions-item :label="Label(general_output.T)">{{ general_output.T.value }}</el-descriptions-item>
+                  <el-descriptions-item :label="Label(general_output.Y)">{{ general_output.Y.value }}</el-descriptions-item>
+                  <el-descriptions-item :label="Label(general_output.U)">{{ general_output.U.value }}</el-descriptions-item>
+                  <el-descriptions-item :label="Label(general_output.Z)">{{ general_output.Z.value }}</el-descriptions-item>
+                  <el-descriptions-item :label="Label(general_output.e_)">{{ general_output.e_.value }}</el-descriptions-item>
+                  <el-descriptions-item :label="Label(general_output.L)">{{ general_output.L.value }}</el-descriptions-item>
+                  <el-descriptions-item :label="Label(general_output.B1)">{{ general_output.B1.value }}</el-descriptions-item>
                 </el-descriptions>
               </el-col>
             </el-row>
@@ -224,7 +236,7 @@ export default {
   name: 'general',
   props: ['general_input', 'general_output'],
   components: {
-    CustomElInput
+    CustomElInput,
   },
   data() {
     return {
@@ -234,37 +246,52 @@ export default {
       img_V: require('@/assets/model_images/falan_xingshixishu_V.png')
     }
   },
+  computed:{
+    Label() {
+      return (para) => {
+        if (para.format_label !== undefined){
+          return para.format_label
+        }
+        let str = para.meaning.concat(para.label)
+        if (para.unit === ''){
+          return str
+        }else {
+          return str.concat('(', para.unit, ')')
+        }
+      }
+    }
+  },
   methods: {
     calculate() {
       //----------------输入----------------//
       // 垫片参数
-      const m = this.general_input.m
-      const y = this.general_input.y
-      const Do = this.general_input.Do
-      const Di = this.general_input.Di
-      const b0 = this.general_input.b0
-      const b = this.general_input.b
+      const m = this.general_input.m.value
+      const y = this.general_input.y.value
+      const Do = this.general_input.Do.value
+      const Di = this.general_input.Di.value
+      const b0 = this.general_input.b0.value
+      const b = this.general_input.b.value
       // 实际螺栓面积
-      const d = this.general_input.d
-      const n = this.general_input.n
-      const P = this.general_input.P
+      const d = this.general_input.d.value
+      const n = this.general_input.n.value
+      const P = this.general_input.P.value
 
       // 法兰尺寸
-      const A = this.general_input.A
-      const B = this.general_input.B
+      const A = this.general_input.A.value
+      const B = this.general_input.B.value
 
       // 法兰力矩
-      const g0 = this.general_input.g0
-      const g1 = this.general_input.g1
-      const h = this.general_input.h
-      const Ep = this.general_input.Ep
-      const C = this.general_input.C
+      const g0 = this.general_input.g0.value
+      const g1 = this.general_input.g1.value
+      const h = this.general_input.h.value
+      const Ep = this.general_input.Ep.value
+      const C = this.general_input.C.value
 
       // 法兰应力
-      const lam = this.general_input.lam
-      const F = this.general_input.F
-      const V = this.general_input.V
-      const nu = this.general_input.nu
+      const lam = this.general_input.lam.value
+      const F = this.general_input.F.value
+      const V = this.general_input.V.value
+      const nu = this.general_input.nu.value
 
       //----------------输出----------------//
       // 垫片参数
@@ -310,30 +337,30 @@ export default {
       }
 
 
-      this.general_output.Dj = round(Dj, precision)
-      this.general_output.Fj = round(Fj, precision)
+      this.general_output.Dj.value = round(Dj, precision)
+      this.general_output.Fj.value = round(Fj, precision)
 
-      this.general_output.S = round(S, precision)
-      this.general_output.SB = round(SB, precision)
-      this.general_input.SB = round(SB, precision) // SB可手动修改
+      this.general_output.S.value = round(S, precision)
+      this.general_output.SB.value = round(SB, precision)
+      this.general_input.SB.value = round(SB, precision) // SB可手动修改
 
-      this.general_output.C0 = round(C0, precision)
-      this.general_output.R = round(R, precision)
-      this.general_output.hd = round(hd, precision)
-      this.general_output.hg = round(hg, precision)
-      this.general_output.ht = round(ht, precision)
+      this.general_output.C0.value = round(C0, precision)
+      this.general_output.R.value = round(R, precision)
+      this.general_output.hd.value = round(hd, precision)
+      this.general_output.hg.value = round(hg, precision)
+      this.general_output.ht.value = round(ht, precision)
 
-      this.general_output.h0 = round(h0, precision)
-      this.general_output.h_h0 = round(h_h0, precision)
-      this.general_output.g1_g0 = round(g1_g0, precision)
-      this.general_output.K = round(K, precision)
-      this.general_output.T = round(T, precision)
-      this.general_output.Y = round(Y, precision)
-      this.general_output.U = round(U, precision)
-      this.general_output.Z = round(Z, precision)
-      this.general_output.e_ = round(e_, precision)
-      this.general_output.L = round(L, precision)
-      this.general_output.B1 = round(B1, precision)
+      this.general_output.h0.value = round(h0, precision)
+      this.general_output.h_h0.value = round(h_h0, precision)
+      this.general_output.g1_g0.value = round(g1_g0, precision)
+      this.general_output.K.value = round(K, precision)
+      this.general_output.T.value = round(T, precision)
+      this.general_output.Y.value = round(Y, precision)
+      this.general_output.U.value = round(U, precision)
+      this.general_output.Z.value = round(Z, precision)
+      this.general_output.e_.value = round(e_, precision)
+      this.general_output.L.value = round(L, precision)
+      this.general_output.B1.value = round(B1, precision)
     },
     cleanAll() {
       this.clean1()
@@ -343,63 +370,70 @@ export default {
       this.clean5()
     },
     clean1() {
-      this.general_input.m = ''
-      this.general_input.y = ''
-      this.general_input.Do = ''
-      this.general_input.Di = ''
-      this.general_input.b0 = ''
-      this.general_input.b = ''
+      this.general_input.m.value = ''
+      this.general_input.y.value = ''
+      this.general_input.Do.value = ''
+      this.general_input.Di.value = ''
+      this.general_input.b0.value = ''
+      this.general_input.b.value = ''
 
-      this.general_output.Dj = '--'
-      this.general_output.Fj = '--'
+      this.general_output.Dj.value = '--'
+      this.general_output.Fj.value = '--'
     },
     clean2() {
-      this.general_input.d = ''
-      this.general_input.n = ''
-      this.general_input.P = ''
+      this.general_input.d.value = ''
+      this.general_input.n.value = ''
+      this.general_input.P.value = ''
 
-      this.general_output.S = '--'
-      this.general_output.SB = '--'
+      this.general_output.S.value = '--'
+      this.general_output.SB.value = '--'
     },
     clean3() {
-      this.general_input.A = ''
-      this.general_input.B = ''
+      this.general_input.A.value = ''
+      this.general_input.B.value = ''
     },
     clean4() {
-      this.general_input.g0 = ''
-      this.general_input.g1 = ''
-      this.general_input.h = ''
-      this.general_input.Ep = ''
-      this.general_input.C = ''
+      this.general_input.g0.value = ''
+      this.general_input.g1.value = ''
+      this.general_input.h.value = ''
+      this.general_input.Ep.value = ''
+      this.general_input.C.value = ''
 
-      this.general_output.C0 = '--'
-      this.general_output.R = '--'
-      this.general_output.hd = '--'
-      this.general_output.hg = '--'
-      this.general_output.ht = '--'
+      this.general_output.C0.value = '--'
+      this.general_output.R.value = '--'
+      this.general_output.hd.value = '--'
+      this.general_output.hg.value = '--'
+      this.general_output.ht.value = '--'
     },
     clean5() {
-      this.general_input.lam = ''
-      this.general_input.F = ''
-      this.general_input.V = ''
-      this.general_input.nu = 0.3
+      this.general_input.lam.value = ''
+      this.general_input.F.value = ''
+      this.general_input.V.value = ''
+      this.general_input.nu.value = 0.3
 
-      this.general_output.h0 = '--'
-      this.general_output.h_h0 = '--'
-      this.general_output.g1_g0 = '--'
-      this.general_output.K = '--'
-      this.general_output.T = '--'
-      this.general_output.Y = '--'
-      this.general_output.U = '--'
-      this.general_output.Z = '--'
-      this.general_output.e_ = '--'
-      this.general_output.L = '--'
-      this.general_output.B1 = '--'
+      this.general_output.h0.value = '--'
+      this.general_output.h_h0.value = '--'
+      this.general_output.g1_g0.value = '--'
+      this.general_output.K.value = '--'
+      this.general_output.T.value = '--'
+      this.general_output.Y.value = '--'
+      this.general_output.U.value = '--'
+      this.general_output.Z.value = '--'
+      this.general_output.e_.value = '--'
+      this.general_output.L.value = '--'
+      this.general_output.B1.value = '--'
     }
   }
 }
 </script>
 
 <style scoped>
-
+.clearfix:before,
+.clearfix:after {
+  display: table;
+  content: "";
+}
+.clearfix:after {
+  clear: both
+}
 </style>

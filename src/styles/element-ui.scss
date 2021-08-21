@@ -92,6 +92,26 @@
 }
 .el-button--text:focus, .el-button--text:hover {
   //color: #cd0303;
-  color: #606266;
-
+  //color: #606266;
 }
+
+.el-tabs__item{
+  height: 20px;
+  line-height: 0;
+}
+
+.el-table--medium td, .el-table--medium th {
+  padding: 8px 0;
+}
+
+.el-result{
+  padding-top: 10px;
+  padding-bottom: 20px;
+}
+.el-result__title{
+  margin-top: 10px;
+}
+.el-result__extra{
+  margin-top: 20px;
+}
+
