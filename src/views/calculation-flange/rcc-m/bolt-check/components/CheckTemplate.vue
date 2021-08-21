@@ -30,7 +30,8 @@
 
 <script>
 import CustomElInput from '@/components/CustomElInput'
-import {pi, pow, round} from "mathjs"
+import {formatLabel} from '@/utils/common'
+
 import {Message} from "element-ui"
 import defaultSettings from '@/settings'
 
@@ -56,15 +57,7 @@ export default {
   computed: {
     Label() {
       return (para) => {
-        if (para.format_label !== undefined) {
-          return para.format_label
-        }
-        let str = para.meaning.concat(para.label)
-        if (para.unit === '') {
-          return str
-        } else {
-          return str.concat('(', para.unit, ')')
-        }
+        return formatLabel(para)
       }
     },
     Title() {

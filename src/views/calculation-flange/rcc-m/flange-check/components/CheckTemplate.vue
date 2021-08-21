@@ -8,6 +8,7 @@
             <el-table
               :data="table_data"
               size="medium"
+              :key="item_key"
               style="width: 100%">
               <el-table-column
                 prop="name"
@@ -41,28 +42,6 @@
               </el-table-column>
             </el-table>
           </template>
-          <!--          <el-row :gutter="10">-->
-          <!--            <el-col :span="8">-->
-          <!--              <custom-el-input :para="condition_input.S_flange" :disabled="true"></custom-el-input>-->
-          <!--            </el-col>-->
-          <!--            <el-col :span="8">-->
-          <!--              <custom-el-input :para="condition_output.SR" :disabled="true"></custom-el-input>-->
-          <!--            </el-col>-->
-          <!--            <el-col :span="8">-->
-          <!--              <custom-el-input :para="condition_output.ST" :disabled="true"></custom-el-input>-->
-          <!--            </el-col>-->
-          <!--          </el-row>-->
-          <!--          <el-row :gutter="10">-->
-          <!--            <el-col :span="8">-->
-          <!--              <custom-el-input :para="condition_output.SH_" :disabled="true"></custom-el-input>-->
-          <!--            </el-col>-->
-          <!--            <el-col :span="8">-->
-          <!--              <custom-el-input :para="condition_output.SH__" :disabled="true"></custom-el-input>-->
-          <!--            </el-col>-->
-          <!--            <el-col :span="8">-->
-          <!--              <custom-el-input :para="condition_output.SH" :disabled="true"></custom-el-input>-->
-          <!--            </el-col>-->
-          <!--          </el-row>-->
         </div>
       </el-form>
     </el-col>
@@ -73,7 +52,7 @@
           <el-result :icon="Icon" :title="Title" subTitle="">
             <template slot="extra">
               <el-button icon="el-icon-video-play" type="primary" size="small" @click="calculate">校核</el-button>
-              <el-button icon="el-icon-delete" type="none" size="small">清空</el-button>
+              <el-button icon="el-icon-delete" type="none" size="small" @click="cleanAll">清空</el-button>
             </template>
           </el-result>
         </el-col>
@@ -85,6 +64,8 @@
 <script>
 import CustomElInput from '@/components/CustomElInput'
 import {pi, pow, round, max} from "mathjs";
+import {formatLabel} from '@/utils/common'
+
 import {Message} from "element-ui";
 import defaultSettings from '@/settings'
 const precision = defaultSettings.precision
@@ -105,45 +86,16 @@ export default {
       condition_input: this.condition.input,
       condition_output: this.condition.output,
 
-      table_data: [
-        {
-          name: '值',
-          SR: '--',
-          ST: '--',
-          SH: '--',
-          SH_SR: '--',
-          SH_ST: '--',
-        }, {
-          name: '限值',
-          SR: '--',
-          ST: '--',
-          SH: '--',
-          SH_SR: '--',
-          SH_ST: '--',
-        }, {
-          name: '校验结果',
-          SR: '--',
-          ST: '--',
-          SH: '--',
-          SH_SR: '--',
-          SH_ST: '--',
-        }
-      ],
-      flange_check_result: '--'
+      table_data: this.getTableData(),
+      flange_check_result: this.condition.output.flange_check_result,
+
+      item_key: ''
     }
   },
   computed: {
     Label() {
       return (para) => {
-        if (para.format_label !== undefined) {
-          return para.format_label
-        }
-        let str = para.meaning.concat(para.label)
-        if (para.unit === '') {
-          return str
-        } else {
-          return str.concat('(', para.unit, ')')
-        }
+        return formatLabel(para)
       }
     },
     Title() {
@@ -168,9 +120,34 @@ export default {
     }
   },
   methods: {
+    getTableData(){
+      return [
+        {
+          name: '值',
+          SR: this.condition.output.SR.value,
+          ST: this.condition.output.ST.value,
+          SH: this.condition.output.SH.value,
+          SH_SR: this.condition.output.SH_SR.value,
+          SH_ST: this.condition.output.SH_ST.value,
+        }, {
+          name: '限值',
+          SR: this.condition.output.SR.limit,
+          ST: this.condition.output.ST.limit,
+          SH: this.condition.output.SH.limit,
+          SH_SR: this.condition.output.SH_SR.limit,
+          SH_ST: this.condition.output.SH_ST.limit,
+        }, {
+          name: '校验结果',
+          SR: this.condition.output.SR.check_result,
+          ST: this.condition.output.ST.check_result,
+          SH: this.condition.output.SH.check_result,
+          SH_SR: this.condition.output.SH_SR.check_result,
+          SH_ST: this.condition.output.SH_ST.check_result,
+        }
+      ]
+    },
     calculate() {
       try {
-
         const Ep = this.general_input.Ep.value
         const B = this.general_input.B.value
         const g0 = this.general_input.g0.value
@@ -198,8 +175,8 @@ export default {
           throw new Error([this.general_output.B1.meaning, this.general_output.B1.label, '未计算！'].join(' '))
         }
 
-        const P = this.condition_input.P
-        const S_flange = this.condition_input.S_flange
+        const P = this.condition_input.P.value
+        const S_flange = this.condition_input.S_flange.value
 
         const M = this.condition_output.M.value
         if (M === '--') {
@@ -207,7 +184,6 @@ export default {
         }
 
         let SR, ST, SH_, SH__, SH, SH_SR, SH_ST, SR_limit, ST_limit, SH_limit, SH_SR_limit, SH_ST_limit
-
         switch (this.condition_name) {
           case 'design':
             SR = (4 / 3 * Ep * e_ + 1) * M / (L * pow(Ep, 2) * B)
@@ -230,7 +206,7 @@ export default {
             this.condition_output.SH_ST.value = round(SH_ST, precision)
             this.condition_output.SH_ST.limit = round(SH_ST_limit, precision)
             this.condition_output.SH_ST.check_result = this.check(SH_ST, SH_ST_limit)
-            return
+            break
         }
         this.condition_output.SR.value = round(SR, precision)
         this.condition_output.SR.limit = round(SR_limit, precision)
@@ -255,11 +231,13 @@ export default {
       } catch (e) {
         Message.error(e)
       }
+
+      this.table_data = this.getTableData()
     },
     check(a, a_limit) {
       return a <= a_limit ? '通过' : '不通过'
     },
-    clearAll(){
+    cleanAll(){
       this.condition_output.SR.value = '--'
       this.condition_output.SR.limit = '--'
       this.condition_output.SR.check_result = '--'
@@ -274,6 +252,18 @@ export default {
       this.condition_output.SH.value = '--'
       this.condition_output.SH.limit = '--'
       this.condition_output.SH.check_result = '--'
+
+      this.condition_output.SH_SR.value = '--'
+      this.condition_output.SH_SR.limit = '--'
+      this.condition_output.SH_SR.check_result = '--'
+
+      this.condition_output.SH_ST.value = '--'
+      this.condition_output.SH_ST.limit = '--'
+      this.condition_output.SH_ST.check_result = '--'
+
+      this.condition_output.flange_check_result = '--'
+
+      this.table_data = this.getTableData()
     }
   }
 }

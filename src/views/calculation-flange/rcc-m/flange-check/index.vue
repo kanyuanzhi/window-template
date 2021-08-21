@@ -46,7 +46,11 @@
             </el-row>
           </el-form>
           <check-template ref="design" :condition="design" :general="general"></check-template>
-          <check-template ref="running" :condition="design" :general="general"></check-template>
+          <check-template ref="running" :condition="running" :general="general"></check-template>
+          <check-template ref="abnormal" :condition="abnormal" :general="general"></check-template>
+          <check-template ref="emergency" :condition="emergency" :general="general"></check-template>
+          <check-template ref="accident" :condition="accident" :general="general"></check-template>
+          <check-template ref="trial" :condition="trial" :general="general"></check-template>
         </el-card>
 
         <el-form label-width="70px">
@@ -69,7 +73,7 @@
 <script>
 import CustomElInput from '@/components/CustomElInput'
 import CheckTemplate from './components/CheckTemplate'
-import {e, log, max, pi, pow, round, sqrt} from "mathjs"
+import {formatLabel} from '@/utils/common'
 
 import defaultSettings from '@/settings'
 import {Message} from "element-ui";
@@ -82,42 +86,40 @@ export default {
     CustomElInput,
     CheckTemplate
   },
-  props: ['general', 'design'],
+  props: ['general', 'design', 'running', 'abnormal', 'emergency', 'accident', 'trial'],
   data() {
     return {
       general_input: this.general.input,
       general_output: this.general.output,
-
-      design_input: this.design.input,
-      design_output: this.design.output
     }
   },
   computed: {
     Label() {
       return (para) => {
-        if (para.format_label !== undefined) {
-          return para.format_label
-        }
-        let str = para.meaning.concat(para.label)
-        if (para.unit === '') {
-          return str
-        } else {
-          return str.concat('(', para.unit, ')')
-        }
+        return formatLabel(para)
       }
     }
   },
   methods: {
     calculate() {
       try {
-        console.log(213123)
-        this.$refs['design'].calculate()
+        this.$refs.design.calculate()
+        this.$refs.running.calculate()
+        this.$refs.abnormal.calculate()
+        this.$refs.emergency.calculate()
+        this.$refs.accident.calculate()
+        this.$refs.trial.calculate()
       } catch (e) {
         Message.error(e)
       }
     },
     cleanAll() {
-
+      this.$refs.design.cleanAll()
+      this.$refs.running.cleanAll()
+      this.$refs.abnormal.cleanAll()
+      this.$refs.emergency.cleanAll()
+      this.$refs.accident.cleanAll()
+      this.$refs.trial.cleanAll()
     }
   }
 }

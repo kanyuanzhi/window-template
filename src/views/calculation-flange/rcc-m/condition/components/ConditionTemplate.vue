@@ -4,8 +4,8 @@
       <el-form label-width="80px">
         <el-card class="box-card" shadow="hover">
           <div slot="header" class="clearfix">
-            <span>法兰压紧力</span>
-            <el-button @click="" style="float: right;padding: 0;" type="text" size="medium"
+            <span>法兰压紧力（{{ condition_name_zh }}工况）</span>
+            <el-button @click="clean1" style="float: right;padding: 0;" type="text" size="medium"
                        icon="el-icon-delete">清空
             </el-button>
             <el-button @click="calculate" style="float: right;padding: 0 20px 0 0;" type="text" size="medium"
@@ -57,8 +57,8 @@
         </el-card>
         <el-card class="box-card" shadow="hover">
           <div slot="header" class="clearfix">
-            <span>螺栓预紧力</span>
-            <el-button @click="" style="float: right;padding: 0;" type="text" size="medium"
+            <span>螺栓预紧力（{{ condition_name_zh }}工况）</span>
+            <el-button @click="clean2" style="float: right;padding: 0;" type="text" size="medium"
                        icon="el-icon-delete">清空
             </el-button>
             <el-button @click="calculate" style="float: right;padding: 0 20px 0 0;" type="text" size="medium"
@@ -122,8 +122,8 @@
         </el-card>
         <el-card class="box-card" shadow="hover">
           <div slot="header" class="clearfix">
-            <span>螺栓所需最小截面面积</span>
-            <el-button @click="" style="float: right;padding: 0;" type="text" size="medium"
+            <span>螺栓所需最小截面面积（{{ condition_name_zh }}工况）</span>
+            <el-button @click="clean3" style="float: right;padding: 0;" type="text" size="medium"
                        icon="el-icon-delete">清空
             </el-button>
             <el-button @click="calculate" style="float: right;padding: 0 20px 0 0;" type="text" size="medium"
@@ -167,8 +167,8 @@
         </el-card>
         <el-card class="box-card" shadow="hover">
           <div slot="header" class="clearfix">
-            <span>法兰力</span>
-            <el-button @click="" style="float: right;padding: 0;" type="text" size="medium"
+            <span>法兰力（{{ condition_name_zh }}工况）</span>
+            <el-button @click="clean4" style="float: right;padding: 0;" type="text" size="medium"
                        icon="el-icon-delete">清空
             </el-button>
             <el-button @click="calculate" style="float: right;padding: 0 20px 0 0;" type="text" size="medium"
@@ -249,8 +249,8 @@
         </el-card>
         <el-card class="box-card" shadow="hover">
           <div slot="header" class="clearfix">
-            <span>法兰力矩</span>
-            <el-button @click="" style="float: right;padding: 0;" type="text" size="medium"
+            <span>法兰力矩（{{ condition_name_zh }}工况）</span>
+            <el-button @click="clean5" style="float: right;padding: 0;" type="text" size="medium"
                        icon="el-icon-delete">清空
             </el-button>
             <el-button @click="calculate" style="float: right;padding: 0 20px 0 0;" type="text" size="medium"
@@ -306,7 +306,7 @@
               </el-descriptions>
             </el-col>
           </el-row>
-      </el-card>
+        </el-card>
       </el-form>
       <el-form label-width="70px">
         <el-row :gutter="10">
@@ -333,6 +333,8 @@
 
 <script>
 import CustomElInput from '@/components/CustomElInput'
+import {formatLabel} from '@/utils/common'
+
 import {e, log, max, pi, pow, round, sqrt} from "mathjs"
 
 import defaultSettings from '@/settings'
@@ -352,6 +354,7 @@ export default {
       general_output: this.general.output,
 
       condition_name: this.condition.name,
+      condition_name_zh: this.condition.name_zh,
       condition_input: this.condition.input,
       condition_output: this.condition.output
     }
@@ -359,15 +362,7 @@ export default {
   computed: {
     Label() {
       return (para) => {
-        if (para.format_label !== undefined) {
-          return para.format_label
-        }
-        let str = para.meaning.concat(para.label)
-        if (para.unit === '') {
-          return str
-        } else {
-          return str.concat('(', para.unit, ')')
-        }
+        return formatLabel(para)
       }
     }
   },
@@ -496,8 +491,64 @@ export default {
         Message.error(e)
       }
     },
-    cleanAll(){
+    cleanAll() {
+      this.clean1()
+      this.clean2()
+      this.clean3()
+      this.clean4()
+      this.clean5()
+    },
+    clean1(){
+      this.condition_input.P.value = ''
+      this.condition_input.Mf.value = ''
+      this.condition_input.Fa.value = ''
 
+      this.condition_output.Peq.value = '--'
+      this.condition_output.FF.value = '--'
+      this.condition_output.FM.value = '--'
+      this.condition_output.FS.value = '--'
+    },
+    clean2(){
+      this.condition_input.Faq.value = ''
+      this.condition_input.Mfn.value = ''
+      this.condition_input.ff.value = ''
+      this.condition_input.Ps.value = ''
+      this.condition_input.Ec.value = ''
+      this.condition_input.Eh.value = ''
+
+      this.condition_output.FS0.value = '--'
+      this.condition_output.FT.value = '--'
+      this.condition_output.FS_.value = '--'
+      this.condition_output.FS0_.value = '--'
+      this.condition_output.FSi.value = '--'
+    },
+    clean3(){
+      this.condition_input.S_bolt.value = ''
+      this.condition_input.Sy.value = ''
+
+      this.condition_output.FSP.value = '--'
+      this.condition_output.SA.value = '--'
+    },
+    clean4(){
+      this.condition_input.Tm_flange.value = ''
+      this.condition_input.S_flange.value = ''
+
+      this.condition_output.FSi_.value = '--'
+      this.condition_output.SA_SB.value = '--'
+      this.condition_output.HD.value = '--'
+      this.condition_output.HT.value = '--'
+      this.condition_output.HD_.value = '--'
+      this.condition_output.HT_.value = '--'
+      this.condition_output.HG.value = '--'
+    },
+    clean5(){
+      this.condition_output.MD.value = '--'
+      this.condition_output.MD_.value = '--'
+      this.condition_output.MT.value = '--'
+      this.condition_output.MT_.value = '--'
+      this.condition_output.MG.value = '--'
+      this.condition_output.MO.value = '--'
+      this.condition_output.M.value = '--'
     },
   }
 }

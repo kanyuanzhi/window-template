@@ -8,7 +8,7 @@ export function getStyle(obj, attr) {
   }
 }
 
-export function generate_report(router_name, output){
+export function generate_report(router_name, output) {
   let routeUrl = router.resolve({
     name: router_name,
     query: {output: JSON.stringify(output)}
@@ -17,10 +17,22 @@ export function generate_report(router_name, output){
 }
 
 export function clear_parameters(input, output) {
-  for(let para in input){
+  for (let para in input) {
     input[para] = ""
   }
-  for(let para in output){
+  for (let para in output) {
     output[para] = "--"
+  }
+}
+
+export function formatLabel(para) {
+  if (para.format_label !== undefined) {
+    return para.format_label
+  }
+  let str = para.meaning.concat(para.label)
+  if (para.unit === '') {
+    return str
+  } else {
+    return str.concat('(', para.unit, ')')
   }
 }

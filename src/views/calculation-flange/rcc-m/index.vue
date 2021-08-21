@@ -1,7 +1,11 @@
 <template>
-  <router-view :general_input="general_input" :general_output="general_output"
-               :general="general"
-               :design="design"/>
+  <router-view :general="general"
+               :design="design"
+               :running="running"
+               :abnormal="abnormal"
+               :emergency="emergency"
+               :accident="accident"
+               :trial="trial"/>
 </template>
 
 
@@ -12,12 +16,12 @@ export default {
   data() {
     return {
       general: this.$store.getters.flange_rcc_m_general,
-      general_input: this.$store.getters.flange_rcc_m_general.input,
-      general_output: this.$store.getters.flange_rcc_m_general.output,
-
       design: this.$store.getters.flange_rcc_m_design,
-      design_input: this.$store.getters.flange_rcc_m_design.input,
-      design_output: this.$store.getters.flange_rcc_m_design.output,
+      running: this.$store.getters.flange_rcc_m_running,
+      abnormal: this.$store.getters.flange_rcc_m_abnormal,
+      emergency: this.$store.getters.flange_rcc_m_emergency,
+      accident: this.$store.getters.flange_rcc_m_accident,
+      trial: this.$store.getters.flange_rcc_m_trial,
     }
   }
 }

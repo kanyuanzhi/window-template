@@ -40,8 +40,14 @@
             <el-row :gutter="10">
               <el-col :span="16">
                 <el-descriptions :column="2">
-                  <el-descriptions-item :label="Label(general_output.Dj)">{{ general_output.Dj.value }}</el-descriptions-item>
-                  <el-descriptions-item :label="Label(general_output.Fj)">{{ general_output.Fj.value }}</el-descriptions-item>
+                  <el-descriptions-item :label="Label(general_output.Dj)">{{
+                      general_output.Dj.value
+                    }}
+                  </el-descriptions-item>
+                  <el-descriptions-item :label="Label(general_output.Fj)">{{
+                      general_output.Fj.value
+                    }}
+                  </el-descriptions-item>
                 </el-descriptions>
               </el-col>
             </el-row>
@@ -71,8 +77,14 @@
             <el-row :gutter="10">
               <el-col :span="16">
                 <el-descriptions :column="2">
-                  <el-descriptions-item :label="Label(general_output.S)">{{ general_output.S.value }}</el-descriptions-item>
-                  <el-descriptions-item :label="Label(general_output.SB)">{{ general_output.SB.value }}</el-descriptions-item>
+                  <el-descriptions-item :label="Label(general_output.S)">{{
+                      general_output.S.value
+                    }}
+                  </el-descriptions-item>
+                  <el-descriptions-item :label="Label(general_output.SB)">{{
+                      general_output.SB.value
+                    }}
+                  </el-descriptions-item>
                 </el-descriptions>
               </el-col>
             </el-row>
@@ -129,13 +141,28 @@
             <el-row :gutter="10">
               <el-col :span="24">
                 <el-descriptions :column="3">
-                  <el-descriptions-item :label="Label(general_output.C0)">{{ general_output.C0.value }}</el-descriptions-item>
-                  <el-descriptions-item :label="Label(general_output.R)">{{ general_output.R.value }}</el-descriptions-item>
+                  <el-descriptions-item :label="Label(general_output.C0)">{{
+                      general_output.C0.value
+                    }}
+                  </el-descriptions-item>
+                  <el-descriptions-item :label="Label(general_output.R)">{{
+                      general_output.R.value
+                    }}
+                  </el-descriptions-item>
                 </el-descriptions>
                 <el-descriptions :column="3">
-                  <el-descriptions-item :label="Label(general_output.hd)">{{ general_output.hd.value }}</el-descriptions-item>
-                  <el-descriptions-item :label="Label(general_output.hg)">{{ general_output.hg.value }}</el-descriptions-item>
-                  <el-descriptions-item :label="Label(general_output.ht)">{{ general_output.ht.value }}</el-descriptions-item>
+                  <el-descriptions-item :label="Label(general_output.hd)">{{
+                      general_output.hd.value
+                    }}
+                  </el-descriptions-item>
+                  <el-descriptions-item :label="Label(general_output.hg)">{{
+                      general_output.hg.value
+                    }}
+                  </el-descriptions-item>
+                  <el-descriptions-item :label="Label(general_output.ht)">{{
+                      general_output.ht.value
+                    }}
+                  </el-descriptions-item>
                 </el-descriptions>
               </el-col>
             </el-row>
@@ -168,17 +195,50 @@
             <el-row :gutter="10">
               <el-col :span="24">
                 <el-descriptions :column="4">
-                  <el-descriptions-item :label="Label(general_output.h0)">{{ general_output.h0.value }}</el-descriptions-item>
-                  <el-descriptions-item :label="Label(general_output.h_h0)">{{ general_output.h_h0.value }}</el-descriptions-item>
-                  <el-descriptions-item :label="Label(general_output.g1_g0)">{{ general_output.g1_g0.value }}</el-descriptions-item>
-                  <el-descriptions-item :label="Label(general_output.K)">{{ general_output.K.value }}</el-descriptions-item>
-                  <el-descriptions-item :label="Label(general_output.T)">{{ general_output.T.value }}</el-descriptions-item>
-                  <el-descriptions-item :label="Label(general_output.Y)">{{ general_output.Y.value }}</el-descriptions-item>
-                  <el-descriptions-item :label="Label(general_output.U)">{{ general_output.U.value }}</el-descriptions-item>
-                  <el-descriptions-item :label="Label(general_output.Z)">{{ general_output.Z.value }}</el-descriptions-item>
-                  <el-descriptions-item :label="Label(general_output.e_)">{{ general_output.e_.value }}</el-descriptions-item>
-                  <el-descriptions-item :label="Label(general_output.L)">{{ general_output.L.value }}</el-descriptions-item>
-                  <el-descriptions-item :label="Label(general_output.B1)">{{ general_output.B1.value }}</el-descriptions-item>
+                  <el-descriptions-item :label="Label(general_output.h0)">{{
+                      general_output.h0.value
+                    }}
+                  </el-descriptions-item>
+                  <el-descriptions-item :label="Label(general_output.h_h0)">{{
+                      general_output.h_h0.value
+                    }}
+                  </el-descriptions-item>
+                  <el-descriptions-item :label="Label(general_output.g1_g0)">{{
+                      general_output.g1_g0.value
+                    }}
+                  </el-descriptions-item>
+                  <el-descriptions-item :label="Label(general_output.K)">{{
+                      general_output.K.value
+                    }}
+                  </el-descriptions-item>
+                  <el-descriptions-item :label="Label(general_output.T)">{{
+                      general_output.T.value
+                    }}
+                  </el-descriptions-item>
+                  <el-descriptions-item :label="Label(general_output.Y)">{{
+                      general_output.Y.value
+                    }}
+                  </el-descriptions-item>
+                  <el-descriptions-item :label="Label(general_output.U)">{{
+                      general_output.U.value
+                    }}
+                  </el-descriptions-item>
+                  <el-descriptions-item :label="Label(general_output.Z)">{{
+                      general_output.Z.value
+                    }}
+                  </el-descriptions-item>
+                  <el-descriptions-item :label="Label(general_output.e_)">{{
+                      general_output.e_.value
+                    }}
+                  </el-descriptions-item>
+                  <el-descriptions-item :label="Label(general_output.L)">{{
+                      general_output.L.value
+                    }}
+                  </el-descriptions-item>
+                  <el-descriptions-item :label="Label(general_output.B1)">{{
+                      general_output.B1.value
+                    }}
+                  </el-descriptions-item>
                 </el-descriptions>
               </el-col>
             </el-row>
@@ -226,6 +286,8 @@
 
 <script>
 import CustomElInput from '@/components/CustomElInput'
+import {formatLabel} from '@/utils/common'
+
 import {e, log, max, pi, pow, round, sqrt} from "mathjs"
 
 import defaultSettings from '@/settings'
@@ -233,31 +295,25 @@ import defaultSettings from '@/settings'
 const precision = defaultSettings.precision
 
 export default {
-  name: 'general',
-  props: ['general_input', 'general_output'],
+  name: 'General',
+  props: ['general'],
   components: {
     CustomElInput,
   },
   data() {
     return {
+      general_input: this.general.input,
+      general_output: this.general.output,
       img_bolt: require('@/assets/model_images/luomu.png'),
       img_lambda: require('@/assets/model_images/falan_xingshixishu_lambda.png'),
       img_F: require('@/assets/model_images/falan_xingshixishu_F.png'),
       img_V: require('@/assets/model_images/falan_xingshixishu_V.png')
     }
   },
-  computed:{
+  computed: {
     Label() {
       return (para) => {
-        if (para.format_label !== undefined){
-          return para.format_label
-        }
-        let str = para.meaning.concat(para.label)
-        if (para.unit === ''){
-          return str
-        }else {
-          return str.concat('(', para.unit, ')')
-        }
+        return formatLabel(para)
       }
     }
   },
@@ -433,6 +489,7 @@ export default {
   display: table;
   content: "";
 }
+
 .clearfix:after {
   clear: both
 }
