@@ -11800,6 +11800,13 @@ vue-loader@^15.9.2:
     vue-hot-reload-api "^2.3.0"
     vue-style-loader "^4.1.0"
 
+vue-print-nb@^1.7.4:
+  version "1.7.4"
+  resolved "https://registry.nlark.com/vue-print-nb/download/vue-print-nb-1.7.4.tgz#5a9162b0d96972b401347e60738592b5a4e42109"
+  integrity sha1-WpFisNlpcrQBNH5gc4WStaTkIQk=
+  dependencies:
+    vue "^2.6.11"
+
 vue-router@3.0.6:
   version "3.0.6"
   resolved "https://registry.nlark.com/vue-router/download/vue-router-3.0.6.tgz"
@@ -11830,6 +11837,11 @@ vue@2.6.10:
   version "2.6.10"
   resolved "https://registry.nlark.com/vue/download/vue-2.6.10.tgz?cache=0&sync_timestamp=1627579383186&other_urls=https%3A%2F%2Fregistry.nlark.com%2Fvue%2Fdownload%2Fvue-2.6.10.tgz"
   integrity sha1-pysaQqTYKnIepDjRtr9V5mGVxjc=
+
+vue@^2.6.11:
+  version "2.6.14"
+  resolved "https://registry.nlark.com/vue/download/vue-2.6.14.tgz?cache=0&sync_timestamp=1629217665911&other_urls=https%3A%2F%2Fregistry.nlark.com%2Fvue%2Fdownload%2Fvue-2.6.14.tgz#e51aa5250250d569a3fbad3a8a5a687d6036e235"
+  integrity sha1-5RqlJQJQ1Wmj+606ilpofWA24jU=
 
 vuex@3.1.0:
   version "3.1.0"

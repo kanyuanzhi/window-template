@@ -7,50 +7,67 @@
             <span>法兰应力</span>
           </div>
           <el-divider class="custom-el-divider--horizontal">通用参数</el-divider>
-          <el-form label-width="80px">
-            <el-row :gutter="10">
-              <el-col :span="6">
-                <custom-el-input :para="general_input.Ep" :disabled="true"></custom-el-input>
-              </el-col>
-              <el-col :span="6">
-                <custom-el-input :para="general_input.B" :disabled="true"></custom-el-input>
-              </el-col>
-              <el-col :span="6">
-                <custom-el-input :para="general_input.g0" :disabled="true"></custom-el-input>
-              </el-col>
-              <el-col :span="6">
-                <custom-el-input :para="general_input.g1" :disabled="true"></custom-el-input>
-              </el-col>
-            </el-row>
-            <el-row :gutter="10">
-              <el-col :span="6">
-                <custom-el-input :para="general_output.e_" :disabled="true"></custom-el-input>
-              </el-col>
-              <el-col :span="6">
-                <custom-el-input :para="general_input.lam" :disabled="true"></custom-el-input>
-              </el-col>
-              <el-col :span="6">
-                <custom-el-input :para="general_output.L" :disabled="true"></custom-el-input>
-              </el-col>
-              <el-col :span="6">
-                <custom-el-input :para="general_output.Z" :disabled="true"></custom-el-input>
-              </el-col>
-            </el-row>
-            <el-row :gutter="10">
-              <el-col :span="6">
-                <custom-el-input :para="general_output.Y" :disabled="true"></custom-el-input>
-              </el-col>
-              <el-col :span="6">
-                <custom-el-input :para="general_output.B1" :disabled="true"></custom-el-input>
-              </el-col>
-            </el-row>
-          </el-form>
-          <check-template ref="design" :condition="design" :general="general"></check-template>
-          <check-template ref="running" :condition="running" :general="general"></check-template>
-          <check-template ref="abnormal" :condition="abnormal" :general="general"></check-template>
-          <check-template ref="emergency" :condition="emergency" :general="general"></check-template>
-          <check-template ref="accident" :condition="accident" :general="general"></check-template>
-          <check-template ref="trial" :condition="trial" :general="general"></check-template>
+          <el-row :gutter="40">
+            <el-col :span="20">
+              <el-form label-width="80px">
+                <el-row :gutter="10">
+                  <el-col :span="6">
+                    <custom-el-input :para="general_input.Ep" :disabled="true"></custom-el-input>
+                  </el-col>
+                  <el-col :span="6">
+                    <custom-el-input :para="general_input.B" :disabled="true"></custom-el-input>
+                  </el-col>
+                  <el-col :span="6">
+                    <custom-el-input :para="general_input.g0" :disabled="true"></custom-el-input>
+                  </el-col>
+                  <el-col :span="6">
+                    <custom-el-input :para="general_input.g1" :disabled="true"></custom-el-input>
+                  </el-col>
+                </el-row>
+                <el-row :gutter="10">
+                  <el-col :span="6">
+                    <custom-el-input :para="general_output.e_" :disabled="true"></custom-el-input>
+                  </el-col>
+                  <el-col :span="6">
+                    <custom-el-input :para="general_input.lam" :disabled="true"></custom-el-input>
+                  </el-col>
+                  <el-col :span="6">
+                    <custom-el-input :para="general_output.L" :disabled="true"></custom-el-input>
+                  </el-col>
+                  <el-col :span="6">
+                    <custom-el-input :para="general_output.Z" :disabled="true"></custom-el-input>
+                  </el-col>
+                </el-row>
+                <el-row :gutter="10">
+                  <el-col :span="6">
+                    <custom-el-input :para="general_output.Y" :disabled="true"></custom-el-input>
+                  </el-col>
+                  <el-col :span="6">
+                    <custom-el-input :para="general_output.B1" :disabled="true"></custom-el-input>
+                  </el-col>
+                </el-row>
+              </el-form>
+            </el-col>
+            <el-col :span="4">
+              <div class="demo-image__placeholder">
+                <div class="el-image-block">
+                  <el-image :src="img_stress" :preview-src-list="[img_stress]">
+                  </el-image>
+                  <span class="demonstration">法兰应力示意图</span>
+                </div>
+              </div>
+            </el-col>
+          </el-row>
+          <el-row>
+            <el-col :span="24">
+              <check-template ref="design" :condition="design" :general="general"></check-template>
+              <check-template ref="running" :condition="running" :general="general"></check-template>
+              <check-template ref="abnormal" :condition="abnormal" :general="general"></check-template>
+              <check-template ref="emergency" :condition="emergency" :general="general"></check-template>
+              <check-template ref="accident" :condition="accident" :general="general"></check-template>
+              <check-template ref="trial" :condition="trial" :general="general"></check-template>
+            </el-col>
+          </el-row>
         </el-card>
 
         <el-form label-width="70px">
@@ -64,6 +81,7 @@
           </el-row>
         </el-form>
       </el-col>
+
     </el-row>
 
   </div>
@@ -91,6 +109,8 @@ export default {
     return {
       general_input: this.general.input,
       general_output: this.general.output,
+
+      img_stress: require('@/assets/model_images/flange_rcc_m_stress.png')
     }
   },
   computed: {

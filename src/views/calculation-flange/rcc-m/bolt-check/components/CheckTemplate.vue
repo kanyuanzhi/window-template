@@ -61,7 +61,7 @@ export default {
       }
     },
     Title() {
-      switch (this.condition_output.bolt_check_result) {
+      switch (this.condition_output.SA.check_result) {
         case '--':
           return '待校核'
         case '通过':
@@ -71,7 +71,7 @@ export default {
       }
     },
     Icon() {
-      switch (this.condition_output.bolt_check_result) {
+      switch (this.condition_output.SA.check_result) {
         case '--':
           return 'info'
         case '通过':
@@ -95,9 +95,9 @@ export default {
         }
         //----------------输出----------------//
         if (SB >= SA) {
-          this.condition_output.bolt_check_result = '通过'
+          this.condition_output.SA.check_result = '通过'
         } else {
-          this.condition_output.bolt_check_result = '不通过'
+          this.condition_output.SA.check_result = '不通过'
         }
       } catch (e) {
         Message.error(e)
@@ -106,7 +106,7 @@ export default {
     cleanAll(){
       this.general_input.SB.value = this.general_output.SB.value
       this.general_input.SB.is_calculated = true
-      this.condition_output.bolt_check_result = '--'
+      this.condition_output.SA.check_result = '--'
     }
   }
 }

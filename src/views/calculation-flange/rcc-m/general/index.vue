@@ -195,6 +195,10 @@
             <el-row :gutter="10">
               <el-col :span="24">
                 <el-descriptions :column="4">
+                  <el-descriptions-item :label="Label(general_output.g1_20)">{{
+                      general_output.g1_20.value
+                    }}
+                  </el-descriptions-item>
                   <el-descriptions-item :label="Label(general_output.h0)">{{
                       general_output.h0.value
                     }}
@@ -304,10 +308,10 @@ export default {
     return {
       general_input: this.general.input,
       general_output: this.general.output,
-      img_bolt: require('@/assets/model_images/luomu.png'),
-      img_lambda: require('@/assets/model_images/falan_xingshixishu_lambda.png'),
-      img_F: require('@/assets/model_images/falan_xingshixishu_F.png'),
-      img_V: require('@/assets/model_images/falan_xingshixishu_V.png')
+      img_bolt: require('@/assets/model_images/flange_rcc_m_bolt.png'),
+      img_lambda: require('@/assets/model_images/flange_rcc_m_lambda.png'),
+      img_F: require('@/assets/model_images/flange_rcc_m_F.png'),
+      img_V: require('@/assets/model_images/flange_rcc_m_V.png')
     }
   },
   computed: {
@@ -371,6 +375,7 @@ export default {
       const ht = (C - B + hg - g1) / 2
 
       // 法兰应力
+      const g1_20 = 20 * g1
       const h0 = sqrt(B * g0)
       const h_h0 = h / sqrt(B * g0)
       const g1_g0 = g1 / g0
@@ -406,6 +411,7 @@ export default {
       this.general_output.hg.value = round(hg, precision)
       this.general_output.ht.value = round(ht, precision)
 
+      this.general_output.g1_20.value = round(g1_20, precision)
       this.general_output.h0.value = round(h0, precision)
       this.general_output.h_h0.value = round(h_h0, precision)
       this.general_output.g1_g0.value = round(g1_g0, precision)

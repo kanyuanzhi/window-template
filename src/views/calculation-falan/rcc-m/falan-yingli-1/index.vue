@@ -58,7 +58,7 @@ export default {
   },
   data() {
     return {
-      img_luomu: require('@/assets/model_images/luomu.png')
+      img_luomu: require('@/assets/model_images/flange_rcc_m_bolt.png')
     }
   },
   methods: {

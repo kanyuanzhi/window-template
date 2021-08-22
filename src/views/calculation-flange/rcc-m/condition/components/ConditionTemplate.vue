@@ -91,6 +91,18 @@
             <el-col :span="6">
               <custom-el-input :para="condition_input.Eh"></custom-el-input>
             </el-col>
+            <el-col :span="6">
+              <custom-el-input :para="condition_input.FT"
+                               :disabled="condition_input.FT.is_calculated"></custom-el-input>
+            </el-col>
+            <el-col :span="6">
+              <el-form-item label="选取方式" size="small" :inline="true">
+                <el-radio-group v-model="condition_input.FT.is_calculated" @change="FTIsCalculatedChange">
+                  <el-radio :label="true">公式计算</el-radio>
+                  <el-radio :label="false">手动填写</el-radio>
+                </el-radio-group>
+              </el-form-item>
+            </el-col>
           </el-row>
           <el-divider class="custom-el-divider--horizontal">计算结果</el-divider>
           <el-row :gutter="10">
@@ -299,6 +311,10 @@
                     condition_output.MO.value
                   }}
                 </el-descriptions-item>
+                <el-descriptions-item :label="Label(condition_output.MA)">{{
+                    condition_output.MA.value
+                  }}
+                </el-descriptions-item>
                 <el-descriptions-item :label="Label(condition_output.M)">{{
                     condition_output.M.value
                   }}
@@ -320,13 +336,13 @@
       </el-form>
     </el-col>
     <el-col :span="4">
-      <!--        <div class="demo-image__placeholder">-->
-      <!--          <div class="el-image-block">-->
-      <!--            <el-image :src="img_bolt" :preview-src-list="[img_bolt]">-->
-      <!--            </el-image>-->
-      <!--            <span class="demonstration">螺母示意图</span>-->
-      <!--          </div>-->
-      <!--        </div>-->
+<!--      <div class="demo-image__placeholder">-->
+<!--        <div class="el-image-block">-->
+<!--          <el-image :src="img_stress" :preview-src-list="[img_stress]">-->
+<!--          </el-image>-->
+<!--          <span class="demonstration">螺母示意图</span>-->
+<!--        </div>-->
+<!--      </div>-->
     </el-col>
   </el-row>
 </template>
@@ -335,7 +351,7 @@
 import CustomElInput from '@/components/CustomElInput'
 import {formatLabel} from '@/utils/common'
 
-import {e, log, max, pi, pow, round, sqrt} from "mathjs"
+import {e, log, max, min, pi, pow, round, sqrt} from "mathjs"
 
 import defaultSettings from '@/settings'
 import {Message} from "element-ui";
@@ -388,6 +404,7 @@ export default {
         const Ps = this.condition_input.Ps.value
         const Ec = this.condition_input.Ec.value
         const Eh = this.condition_input.Eh.value
+        const FT_manual = this.condition_input.FT.value
 
         const Fj = this.general_output.Fj.value
         if (Fj === '--') {
@@ -429,15 +446,42 @@ export default {
         const FS = FF + FM
 
         // 螺栓预紧力
+        let FT
         const FS0 = Ec / Eh * FS
-        const FT = sqrt(pow(Faq, 2) + pow(Mfn / Dj, 2)) / ff
+        const FT_calculate = sqrt(pow(Faq, 2) + pow(Mfn / Dj, 2)) / ff
+        if (this.condition_input.FT.is_calculated) {
+          FT = FT_calculate
+        } else {
+          FT = FT_manual
+        }
         const FS_ = pi / 4 * pow(Dj, 2) * Ps + FT
         const FS0_ = Ec / Eh * FS_
         const FSi = max(Fj, FS0, FS0_)
 
         // 螺栓所需最小截面面积
-        const FSP = pi / 4 * pow(Dj, 2) * P * (1 + m)
-        const SA = FSP / S_bolt
+        let FSP, SA
+        switch (this.condition_name) {
+          case 'design':
+            FSP = pi / 4 * pow(Dj, 2) * P * (1 + m)
+            SA = FSP / S_bolt
+            break
+          case 'running':
+            SA = Eh / Ec * FSi / min(S_bolt, Sy)
+            break
+          case 'abnormal':
+            SA = Eh / Ec * FSi / min(S_bolt, Sy)
+            break
+          case 'emergency':
+            SA = Eh / Ec * FSi / min(S_bolt, Sy)
+            break
+          case 'accident':
+            SA = Eh / Ec * FSi / min(S_bolt, Sy)
+            break
+          case 'trial':
+            FSP = pi / 4 * pow(Dj, 2) * P * (1 + m)
+            SA = FSP / (2 / 3 * Sy)
+            break
+        }
 
         // 法兰力
         const FSi_ = 1 / 2 * (1 + SB / SA) * FSi
@@ -446,16 +490,60 @@ export default {
         const HT = pi / 4 * (pow(Dj, 2) - pow(B, 2)) * P
         const HD_ = 4 * Mf / pow(Dj, 3) * pow(B, 2) + Fa / pow(Dj, 2) * pow(B, 2)
         const HT_ = 4 * Mf / pow(Dj, 3) * (pow(Dj, 2) - pow(B, 2)) + Fa / pow(Dj, 2) * (pow(Dj, 2) - pow(B, 2))
-        const HG = FSi_ - (HT + HT_) - (HD + HD_)
+        let HG
+        switch (this.condition_name) {
+          case 'design':
+            HG = FSi_ - (HT + HT_) - (HD + HD_)
+            break
+          case 'running':
+            HG = Eh / Ec * FSi_ - (HT + HT_) - (HD + HD_)
+            break
+          case 'abnormal':
+            HG = Eh / Ec * FSi_ - (HT + HT_) - (HD + HD_)
+            break
+          case 'emergency':
+            HG = Eh / Ec * FSi_ - (HT + HT_) - (HD + HD_)
+            break
+          case 'accident':
+            HG = Eh / Ec * FSi_ - (HT + HT_) - (HD + HD_)
+            break
+          case 'trial':
+            HG = FSi_ - (HT + HT_) - (HD + HD_)
+            break
+        }
 
         // 法兰力矩
         const MD = HD * hd
         const MD_ = HD_ * hd
         const MT = HT * ht
-        const MT_ = HT_ * hd
+        const MT_ = HT_ * ht
         const MG = HG * hg
         const MO = MD + MD_ + MT + MT_ + MG
-        const M = C0 * MO
+        let MA, M
+        switch (this.condition_name) {
+          case 'design':
+            M = C0 * MO
+            break
+          case 'running':
+            MA = FSi * hg
+            M = C0 * max(MO, MA)
+            break
+          case 'abnormal':
+            MA = FSi * hg
+            M = C0 * max(MO, MA)
+            break
+          case 'emergency':
+            MA = FSi * hg
+            M = C0 * max(MO, MA)
+            break
+          case 'accident':
+            MA = FSi * hg
+            M = C0 * max(MO, MA)
+            break
+          case 'trial':
+            M = C0 * MO
+            break
+        }
 
         this.condition_output.Peq.value = round(Peq, precision)
         this.condition_output.FF.value = round(FF, precision)
@@ -468,7 +556,10 @@ export default {
         this.condition_output.FS0_.value = round(FS0_, precision)
         this.condition_output.FSi.value = round(FSi, precision)
 
-        this.condition_output.FSP.value = round(FSP, precision)
+        if (this.condition_name === 'design' || this.condition_name === 'trial') {
+          // 只有设计和试验工况需要计算并重置FSP，其他工况不需要计算和重置FSP，否则造成round('--', precision)报错。
+          this.condition_output.FSP.value = round(FSP, precision)
+        }
         this.condition_output.SA.value = round(SA, precision)
 
         this.condition_output.FSi_.value = round(FSi_, precision)
@@ -485,6 +576,10 @@ export default {
         this.condition_output.MT_.value = round(MT_, precision)
         this.condition_output.MG.value = round(MG, precision)
         this.condition_output.MO.value = round(MO, precision)
+        if (this.condition_name !== 'design' && this.condition_name !== 'trial') {
+          // 设计和试验工况不需要计算和重置MA，否则造成round('--', precision)报错，其他工况需要计算并重置MA
+          this.condition_output.MA.value = round(MA, precision)
+        }
         this.condition_output.M.value = round(M, precision)
 
       } catch (e) {
@@ -498,7 +593,7 @@ export default {
       this.clean4()
       this.clean5()
     },
-    clean1(){
+    clean1() {
       this.condition_input.P.value = ''
       this.condition_input.Mf.value = ''
       this.condition_input.Fa.value = ''
@@ -508,7 +603,7 @@ export default {
       this.condition_output.FM.value = '--'
       this.condition_output.FS.value = '--'
     },
-    clean2(){
+    clean2() {
       this.condition_input.Faq.value = ''
       this.condition_input.Mfn.value = ''
       this.condition_input.ff.value = ''
@@ -522,14 +617,14 @@ export default {
       this.condition_output.FS0_.value = '--'
       this.condition_output.FSi.value = '--'
     },
-    clean3(){
+    clean3() {
       this.condition_input.S_bolt.value = ''
       this.condition_input.Sy.value = ''
 
       this.condition_output.FSP.value = '--'
       this.condition_output.SA.value = '--'
     },
-    clean4(){
+    clean4() {
       this.condition_input.Tm_flange.value = ''
       this.condition_input.S_flange.value = ''
 
@@ -541,15 +636,21 @@ export default {
       this.condition_output.HT_.value = '--'
       this.condition_output.HG.value = '--'
     },
-    clean5(){
+    clean5() {
       this.condition_output.MD.value = '--'
       this.condition_output.MD_.value = '--'
       this.condition_output.MT.value = '--'
       this.condition_output.MT_.value = '--'
       this.condition_output.MG.value = '--'
       this.condition_output.MO.value = '--'
+      this.condition_output.MA.value = '--'
       this.condition_output.M.value = '--'
     },
+    FTIsCalculatedChange(val) {
+      // if (val) {
+      //   this.condition_input.FT.value = this.condition_output.FT.value
+      // }
+    }
   }
 }
 </script>

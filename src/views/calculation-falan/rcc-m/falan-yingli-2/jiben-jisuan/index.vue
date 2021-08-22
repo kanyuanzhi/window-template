@@ -127,9 +127,9 @@ export default {
   },
   data() {
     return {
-      img_lambda: require('@/assets/model_images/falan_xingshixishu_lambda.png'),
-      img_F: require('@/assets/model_images/falan_xingshixishu_F.png'),
-      img_V: require('@/assets/model_images/falan_xingshixishu_V.png')
+      img_lambda: require('@/assets/model_images/flange_rcc_m_lambda.png'),
+      img_F: require('@/assets/model_images/flange_rcc_m_F.png'),
+      img_V: require('@/assets/model_images/flange_rcc_m_V.png')
     }
   },
   methods: {

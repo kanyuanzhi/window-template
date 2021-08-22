@@ -4,44 +4,41 @@
       <el-form label-width="80px">
         <el-divider class="custom-el-divider--horizontal">{{ condition_name_zh }}工况</el-divider>
         <div class="left-panel" style="margin-bottom: 20px">
-          <template>
-            <el-table
-              :data="table_data"
-              size="medium"
-              :key="item_key"
-              style="width: 100%">
-              <el-table-column
-                prop="name"
-                label=""
-                min-width="10%">
-              </el-table-column>
-              <el-table-column
-                prop="SR"
-                :label="Label(condition_output.SR)"
-                min-width="18%">
-              </el-table-column>
-              <el-table-column
-                prop="ST"
-                :label="Label(condition_output.ST)"
-                min-width="18%">
-              </el-table-column>
-              <el-table-column
-                prop="SH"
-                :label="Label(condition_output.SH)"
-                min-width="18%">
-              </el-table-column>
-              <el-table-column
-                prop="SH_SR"
-                :label="Label(condition_output.SH_SR)"
-                min-width="18%">
-              </el-table-column>
-              <el-table-column
-                prop="SH_ST"
-                :label="Label(condition_output.SH_ST)"
-                min-width="18%">
-              </el-table-column>
-            </el-table>
-          </template>
+          <el-table
+            :data="table_data"
+            size="medium"
+            style="width: 100%">
+            <el-table-column
+              prop="name"
+              label=""
+              min-width="10%">
+            </el-table-column>
+            <el-table-column
+              prop="SR"
+              :label="Label(condition_output.SR)"
+              min-width="18%">
+            </el-table-column>
+            <el-table-column
+              prop="ST"
+              :label="Label(condition_output.ST)"
+              min-width="18%">
+            </el-table-column>
+            <el-table-column
+              prop="SH"
+              :label="Label(condition_output.SH)"
+              min-width="18%">
+            </el-table-column>
+            <el-table-column
+              prop="SH_SR"
+              :label="Label(condition_output.SH_SR)"
+              min-width="18%">
+            </el-table-column>
+            <el-table-column
+              prop="SH_ST"
+              :label="Label(condition_output.SH_ST)"
+              min-width="18%">
+            </el-table-column>
+          </el-table>
         </div>
       </el-form>
     </el-col>
@@ -68,6 +65,7 @@ import {formatLabel} from '@/utils/common'
 
 import {Message} from "element-ui";
 import defaultSettings from '@/settings'
+
 const precision = defaultSettings.precision
 
 export default {
@@ -88,8 +86,6 @@ export default {
 
       table_data: this.getTableData(),
       flange_check_result: this.condition.output.flange_check_result,
-
-      item_key: ''
     }
   },
   computed: {
@@ -120,7 +116,7 @@ export default {
     }
   },
   methods: {
-    getTableData(){
+    getTableData() {
       return [
         {
           name: '值',
@@ -183,29 +179,53 @@ export default {
           throw new Error([this.condition_output.M.meaning, this.condition_output.M.label, '未计算！'].join(' '))
         }
 
-        let SR, ST, SH_, SH__, SH, SH_SR, SH_ST, SR_limit, ST_limit, SH_limit, SH_SR_limit, SH_ST_limit
+        const SR = (4 / 3 * Ep * e_ + 1) * M / (L * pow(Ep, 2) * B)
+        const ST = Y * M / (pow(Ep, 2) * B) - Z * SR
+        const SH_ = M / (L * pow(g1, 2) * B1) + P * B / (4 * g0)
+        const SH__ = lam * M / (L * pow(g1, 2) * B1) + P * B / (4 * g0)
+        const SH = max(SH_, SH__)
+
+        let SH_SR, SH_ST, SR_limit, ST_limit, SH_limit, SH_SR_limit, SH_ST_limit
         switch (this.condition_name) {
           case 'design':
-            SR = (4 / 3 * Ep * e_ + 1) * M / (L * pow(Ep, 2) * B)
-            ST = Y * M / (pow(Ep, 2) * B) - Z * SR
-            SH_ = M / (L * pow(g1, 2) * B1) + P * B / (4 * g0)
-            SH__ = lam * M / (L * pow(g1, 2) * B1) + P * B / (4 * g0)
-            SH = max(SH_, SH__)
             SH_SR = (SH + SR) / 2
             SH_ST = (SH + ST) / 2
+
             SH_limit = 1.5 * S_flange
             SR_limit = S_flange
             ST_limit = S_flange
             SH_SR_limit = S_flange
             SH_ST_limit = S_flange
+            break
+          case 'running':
+            SH_limit = 1.5 * S_flange
+            SR_limit = 1.5 * S_flange
+            ST_limit = 1.5 * S_flange
+            break
+          case 'abnormal':
+            SH_limit = 1.5 * S_flange
+            SR_limit = 1.5 * S_flange
+            ST_limit = 1.5 * S_flange
+            break
+          case 'emergency':
+            SH_limit = 1.8 * S_flange
+            SR_limit = 1.8 * S_flange
+            ST_limit = 1.8 * S_flange
+            break
+          case 'accident':
+            SH_limit = 2.4 * S_flange
+            SR_limit = 2.4 * S_flange
+            ST_limit = 2.4 * S_flange
+            break
+          case 'trial':
+            SH_SR = (SH + SR) / 2
+            SH_ST = (SH + ST) / 2
 
-            this.condition_output.SH_SR.value = round(SH_SR, precision)
-            this.condition_output.SH_SR.limit = round(SH_SR_limit, precision)
-            this.condition_output.SH_SR.check_result = this.check(SH_SR, SH_SR_limit)
-
-            this.condition_output.SH_ST.value = round(SH_ST, precision)
-            this.condition_output.SH_ST.limit = round(SH_ST_limit, precision)
-            this.condition_output.SH_ST.check_result = this.check(SH_ST, SH_ST_limit)
+            SH_limit = 1.5 * S_flange
+            SR_limit = S_flange
+            ST_limit = S_flange
+            SH_SR_limit = S_flange
+            SH_ST_limit = S_flange
             break
         }
         this.condition_output.SR.value = round(SR, precision)
@@ -217,17 +237,33 @@ export default {
         this.condition_output.ST.check_result = this.check(ST, ST_limit)
 
         this.condition_output.SH_.value = round(SH_, precision)
+
         this.condition_output.SH__.value = round(SH__, precision)
 
         this.condition_output.SH.value = round(SH, precision)
         this.condition_output.SH.limit = round(SH_limit, precision)
         this.condition_output.SH.check_result = this.check(SH, SH_limit)
 
-        this.condition_output.flange_check_result = (this.condition_output.SR.check_result === '通过'
-          && this.condition_output.ST.check_result === '通过'
-          && this.condition_output.SH.check_result === '通过'
-          && this.condition_output.SH_SR.check_result === '通过'
-          && this.condition_output.SH_ST.check_result === '通过') ? '通过' : '不通过'
+        if (this.condition_name === 'design' || this.condition_name === 'trial') {
+          // 只有设计和试验工况需要校验SH_SR和SH_ST，其他工况不需要
+          this.condition_output.SH_SR.value = round(SH_SR, precision)
+          this.condition_output.SH_SR.limit = round(SH_SR_limit, precision)
+          this.condition_output.SH_SR.check_result = this.check(SH_SR, SH_SR_limit)
+
+          this.condition_output.SH_ST.value = round(SH_ST, precision)
+          this.condition_output.SH_ST.limit = round(SH_ST_limit, precision)
+          this.condition_output.SH_ST.check_result = this.check(SH_ST, SH_ST_limit)
+
+          this.condition_output.flange_check_result = (this.condition_output.SR.check_result === '通过'
+            && this.condition_output.ST.check_result === '通过'
+            && this.condition_output.SH.check_result === '通过'
+            && this.condition_output.SH_SR.check_result === '通过'
+            && this.condition_output.SH_ST.check_result === '通过') ? '通过' : '不通过'
+        } else {
+          this.condition_output.flange_check_result = (this.condition_output.SR.check_result === '通过'
+            && this.condition_output.ST.check_result === '通过'
+            && this.condition_output.SH.check_result === '通过') ? '通过' : '不通过'
+        }
       } catch (e) {
         Message.error(e)
       }
@@ -237,7 +273,7 @@ export default {
     check(a, a_limit) {
       return a <= a_limit ? '通过' : '不通过'
     },
-    cleanAll(){
+    cleanAll() {
       this.condition_output.SR.value = '--'
       this.condition_output.SR.limit = '--'
       this.condition_output.SR.check_result = '--'

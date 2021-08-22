@@ -153,7 +153,7 @@ export const asyncRoutes = [
           },
           {
             path: 'report',
-            component: () => import('@/views/calculation-flange/rcc-m/general'),
+            component: () => import('@/views/calculation-flange/rcc-m/report'),
             name: 'Report',
             meta: {title: '校核报告'}
           },

@@ -59,6 +59,13 @@ const getDefaultConditionInput = () => {
       label: 'Eh',
       unit: 'Pa'
     },
+    FT: { // 可以手动修改，output中有同名参数
+      value: '',
+      meaning: '工况下克服法兰相对切向位移所需的力',
+      label: 'FT',
+      unit: 'N',
+      is_calculated: true
+    },
 
     // 螺栓所需最小截面面积
     S_bolt: {
@@ -129,13 +136,13 @@ const getDefaultConditionOutput = () => {
     },
     FT: {
       value: '--',
-      meaning: '运行工况下克服法兰相对切向位移所需的力',
+      meaning: '工况下克服法兰相对切向位移所需的力',
       label: 'FT',
       unit: 'N'
     },
     FS_: {
       value: '--',
-      meaning: '运行工况下保证密封要求的力',
+      meaning: '工况下保证密封要求的力',
       label: 'FS\'',
       unit: 'N'
     },
@@ -163,7 +170,8 @@ const getDefaultConditionOutput = () => {
       value: '--',
       meaning: '所需的螺栓最小截面积',
       label: 'SA',
-      unit: 'mm2'
+      unit: 'mm2',
+      check_result: '--', // '通过' or '不通过'
     },
 
     bolt_check_result: '--', // '通过' or '不通过'
@@ -250,6 +258,12 @@ const getDefaultConditionOutput = () => {
       label: 'MO',
       unit: 'N·mm'
     },
+    MA: {
+      value: '--',
+      meaning: '用于特殊检验时的弯矩',
+      label: 'MA',
+      unit: 'N·mm'
+    },
     M: {
       value: '--',
       meaning: '法兰应力计算所需弯矩',
@@ -334,7 +348,7 @@ const state = {
         value: '',
         meaning: '垫片密封比压力',
         label: 'y',
-        unit: 'Mpa'
+        unit: 'MPa'
       },
       Do: {
         value: '',
@@ -526,6 +540,12 @@ const state = {
       },
 
       // 法兰应力
+      g1_20:{
+        value: '--',
+        meaning: '系数',
+        label: '20g1',
+        unit: 'mm'
+      },
       h0: {
         value: '--',
         meaning: '系数',
