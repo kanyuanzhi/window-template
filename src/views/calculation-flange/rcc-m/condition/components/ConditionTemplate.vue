@@ -19,6 +19,9 @@
             <el-col :span="6">
               <custom-el-input :para="general_input.m" :disabled="true"></custom-el-input>
             </el-col>
+            <el-col :span="6">
+              <custom-el-input :para="general_output.b" :disabled="true"></custom-el-input>
+            </el-col>
           </el-row>
           <el-row :gutter="10">
             <el-col :span="6">
@@ -336,13 +339,13 @@
       </el-form>
     </el-col>
     <el-col :span="4">
-<!--      <div class="demo-image__placeholder">-->
-<!--        <div class="el-image-block">-->
-<!--          <el-image :src="img_stress" :preview-src-list="[img_stress]">-->
-<!--          </el-image>-->
-<!--          <span class="demonstration">螺母示意图</span>-->
-<!--        </div>-->
-<!--      </div>-->
+      <!--      <div class="demo-image__placeholder">-->
+      <!--        <div class="el-image-block">-->
+      <!--          <el-image :src="img_stress" :preview-src-list="[img_stress]">-->
+      <!--          </el-image>-->
+      <!--          <span class="demonstration">螺母示意图</span>-->
+      <!--        </div>-->
+      <!--      </div>-->
     </el-col>
   </el-row>
 </template>
@@ -396,6 +399,10 @@ export default {
           throw new Error([this.general_output.Dj.meaning, this.general_output.Dj.label, '未计算！'].join(' '))
         }
         const m = this.general_input.m.value
+        const b = this.general_output.Dj.value
+        if (b === '--') {
+          throw new Error([this.general_output.b.meaning, this.general_output.b.label, '未计算！'].join(' '))
+        }
 
         // 螺栓预紧力
         const Faq = this.condition_input.Faq.value
@@ -442,7 +449,8 @@ export default {
         // 法兰压紧力
         const Peq = 16 * Mf / (pi * pow(Dj, 3) + 4 * Fa / (pi * pow(Dj, 2)))
         const FF = pi / 4 * pow(Dj, 2) * (P + Peq)
-        const FM = pi / 4 * pow(Dj, 2) * m * P
+        // const FM = pi / 4 * pow(Dj, 2) * m * P
+        const FM = 2 * pi * Dj * b * m * P
         const FS = FF + FM
 
         // 螺栓预紧力

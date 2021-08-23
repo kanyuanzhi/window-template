@@ -31,7 +31,7 @@
             <el-divider class="custom-el-divider--horizontal">计算结果</el-divider>
             <el-row :gutter="10">
               <el-col :span="24">
-                <el-descriptions :column="4">
+                <el-descriptions :column="3">
                   <el-descriptions-item :label="Label(general_output.N)">{{
                       general_output.N.value
                     }}
@@ -58,7 +58,7 @@
           </el-card>
           <el-card class="box-card" shadow="hover">
             <div slot="header" class="clearfix">
-              <span>实际螺栓面积</span>
+              <span>螺栓参数</span>
               <el-button @click="clean2" style="float: right;padding: 0;" type="text" size="medium"
                          icon="el-icon-delete">清空
               </el-button>
@@ -76,17 +76,43 @@
               <el-col :span="6">
                 <custom-el-input :para="general_input.P"></custom-el-input>
               </el-col>
+              <el-col :span="6">
+                <custom-el-input :para="general_input.S"></custom-el-input>
+              </el-col>
+            </el-row>
+            <el-row :gutter="10">
+              <el-col :span="6">
+                <custom-el-input :para="general_input.f"></custom-el-input>
+              </el-col>
+              <el-col :span="6">
+                <custom-el-input :para="general_input.f_"></custom-el-input>
+              </el-col>
+              <el-col :span="6">
+                <custom-el-input :para="general_input.PV"></custom-el-input>
+              </el-col>
             </el-row>
             <el-divider class="custom-el-divider--horizontal">计算结果</el-divider>
             <el-row :gutter="10">
-              <el-col :span="16">
-                <el-descriptions :column="2">
-                  <el-descriptions-item :label="Label(general_output.S)">{{
-                      general_output.S.value
+              <el-col :span="24">
+                <el-descriptions :column="3">
+                  <el-descriptions-item :label="Label(general_output.SB_)">{{
+                      general_output.SB_.value
                     }}
                   </el-descriptions-item>
                   <el-descriptions-item :label="Label(general_output.SB)">{{
                       general_output.SB.value
+                    }}
+                  </el-descriptions-item>
+                  <el-descriptions-item :label="Label(general_output.r)">{{
+                      general_output.r.value
+                    }}
+                  </el-descriptions-item>
+                  <el-descriptions-item :label="Label(general_output.Rma)">{{
+                      general_output.Rma.value
+                    }}
+                  </el-descriptions-item>
+                  <el-descriptions-item :label="Label(general_output.CS)">{{
+                      general_output.CS.value
                     }}
                   </el-descriptions-item>
                 </el-descriptions>
@@ -110,33 +136,20 @@
               <el-col :span="6">
                 <custom-el-input :para="general_input.B"></custom-el-input>
               </el-col>
-            </el-row>
-          </el-card>
-          <el-card class="box-card" shadow="hover">
-            <div slot="header" class="clearfix">
-              <span>法兰力矩</span>
-              <el-button @click="clean4" style="float: right;padding: 0;" type="text" size="medium"
-                         icon="el-icon-delete">清空
-              </el-button>
-              <el-button @click="calculate" style="float: right;padding: 0 20px 0 0;" type="text" size="medium"
-                         icon="el-icon-video-play">计算
-              </el-button>
-            </div>
-            <el-row :gutter="10">
               <el-col :span="6">
                 <custom-el-input :para="general_input.g0"></custom-el-input>
               </el-col>
               <el-col :span="6">
                 <custom-el-input :para="general_input.g1"></custom-el-input>
               </el-col>
+            </el-row>
+            <el-row :gutter="10">
               <el-col :span="6">
                 <custom-el-input :para="general_input.h"></custom-el-input>
               </el-col>
               <el-col :span="6">
                 <custom-el-input :para="general_input.Ep"></custom-el-input>
               </el-col>
-            </el-row>
-            <el-row :gutter="10">
               <el-col :span="6">
                 <custom-el-input :para="general_input.C"></custom-el-input>
               </el-col>
@@ -173,8 +186,8 @@
           </el-card>
           <el-card class="box-card" shadow="hover">
             <div slot="header" class="clearfix">
-              <span>法兰应力</span>
-              <el-button @click="clean5" style="float: right;padding: 0;" type="text" size="medium"
+              <span>法兰系数</span>
+              <el-button @click="clean4" style="float: right;padding: 0;" type="text" size="medium"
                          icon="el-icon-delete">清空
               </el-button>
               <el-button @click="calculate" style="float: right;padding: 0 20px 0 0;" type="text" size="medium"
@@ -334,23 +347,25 @@ export default {
       const Do = this.general_input.Do.value
       const Di = this.general_input.Di.value
 
-      // 实际螺栓面积
+      // 螺栓系数
       const d = this.general_input.d.value
       const n = this.general_input.n.value
       const P = this.general_input.P.value
+      const S = this.general_input.S.value
+      const f = this.general_input.f.value
+      const f_ = this.general_input.f_.value
+      const PV = this.general_input.PV.value
 
       // 法兰尺寸
       const A = this.general_input.A.value
       const B = this.general_input.B.value
-
-      // 法兰力矩
       const g0 = this.general_input.g0.value
       const g1 = this.general_input.g1.value
       const h = this.general_input.h.value
       const Ep = this.general_input.Ep.value
       const C = this.general_input.C.value
 
-      // 法兰应力
+      // 法兰系数
       const lam = this.general_input.lam.value
       const F = this.general_input.F.value
       const V = this.general_input.V.value
@@ -362,13 +377,18 @@ export default {
       const b0 = N / 2
       const b = b0 > 6.4 ? 2.53 * sqrt(b0) : b0
       const Dj = b0 > 6.4 ? Do - 2 * b : (Do + Di) / 2
-      const Fj = pi / 4 * pow(Dj, 2) * y
+      // const Fj = pi / 4 * pow(Dj, 2) * y
+      const Fj = pi * Dj * b * y
 
-      // 实际螺栓面积
-      const S = pow((d - 1.2268 * P), 2) * pi / 4
-      const SB = S * n
 
-      // 法兰力矩
+      // 螺栓系数
+      const SB_ = pow((d - 1.2268 * P), 2) * pi / 4
+      const SB = SB_ * n
+      const r = (d - 0.6495 * P) / 2
+      const Rma = (d + S) / 4
+      const CS = PV * (P / (2 * pi) + f * r + f_ * Rma) / 1000
+
+      // 法兰尺寸
       let C0
       if (pi * C / n > 2 * d + Ep) {
         C0 = max(sqrt(pi * C / (n * (2 * d + Ep))), 1)
@@ -380,7 +400,7 @@ export default {
       const hg = (C - Dj) / 2
       const ht = (C - B + hg - g1) / 2
 
-      // 法兰应力
+      // 法兰系数
       const g1_20 = 20 * g1
       const h0 = sqrt(B * g0)
       const h_h0 = h / sqrt(B * g0)
@@ -403,16 +423,18 @@ export default {
         }
       }
 
-
       this.general_output.N.value = round(N, precision)
       this.general_output.b0.value = round(b0, precision)
       this.general_output.b.value = round(b, precision)
       this.general_output.Dj.value = round(Dj, precision)
       this.general_output.Fj.value = round(Fj, precision)
 
-      this.general_output.S.value = round(S, precision)
+      this.general_output.SB_.value = round(SB_, precision)
       this.general_output.SB.value = round(SB, precision)
       this.general_input.SB.value = round(SB, precision) // SB可手动修改
+      this.general_output.r.value = round(r, precision)
+      this.general_output.Rma.value = round(Rma, precision)
+      this.general_output.CS.value = round(CS, precision)
 
       this.general_output.C0.value = round(C0, precision)
       this.general_output.R.value = round(R, precision)
@@ -438,7 +460,6 @@ export default {
       this.clean2()
       this.clean3()
       this.clean4()
-      this.clean5()
     },
     clean1() {
       this.general_input.m.value = ''
@@ -455,15 +476,20 @@ export default {
       this.general_input.d.value = ''
       this.general_input.n.value = ''
       this.general_input.P.value = ''
+      this.general_input.S.value = ''
+      this.general_input.f.value = ''
+      this.general_input.f_.value = ''
+      this.general_input.PV.value = ''
 
-      this.general_output.S.value = '--'
+      this.general_output.SB_.value = '--'
       this.general_output.SB.value = '--'
+      this.general_output.r.value = '--'
+      this.general_output.Rma.value = '--'
+      this.general_output.CS.value = '--'
     },
     clean3() {
       this.general_input.A.value = ''
       this.general_input.B.value = ''
-    },
-    clean4() {
       this.general_input.g0.value = ''
       this.general_input.g1.value = ''
       this.general_input.h.value = ''
@@ -476,7 +502,7 @@ export default {
       this.general_output.hg.value = '--'
       this.general_output.ht.value = '--'
     },
-    clean5() {
+    clean4() {
       this.general_input.lam.value = ''
       this.general_input.F.value = ''
       this.general_input.V.value = ''

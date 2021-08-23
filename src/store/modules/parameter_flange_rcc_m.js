@@ -362,7 +362,7 @@ const state = {
       },
 
 
-      // 实际螺栓面积
+      // 螺栓参数
       d: {
         value: '',
         meaning: '螺栓公称直径',
@@ -390,7 +390,33 @@ const state = {
       },
       SB_is_calculated: true,
 
-      // 法兰尺寸
+      S: {
+        value: '',
+        meaning: '螺母平头直径',
+        label: 'S',
+        unit: 'mm'
+      },
+      f: {
+        value: '',
+        meaning: '螺纹摩擦系数',
+        label: 'f',
+        unit: 'mm'
+      },
+      f_: {
+        value: '',
+        meaning: '螺母垫片摩擦系数',
+        label: 'f\'',
+        unit: 'mm'
+      },
+      PV: {
+        value: '',
+        meaning: '螺栓传递力',
+        label: 'PV',
+        unit: 'N'
+      },
+
+
+      // 法兰力矩
       A: {
         value: '',
         meaning: '法兰外径',
@@ -404,7 +430,6 @@ const state = {
         unit: 'mm'
       },
 
-      // 法兰力矩
       g0: {
         value: '',
         meaning: '法兰颈最薄处的厚度',
@@ -436,7 +461,7 @@ const state = {
         unit: 'mm'
       },
 
-      // 法兰应力
+      // 法兰系数
       lam: {
         value: '',
         meaning: '法兰形式系数',
@@ -495,11 +520,11 @@ const state = {
         unit: 'N'
       },
 
-      // 实际螺栓面积
-      S: {
+      // 螺栓参数
+      SB_: {
         value: '--',
         meaning: '单个螺栓实际根部截面积',
-        label: 'S',
+        label: 'SB\'',
         unit: 'mm2'
       },
       SB: {
@@ -508,10 +533,26 @@ const state = {
         label: 'SB',
         unit: 'mm2'
       },
+      r: {
+        value: '--',
+        meaning: '螺栓螺纹顶半径',
+        label: 'r',
+        unit: 'mm'
+      },
+      Rma: {
+        value: '--',
+        meaning: '',
+        label: 'Rma',
+        unit: 'mm',
+      },
+      CS: {
+        value: '--',
+        meaning: '螺栓紧固力矩',
+        label: 'CS',
+        unit: 'N/m'
+      },
 
       // 法兰尺寸
-
-      // 法兰力矩
       C0: {
         value: '--',
         meaning: '力矩修正系数',
@@ -544,7 +585,7 @@ const state = {
         unit: 'mm'
       },
 
-      // 法兰应力
+      // 法兰系数
       g1_20:{
         value: '--',
         meaning: '系数',

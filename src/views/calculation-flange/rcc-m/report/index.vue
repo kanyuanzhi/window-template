@@ -32,7 +32,7 @@
 
               <custom-tr section="实际螺栓面积" :is_general="true" input_output="input" para="d" rowspan="4"></custom-tr>
               <custom-tr section="实际螺栓面积" :is_general="true" input_output="input" para="n"></custom-tr>
-              <custom-tr section="实际螺栓面积" :is_general="true" input_output="output" para="S"></custom-tr>
+              <custom-tr section="实际螺栓面积" :is_general="true" input_output="output" para="SB_"></custom-tr>
               <custom-tr section="实际螺栓面积" :is_general="true" input_output="output" para="SB"></custom-tr>
 
               <custom-tr section="法兰压紧力" :is_general="false" input_output="input" para="P" rowspan="7"></custom-tr>
