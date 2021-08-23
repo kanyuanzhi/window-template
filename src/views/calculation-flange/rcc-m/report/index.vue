@@ -26,8 +26,8 @@
               <custom-tr section="垫片参数" :is_general="true" input_output="input" para="y"></custom-tr>
               <custom-tr section="垫片参数" :is_general="true" input_output="input" para="Do"></custom-tr>
               <custom-tr section="垫片参数" :is_general="true" input_output="input" para="Di"></custom-tr>
-              <custom-tr section="垫片参数" :is_general="true" input_output="input" para="b0"></custom-tr>
-              <custom-tr section="垫片参数" :is_general="true" input_output="input" para="b"></custom-tr>
+              <custom-tr section="垫片参数" :is_general="true" input_output="output" para="b0"></custom-tr>
+              <custom-tr section="垫片参数" :is_general="true" input_output="output" para="b"></custom-tr>
               <custom-tr section="垫片参数" :is_general="true" input_output="output" para="Dj"></custom-tr>
 
               <custom-tr section="实际螺栓面积" :is_general="true" input_output="input" para="d" rowspan="4"></custom-tr>

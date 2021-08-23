@@ -28,18 +28,22 @@
                 <custom-el-input :para="general_input.Di"></custom-el-input>
               </el-col>
             </el-row>
-            <el-row :gutter="10">
-              <el-col :span="6">
-                <custom-el-input :para="general_input.b0"></custom-el-input>
-              </el-col>
-              <el-col :span="6">
-                <custom-el-input :para="general_input.b"></custom-el-input>
-              </el-col>
-            </el-row>
             <el-divider class="custom-el-divider--horizontal">计算结果</el-divider>
             <el-row :gutter="10">
-              <el-col :span="16">
-                <el-descriptions :column="2">
+              <el-col :span="24">
+                <el-descriptions :column="4">
+                  <el-descriptions-item :label="Label(general_output.N)">{{
+                      general_output.N.value
+                    }}
+                  </el-descriptions-item>
+                  <el-descriptions-item :label="Label(general_output.b0)">{{
+                      general_output.b0.value
+                    }}
+                  </el-descriptions-item>
+                  <el-descriptions-item :label="Label(general_output.b)">{{
+                      general_output.b.value
+                    }}
+                  </el-descriptions-item>
                   <el-descriptions-item :label="Label(general_output.Dj)">{{
                       general_output.Dj.value
                     }}
@@ -329,8 +333,7 @@ export default {
       const y = this.general_input.y.value
       const Do = this.general_input.Do.value
       const Di = this.general_input.Di.value
-      const b0 = this.general_input.b0.value
-      const b = this.general_input.b.value
+
       // 实际螺栓面积
       const d = this.general_input.d.value
       const n = this.general_input.n.value
@@ -355,7 +358,10 @@ export default {
 
       //----------------输出----------------//
       // 垫片参数
-      const Dj = (Do + Di) / 2
+      const N = (Do - Di) / 2
+      const b0 = N / 2
+      const b = b0 > 6.4 ? 2.53 * sqrt(b0) : b0
+      const Dj = b0 > 6.4 ? Do - 2 * b : (Do + Di) / 2
       const Fj = pi / 4 * pow(Dj, 2) * y
 
       // 实际螺栓面积
@@ -398,6 +404,9 @@ export default {
       }
 
 
+      this.general_output.N.value = round(N, precision)
+      this.general_output.b0.value = round(b0, precision)
+      this.general_output.b.value = round(b, precision)
       this.general_output.Dj.value = round(Dj, precision)
       this.general_output.Fj.value = round(Fj, precision)
 

@@ -1,5 +1,3 @@
-import {getToken} from "@/utils/auth";
-
 const getDefaultConditionInput = () => {
   return {
     // 法兰压紧力
@@ -362,18 +360,7 @@ const state = {
         label: 'Di',
         unit: 'mm'
       },
-      b0: {
-        value: '',
-        meaning: '基本密封宽度',
-        label: 'b0',
-        unit: 'mm'
-      },
-      b: {
-        value: '',
-        meaning: '有效密封宽度',
-        label: 'b',
-        unit: 'mm'
-      },
+
 
       // 实际螺栓面积
       d: {
@@ -477,6 +464,24 @@ const state = {
     },
     output: {
       // 垫片参数
+      N: {
+        value: '--',
+        meaning: '垫片作用宽度',
+        label: 'N',
+        unit: 'mm'
+      },
+      b0: {
+        value: '',
+        meaning: '基本密封宽度',
+        label: 'b0',
+        unit: 'mm'
+      },
+      b: {
+        value: '',
+        meaning: '有效密封宽度',
+        label: 'b',
+        unit: 'mm'
+      },
       Dj: {
         value: '--',
         meaning: '垫片平均直径',
