@@ -549,7 +549,7 @@ const state = {
         value: '--',
         meaning: '螺栓紧固力矩',
         label: 'CS',
-        unit: 'N/m'
+        unit: 'N·m'
       },
 
       // 法兰尺寸

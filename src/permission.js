@@ -11,9 +11,9 @@ NProgress.configure({ showSpinner: false }) // NProgress Configuration
 // no redirect whitelist
 const whiteList = [
   '/login',
-  '/fljh-lsyjl-project1_report',
-  '/fljh-lsyjl-project2_report',
-  '/fljh-lsyjl-project3_report',
+  // '/fljh-lsyjl-project1_report',
+  // '/fljh-lsyjl-project2_report',
+  // '/fljh-lsyjl-project3_report',
 ]
 
 router.beforeEach(async (to, from, next) => {

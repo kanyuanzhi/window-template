@@ -92,24 +92,6 @@ export const constantRoutes = [
       }
     ]
   },
-  {
-    path: '/fljh-lsyjl-project1_report',
-    name: 'fljh-lsyjl-project1_report',
-    component: () => import('@/views/formula-fljh/components-lsyjl/project1_report'),
-    hidden: true
-  },
-  {
-    path: '/fljh-lsyjl-project2_report',
-    name: 'fljh-lsyjl-project2_report',
-    component: () => import('@/views/formula-fljh/components-lsyjl/project2_report'),
-    hidden: true
-  },
-  {
-    path: '/fljh-lsyjl-project3_report',
-    name: 'fljh-lsyjl-project3_report',
-    component: () => import('@/views/formula-fljh/components-lsyjl/project3_report'),
-    hidden: true
-  },
 ]
 
 export const asyncRoutes = [
@@ -122,7 +104,7 @@ export const asyncRoutes = [
     children: [
       {
         path: 'rcc-m',
-        name: 'rcc-m',
+        name: 'RCC-M',
         redirect: 'noRedirect',
         component: () => import('@/views/calculation-flange/rcc-m'),
         meta: {title: 'RCC-M'},
@@ -160,10 +142,52 @@ export const asyncRoutes = [
         ]
       },
       {
-        path: 'gb150-kuanmian-banshi',
-        name: 'gb150-kuanmian-banshi',
-        // component: () => import('@/views/formula-lslj/lslj2'),
-        meta: {title: 'GB150宽面板式'}
+        path: 'gb150-wide-plate',
+        name: 'GB150WidePlate',
+        redirect: 'noRedirect',
+        component: () => import('@/views/calculation-flange/gb150-wide-plate'),
+        meta: {title: 'GB150宽面板式'},
+        children: [
+          {
+            path: 'general',
+            component: () => import('@/views/calculation-flange/gb150-wide-plate/general'),
+            name: 'General',
+            meta: {title: '基本参数'}
+          },
+          {
+            path: 'hubbed',
+            component: () => import('@/views/calculation-flange/gb150-wide-plate/check'),
+            name: 'Hubbed',
+            meta: {title: '法兰校核'}
+          },
+          {
+            path: 'report',
+            component: () => import('@/views/calculation-flange/gb150-wide-plate/report'),
+            name: 'Report',
+            meta: {title: '校核报告'}
+          },
+        ]
+      },
+      {
+        path: 'gb150-wide-hubbed',
+        name: 'GB150WideHubbed',
+        redirect: 'noRedirect',
+        // component: () => import('@/views/calculation-flange/rcc-m'),
+        meta: {title: 'GB150宽面带颈'},
+        children: [
+          {
+            path: 'plate',
+            // component: () => import('@/views/calculation-flange/rcc-m/general'),
+            name: 'Plate',
+            meta: {title: '板式'}
+          },
+          {
+            path: 'hubbed',
+            // component: () => import('@/views/calculation-flange/rcc-m/condition'),
+            name: 'Hubbed',
+            meta: {title: '带颈'}
+          },
+        ]
       },
     ]
   },

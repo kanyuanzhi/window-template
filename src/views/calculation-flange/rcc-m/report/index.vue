@@ -4,7 +4,7 @@
       <el-col :span="20" :offset="2">
         <div id="print-area">
           <div class="report-header">
-            <span>法兰校核</span>
+            <span>RCC-M法兰校核</span>
           </div>
           <div class="report-panel" style="margin-bottom: 20px">
             <table class="custom-table">
@@ -190,7 +190,15 @@
             </table>
           </div>
         </div>
-        <el-button type="primary" v-print="print">打印</el-button>
+        <el-form>
+          <el-row>
+            <el-col :span="24">
+              <el-form-item align="right">
+                <el-button type="primary" v-print="print">打印</el-button>
+              </el-form-item>
+            </el-col>
+          </el-row>
+        </el-form>
       </el-col>
     </el-row>
   </div>
@@ -272,12 +280,13 @@ export default {
 .custom-table {
   width: 100%;
   font-size: 15px;
-  border: 1px solid #5a5e66;
+  border: 2px solid #5a5e66;
   border-collapse: collapse;
 }
 
 thead td {
   border: 1px solid #5a5e66;
+  border-bottom: 2px solid #5a5e66;
   text-align: center;
   height: 40px;
   font-weight: bold;
