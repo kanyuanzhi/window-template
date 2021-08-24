@@ -18,5 +18,6 @@ const getters = {
   flange_rcc_m_trial: state => state.parameter_flange_rcc_m.trial,
 
   flange_gb150_wide_plate_general: state => state.parameter_flange_gb150_wide_plate.general,
+  flange_gb150_wide_hubbed_general: state => state.parameter_flange_gb150_wide_hubbed.general,
 }
 export default getters

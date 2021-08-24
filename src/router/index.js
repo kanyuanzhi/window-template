@@ -155,9 +155,9 @@ export const asyncRoutes = [
             meta: {title: '基本参数'}
           },
           {
-            path: 'hubbed',
+            path: 'check',
             component: () => import('@/views/calculation-flange/gb150-wide-plate/check'),
-            name: 'Hubbed',
+            name: 'Check',
             meta: {title: '法兰校核'}
           },
           {
@@ -172,20 +172,26 @@ export const asyncRoutes = [
         path: 'gb150-wide-hubbed',
         name: 'GB150WideHubbed',
         redirect: 'noRedirect',
-        // component: () => import('@/views/calculation-flange/rcc-m'),
+        component: () => import('@/views/calculation-flange/gb150-wide-hubbed'),
         meta: {title: 'GB150宽面带颈'},
         children: [
           {
-            path: 'plate',
-            // component: () => import('@/views/calculation-flange/rcc-m/general'),
-            name: 'Plate',
-            meta: {title: '板式'}
+            path: 'general',
+            component: () => import('@/views/calculation-flange/gb150-wide-hubbed/general'),
+            name: 'General',
+            meta: {title: '基本参数'}
           },
           {
-            path: 'hubbed',
-            // component: () => import('@/views/calculation-flange/rcc-m/condition'),
-            name: 'Hubbed',
-            meta: {title: '带颈'}
+            path: 'check',
+            component: () => import('@/views/calculation-flange/gb150-wide-hubbed/check'),
+            name: 'Check',
+            meta: {title: '法兰校核'}
+          },
+          {
+            path: 'report',
+            component: () => import('@/views/calculation-flange/gb150-wide-hubbed/report'),
+            name: 'Report',
+            meta: {title: '校核报告'}
           },
         ]
       },

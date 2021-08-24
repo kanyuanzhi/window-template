@@ -60,7 +60,7 @@
               <custom-tr section="垫片" input_output="output" para="LR"></custom-tr>
               <custom-tr section="垫片" input_output="output" para="DG_"></custom-tr>
 
-              <custom-tr section="螺栓受力计算" input_output="input" para="Eb" rowspan="16"></custom-tr>
+              <custom-tr section="螺栓受力计算" input_output="input" para="Eb" rowspan="14"></custom-tr>
               <custom-tr section="螺栓受力计算" input_output="input" para="Ebt"></custom-tr>
               <custom-tr section="螺栓受力计算" input_output="output" para="Fa_"></custom-tr>
               <custom-tr section="螺栓受力计算" input_output="output" para="Fp_"></custom-tr>
@@ -84,8 +84,6 @@
                   <div class="custom-cell">{{ general.output.CS.value_1 }} ~ {{ general.output.CS.value_2 }}</div>
                 </td>
               </tr>
-              <custom-tr section="螺栓受力计算" input_output="output" para="Wp_"></custom-tr>
-              <custom-tr section="螺栓受力计算" input_output="output" para="FR_"></custom-tr>
 
               <custom-tr section="法兰校核" input_output="output" para="MO" rowspan="2"></custom-tr>
               <custom-tr section="法兰校核" input_output="output" para="delta_f"></custom-tr>
