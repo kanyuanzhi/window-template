@@ -1,6 +1,7 @@
 module.exports = {
 
-  title: 'Window Template',
+  // title: 'Window Template',
+  title: 'XXXX计算平台',
 
   /**
    * @type {boolean} true | false

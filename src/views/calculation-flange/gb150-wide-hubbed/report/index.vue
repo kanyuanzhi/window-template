@@ -4,7 +4,7 @@
       <el-col :span="20" :offset="2">
         <div id="print-area">
           <div class="report-header">
-            <span>GB150宽面法兰校核</span>
+            <span>GB150宽面带颈法兰校核</span>
           </div>
           <div class="report-panel" style="margin-bottom: 20px">
             <table class="custom-table">

@@ -9,7 +9,8 @@
       label-position="left"
     >
       <div class="title-container">
-        <h3 class="title">Login Form</h3>
+        <h1 class="web-title">XXXX计算平台</h1>
+        <h3 class="title">用户登录</h3>
       </div>
 
       <el-form-item prop="username">
@@ -54,7 +55,7 @@
         type="primary"
         style="width: 100%; margin-bottom: 30px"
         @click.native.prevent="handleLogin"
-      >Login
+      >登录
       </el-button
       >
 
@@ -222,7 +223,7 @@ $cursor: #fff;
 <style lang="scss" scoped>
 $bg: #2d3a4b;
 $dark_gray: #889aa4;
-$light_gray: #eee;
+$light_gray: #eeeeee;
 
 .login-container {
   min-height: 100%;
@@ -263,7 +264,15 @@ $light_gray: #eee;
     position: relative;
 
     .title {
-      font-size: 26px;
+      font-size: 20px;
+      color: $light_gray;
+      margin: 0px auto 40px auto;
+      text-align: center;
+      font-weight: bold;
+    }
+
+    .web-title {
+      font-size: 40px;
       color: $light_gray;
       margin: 0px auto 40px auto;
       text-align: center;

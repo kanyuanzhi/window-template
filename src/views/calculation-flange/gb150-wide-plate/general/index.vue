@@ -210,6 +210,15 @@
           </el-row>
         </el-form>
       </el-col>
+      <el-col :span="4">
+        <div class="demo-image__placeholder">
+          <div class="el-image-block">
+            <el-image :src="img_plate" :preview-src-list="[img_plate]">
+            </el-image>
+            <span class="demonstration">GB150宽面板式法兰示意图</span>
+          </div>
+        </div>
+      </el-col>
     </el-row>
   </div>
 </template>
@@ -235,6 +244,8 @@ export default {
     return {
       general_input: this.general.input,
       general_output: this.general.output,
+
+      img_plate: require('@/assets/model_images/flange_gb150_wide_plate.png')
     }
   },
   computed: {

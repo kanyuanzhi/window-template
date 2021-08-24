@@ -131,6 +131,15 @@
           </el-row>
         </el-form>
       </el-col>
+      <el-col :span="4">
+        <div class="demo-image__placeholder">
+          <div class="el-image-block">
+            <el-image :src="img_hubbed" :preview-src-list="[img_hubbed]">
+            </el-image>
+            <span class="demonstration">GB150宽面带颈法兰示意图</span>
+          </div>
+        </div>
+      </el-col>
     </el-row>
   </div>
 </template>
@@ -156,6 +165,8 @@ export default {
     return {
       general_input: this.general.input,
       general_output: this.general.output,
+
+      img_hubbed: require('@/assets/model_images/flange_gb150_wide_hubbed.png')
     }
   },
   computed: {
