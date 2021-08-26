@@ -327,7 +327,7 @@
           </el-row>
         </el-card>
       </el-form>
-      <el-form label-width="70px">
+      <el-form>
         <el-row :gutter="10">
           <el-col :span="24">
             <el-form-item align="center">

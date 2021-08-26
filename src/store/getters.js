@@ -19,5 +19,7 @@ const getters = {
 
   flange_gb150_wide_plate_general: state => state.parameter_flange_gb150_wide_plate.general,
   flange_gb150_wide_hubbed_general: state => state.parameter_flange_gb150_wide_hubbed.general,
+
+  flange_gb150_narrow_general: state => state.parameter_flange_gb150_narrow.general,
 }
 export default getters

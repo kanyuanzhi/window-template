@@ -195,6 +195,39 @@ export const asyncRoutes = [
           },
         ]
       },
+      {
+        path: 'gb150-narrow',
+        name: 'GB150Narrow',
+        redirect: 'noRedirect',
+        component: () => import('@/views/calculation-flange/gb150-narrow'),
+        meta: {title: 'GB150窄面'},
+        children: [
+          {
+            path: 'general',
+            component: () => import('@/views/calculation-flange/gb150-narrow/general'),
+            name: 'General',
+            meta: {title: '基本参数'}
+          },
+          {
+            path: 'bolt-check',
+            component: () => import('@/views/calculation-flange/gb150-narrow/bolt-check'),
+            name: 'BoltCheck',
+            meta: {title: '螺栓校核'}
+          },
+          {
+            path: 'flange-check',
+            component: () => import('@/views/calculation-flange/gb150-narrow/flange-check'),
+            name: 'FlangeCheck',
+            meta: {title: '法兰校核'}
+          },
+          {
+            path: 'report',
+            component: () => import('@/views/calculation-flange/gb150-narrow/report'),
+            name: 'Report',
+            meta: {title: '校核报告'}
+          },
+        ]
+      },
     ]
   },
 

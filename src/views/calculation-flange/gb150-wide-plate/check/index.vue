@@ -72,11 +72,8 @@
                       general_output.Ab.value
                     }}
                   </el-descriptions-item>
-                  <el-descriptions-item :label="Label(general_output.CS)">{{
-                      general_output.CS.value_1
-                    }} ~ {{
-                      general_output.CS.value_2
-                    }}
+                  <el-descriptions-item :label="Label(general_output.CS)">
+                    {{ [general_output.CS.value_1, general_output.CS.value_2].join('~') }}
                   </el-descriptions-item>
                   <el-descriptions-item :label="Label(general_output.Wp_)">{{
                       general_output.Wp_.value
@@ -131,7 +128,7 @@
             </el-row>
           </el-card>
         </el-form>
-        <el-form label-width="70px">
+        <el-form>
           <el-row :gutter="10">
             <el-col :span="24">
               <el-form-item align="center">
