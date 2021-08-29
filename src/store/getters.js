@@ -21,5 +21,11 @@ const getters = {
   flange_gb150_wide_hubbed_general: state => state.parameter_flange_gb150_wide_hubbed.general,
 
   flange_gb150_narrow_general: state => state.parameter_flange_gb150_narrow.general,
+
+  valve_headstock_edf_sluice_c: state => state.parameter_valve_headstock_edf_sluice_c.general,
+  valve_headstock_edf_sluice_v: state => state.parameter_valve_headstock_edf_sluice_v.general,
+  valve_headstock_edf_sluice_w: state => state.parameter_valve_headstock_edf_sluice_w.general,
+  valve_headstock_edf_cutoff_s: state => state.parameter_valve_headstock_edf_cutoff_s.general,
+
 }
 export default getters

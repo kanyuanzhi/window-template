@@ -230,6 +230,99 @@ export const asyncRoutes = [
       },
     ]
   },
+  {
+    path: '/calculation-valve-headstock',
+    component: Layout,
+    redirect: 'noRedirect',
+    name: 'ValveHeadstock',
+    meta: {title: '阀门启闭力矩', icon: 'el-icon-s-help', role: ['super']},
+    children: [
+      {
+        path: 'edf-sluice-valve-c',
+        name: 'EDFSluiceValveC',
+        redirect: 'noRedirect',
+        component: () => import('@/views/calculation-valve-headstock/edf-sluice-c'),
+        meta: {title: 'EDF C型闸阀'},
+        children: [
+          {
+            path: 'calculation',
+            component: () => import('@/views/calculation-valve-headstock/edf-sluice-c/calculation'),
+            name: 'Calculation',
+            meta: {title: '数据计算'}
+          },
+          {
+            path: 'report',
+            component: () => import('@/views/calculation-valve-headstock/edf-sluice-c/report'),
+            name: 'Report',
+            meta: {title: '计算报告'}
+          },
+        ]
+      },
+      {
+        path: 'edf-sluice-valve-v',
+        name: 'EDFSluiceValveV',
+        redirect: 'noRedirect',
+        component: () => import('@/views/calculation-valve-headstock/edf-sluice-v'),
+        meta: {title: 'EDF V型闸阀'},
+        children: [
+          {
+            path: 'calculation',
+            component: () => import('@/views/calculation-valve-headstock/edf-sluice-v/calculation'),
+            name: 'Calculation',
+            meta: {title: '数据计算'}
+          },
+          {
+            path: 'report',
+            component: () => import('@/views/calculation-valve-headstock/edf-sluice-v/report'),
+            name: 'Report',
+            meta: {title: '计算报告'}
+          },
+        ]
+      },
+      {
+        path: 'edf-sluice-valve-w',
+        name: 'EDFSluiceValveW',
+        redirect: 'noRedirect',
+        component: () => import('@/views/calculation-valve-headstock/edf-sluice-w'),
+        meta: {title: 'EDF W型闸阀'},
+        children: [
+          {
+            path: 'calculation',
+            component: () => import('@/views/calculation-valve-headstock/edf-sluice-w/calculation'),
+            name: 'Calculation',
+            meta: {title: '数据计算'}
+          },
+          {
+            path: 'report',
+            component: () => import('@/views/calculation-valve-headstock/edf-sluice-w/report'),
+            name: 'Report',
+            meta: {title: '计算报告'}
+          },
+        ]
+      },
+      {
+        path: 'edf-cutoff-valve-w',
+        name: 'EDFCutoffValveW',
+        redirect: 'noRedirect',
+        component: () => import('@/views/calculation-valve-headstock/edf-cutoff-s'),
+        meta: {title: 'EDF S型截止阀'},
+        children: [
+          {
+            path: 'calculation',
+            component: () => import('@/views/calculation-valve-headstock/edf-cutoff-s/calculation'),
+            name: 'Calculation',
+            meta: {title: '数据计算'}
+          },
+          {
+            path: 'report',
+            component: () => import('@/views/calculation-valve-headstock/edf-cutoff-s/report'),
+            name: 'Report',
+            meta: {title: '计算报告'}
+          },
+        ]
+      },
+    ]
+  },
 
   {
     path: 'external-link',
