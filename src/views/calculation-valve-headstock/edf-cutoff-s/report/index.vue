@@ -4,7 +4,7 @@
       <el-col :span="20" :offset="2">
         <div id="print-area">
           <div class="report-header">
-            <span>EDF C型闸阀启闭力矩</span>
+            <span>EDF S型截止阀启闭力矩</span>
           </div>
           <div class="report-panel" style="margin-bottom: 20px">
             <table class="custom-table">

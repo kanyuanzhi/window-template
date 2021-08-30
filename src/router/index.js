@@ -321,6 +321,47 @@ export const asyncRoutes = [
           },
         ]
       },
+      {
+        path: 'areva-sluice-valve',
+        name: 'AREVASluiceValve',
+        redirect: 'noRedirect',
+        component: () => import('@/views/calculation-valve-headstock/areva-sluice'),
+        meta: {title: '华龙一号 闸阀'},
+        children: [
+          {
+            path: 'calculation',
+            component: () => import('@/views/calculation-valve-headstock/areva-sluice/calculation'),
+            name: 'Calculation',
+            meta: {title: '数据计算'}
+          },
+          {
+            path: 'report',
+            component: () => import('@/views/calculation-valve-headstock/areva-sluice/report'),
+            name: 'Report',
+            meta: {title: '计算报告'}
+          },
+        ]
+      },{
+        path: 'areva-cutoff-valve',
+        name: 'AREVACutoffValve',
+        redirect: 'noRedirect',
+        component: () => import('@/views/calculation-valve-headstock/areva-cutoff'),
+        meta: {title: '华龙一号 截止阀'},
+        children: [
+          {
+            path: 'calculation',
+            component: () => import('@/views/calculation-valve-headstock/areva-cutoff/calculation'),
+            name: 'Calculation',
+            meta: {title: '数据计算'}
+          },
+          {
+            path: 'report',
+            component: () => import('@/views/calculation-valve-headstock/areva-cutoff/report'),
+            name: 'Report',
+            meta: {title: '计算报告'}
+          },
+        ]
+      },
     ]
   },
 

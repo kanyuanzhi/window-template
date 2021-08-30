@@ -6,7 +6,7 @@
 <script>
 
 export default {
-  name: 'EDFSluiceC',
+  name: 'EDFCutoffS',
   data() {
     return {
       general: this.$store.getters.valve_headstock_edf_cutoff_s,

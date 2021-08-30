@@ -26,6 +26,8 @@ const getters = {
   valve_headstock_edf_sluice_v: state => state.parameter_valve_headstock_edf_sluice_v.general,
   valve_headstock_edf_sluice_w: state => state.parameter_valve_headstock_edf_sluice_w.general,
   valve_headstock_edf_cutoff_s: state => state.parameter_valve_headstock_edf_cutoff_s.general,
+  valve_headstock_edf_areva_sluice: state => state.parameter_valve_headstock_areva_sluice.general,
+  valve_headstock_edf_areva_cutoff: state => state.parameter_valve_headstock_areva_cutoff.general,
 
 }
 export default getters

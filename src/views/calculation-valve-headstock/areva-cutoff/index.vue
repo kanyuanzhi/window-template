@@ -6,10 +6,10 @@
 <script>
 
 export default {
-  name: 'EDFSluiceV',
+  name: 'AREVASCutoff',
   data() {
     return {
-      general: this.$store.getters.valve_headstock_edf_sluice_v,
+      general: this.$store.getters.valve_headstock_edf_areva_cutoff,
     }
   }
 }

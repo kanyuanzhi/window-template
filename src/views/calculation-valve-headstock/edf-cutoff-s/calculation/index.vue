@@ -279,7 +279,7 @@ export default {
         const Q3 = 1.5 * Pms <= 10 ? pi * Dt * h : 1.5 * Pms / 10 * pi * Dt * h
         const Q4 = E * pi * Ds
         const Qt = (Q1 + Q2 + Q3 + Q4 - Q5) * CR
-        const Tf = (tan_alpha + miu_2 / cos(beta)) / (1 - (tan_alpha + miu_2 / cos(beta))) * Rm
+        const Tf = (tan_alpha + miu_2 / cos(beta)) / (1 - tan_alpha * miu_2 / cos(beta)) * Rm
 
         // 结果数据
         const C = Qt / R * Tf
