@@ -382,6 +382,27 @@ export const asyncRoutes = [
           },
         ]
       },
+      {
+        path: 'enchiridion-ball-valve',
+        name: 'EnchiridionBallValve',
+        redirect: 'noRedirect',
+        component: () => import('@/views/calculation-valve-headstock/enchiridion-ball'),
+        meta: {title: '阀门手册 球阀'},
+        children: [
+          {
+            path: 'calculation',
+            component: () => import('@/views/calculation-valve-headstock/enchiridion-ball/calculation'),
+            name: 'Calculation',
+            meta: {title: '数据计算'}
+          },
+          {
+            path: 'report',
+            component: () => import('@/views/calculation-valve-headstock/enchiridion-ball/report'),
+            name: 'Report',
+            meta: {title: '计算报告'}
+          },
+        ]
+      },
     ]
   },
 

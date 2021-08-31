@@ -4,7 +4,7 @@
       <el-col :span="20" :offset="2">
         <div id="print-area">
           <div class="report-header">
-            <span>阀门手册 蝶阀启闭力矩</span>
+            <span>阀门手册 球阀启闭力矩</span>
           </div>
           <div class="report-panel" style="margin-bottom: 20px">
             <table class="custom-table">
@@ -17,11 +17,13 @@
               </tr>
               </thead>
               <tbody>
-              <custom-tr section="输入参数一" input_output="input" para="D" rowspan="5"></custom-tr>
-              <custom-tr section="输入参数一" input_output="input" para="V"></custom-tr>
-              <custom-tr section="输入参数一" input_output="input" para="g"></custom-tr>
-              <custom-tr section="输入参数一" input_output="input" para="k"></custom-tr>
-              <custom-tr section="输入参数一" input_output="input" para="gama"></custom-tr>
+              <custom-tr section="输入参数一" input_output="input" para="Rk" rowspan="7"></custom-tr>
+              <custom-tr section="输入参数一" input_output="input" para="Rm"></custom-tr>
+              <custom-tr section="输入参数一" input_output="input" para="P"></custom-tr>
+              <custom-tr section="输入参数一" input_output="input" para="miu_k"></custom-tr>
+              <custom-tr section="输入参数一" input_output="input" para="a"></custom-tr>
+              <custom-tr section="输入参数一" input_output="output" para="sin_beta"></custom-tr>
+              <custom-tr section="输入参数一" input_output="output" para="cos_beta"></custom-tr>
 
               <custom-tr section="输入参数二" input_output="input" para="P" rowspan="6"></custom-tr>
               <custom-tr section="输入参数二" input_output="input" para="miu"></custom-tr>
@@ -30,16 +32,8 @@
               <custom-tr section="输入参数二" input_output="input" para="dc"></custom-tr>
               <custom-tr section="输入参数二" input_output="input" para="s"></custom-tr>
 
-              <custom-tr section="输入参数三" input_output="input" para="PH" rowspan="4"></custom-tr>
-              <custom-tr section="输入参数三" input_output="input" para="miu_"></custom-tr>
-              <custom-tr section="输入参数三" input_output="input" para="Qc"></custom-tr>
-              <custom-tr section="输入参数三" input_output="input" para="d"></custom-tr>
-
-              <custom-tr section="输入参数四" input_output="input" para="Ma" rowspan="1"></custom-tr>
-
-              <custom-tr section="中间过程参数" input_output="output" para="MD" rowspan="4"></custom-tr>
+              <custom-tr section="中间过程参数" input_output="output" para="MK" rowspan="3"></custom-tr>
               <custom-tr section="中间过程参数" input_output="output" para="MT"></custom-tr>
-              <custom-tr section="中间过程参数" input_output="output" para="MZ"></custom-tr>
               <custom-tr section="中间过程参数" input_output="output" para="MS"></custom-tr>
               </tbody>
             </table>
