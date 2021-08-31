@@ -361,6 +361,26 @@ export const asyncRoutes = [
             meta: {title: '计算报告'}
           },
         ]
+      },{
+        path: 'enchiridion-butterfly-valve',
+        name: 'EnchiridionButterflyValve',
+        redirect: 'noRedirect',
+        component: () => import('@/views/calculation-valve-headstock/enchiridion-butterfly'),
+        meta: {title: '阀门手册 蝶阀'},
+        children: [
+          {
+            path: 'calculation',
+            component: () => import('@/views/calculation-valve-headstock/enchiridion-butterfly/calculation'),
+            name: 'Calculation',
+            meta: {title: '数据计算'}
+          },
+          {
+            path: 'report',
+            component: () => import('@/views/calculation-valve-headstock/enchiridion-butterfly/report'),
+            name: 'Report',
+            meta: {title: '计算报告'}
+          },
+        ]
       },
     ]
   },

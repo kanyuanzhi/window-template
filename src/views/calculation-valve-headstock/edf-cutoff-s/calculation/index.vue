@@ -219,7 +219,7 @@ import {Message} from "element-ui";
 const precision = defaultSettings.precision
 
 export default {
-  name: 'EDFSluiceCCalculation',
+  name: 'EDFSluiceSCalculation',
   props: ['general'],
   components: {
     CustomElInput
