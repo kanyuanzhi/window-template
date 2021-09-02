@@ -405,6 +405,99 @@ export const asyncRoutes = [
       },
     ]
   },
+  {
+    path: '/calculation-valve-packing',
+    component: Layout,
+    redirect: 'noRedirect',
+    name: 'ValvePacking',
+    meta: {title: '阀门盘根力矩', icon: 'el-icon-s-help', role: ['super']},
+    children: [
+      {
+        path: 'edf',
+        name: 'EDF',
+        redirect: 'noRedirect',
+        component: () => import('@/views/calculation-valve-packing/edf'),
+        meta: {title: 'EDF'},
+        children: [
+          {
+            path: 'calculation',
+            component: () => import('@/views/calculation-valve-packing/edf/calculation'),
+            name: 'Calculation',
+            meta: {title: '数据计算'}
+          },
+          {
+            path: 'report',
+            component: () => import('@/views/calculation-valve-packing/edf/report'),
+            name: 'Report',
+            meta: {title: '计算报告'}
+          },
+        ]
+      },
+      {
+        path: 'areva',
+        name: 'AREVA',
+        redirect: 'noRedirect',
+        component: () => import('@/views/calculation-valve-packing/areva'),
+        meta: {title: '华龙一号'},
+        children: [
+          {
+            path: 'calculation',
+            component: () => import('@/views/calculation-valve-packing/areva/calculation'),
+            name: 'Calculation',
+            meta: {title: '数据计算'}
+          },
+          {
+            path: 'report',
+            component: () => import('@/views/calculation-valve-packing/areva/report'),
+            name: 'Report',
+            meta: {title: '计算报告'}
+          },
+        ]
+      },
+      {
+        path: 'enchiridion',
+        name: 'Enchiridion',
+        redirect: 'noRedirect',
+        component: () => import('@/views/calculation-valve-packing/enchiridion'),
+        meta: {title: '阀门手册'},
+        children: [
+          {
+            path: 'calculation',
+            component: () => import('@/views/calculation-valve-packing/enchiridion/calculation'),
+            name: 'Calculation',
+            meta: {title: '数据计算'}
+          },
+          {
+            path: 'report',
+            component: () => import('@/views/calculation-valve-packing/enchiridion/report'),
+            name: 'Report',
+            meta: {title: '计算报告'}
+          },
+        ]
+      },
+      {
+        path: 'epri',
+        name: 'EPRI',
+        redirect: 'noRedirect',
+        component: () => import('@/views/calculation-valve-packing/epri'),
+        meta: {title: 'EPRI'},
+        children: [
+          {
+            path: 'calculation',
+            component: () => import('@/views/calculation-valve-packing/epri/calculation'),
+            name: 'Calculation',
+            meta: {title: '数据计算'}
+          },
+          {
+            path: 'report',
+            component: () => import('@/views/calculation-valve-packing/epri/report'),
+            name: 'Report',
+            meta: {title: '计算报告'}
+          },
+        ]
+      },
+    ]
+  },
 
   {
     path: 'external-link',

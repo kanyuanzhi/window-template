@@ -1,0 +1,197 @@
+<template>
+  <div class="app-container">
+    <el-row :gutter="10">
+      <el-col :span="20">
+        <el-form label-width="80px">
+          <el-card class="box-card" shadow="hover">
+            <div slot="header" class="clearfix">
+              <span>输入参数</span>
+              <el-button @click="clean1" style="float: right;padding: 0;" type="text" size="medium"
+                         icon="el-icon-delete">清空
+              </el-button>
+              <el-button @click="calculate" style="float: right;padding: 0 20px 0 0;" type="text" size="medium"
+                         icon="el-icon-video-play">计算
+              </el-button>
+            </div>
+            <el-row :gutter="10">
+              <el-col :span="6">
+                <custom-el-input :para="general_input.PMS"></custom-el-input>
+              </el-col>
+              <el-col :span="6">
+                <custom-el-input :para="general_input.Do"></custom-el-input>
+              </el-col>
+              <el-col :span="6">
+                <custom-el-input :para="general_input.Di"></custom-el-input>
+              </el-col>
+              <el-col :span="6">
+                <custom-el-input :para="general_input.D"></custom-el-input>
+              </el-col>
+            </el-row>
+            <el-row :gutter="10">
+              <el-col :span="6">
+                <custom-el-input :para="general_input.K"></custom-el-input>
+              </el-col>
+              <el-col :span="6">
+                <custom-el-input :para="general_input.N"></custom-el-input>
+              </el-col>
+            </el-row>
+            <el-divider class="custom-el-divider--horizontal">计算结果</el-divider>
+            <el-row :gutter="10">
+              <el-col :span="24">
+                <el-descriptions :column="2">
+                  <el-descriptions-item :label="Label(general_output.Pg)">{{
+                      general_output.Pg.value
+                    }}
+                  </el-descriptions-item>
+                </el-descriptions>
+              </el-col>
+            </el-row>
+          </el-card>
+          <el-card class="box-card" shadow="hover">
+            <div slot="header" class="clearfix">
+              <span>结果参数</span>
+              <el-button @click="clean2" style="float: right;padding: 0;" type="text" size="medium"
+                         icon="el-icon-delete">清空
+              </el-button>
+              <el-button @click="calculate" style="float: right;padding: 0 20px 0 0;" type="text" size="medium"
+                         icon="el-icon-video-play">计算
+              </el-button>
+            </div>
+            <el-divider class="custom-el-divider--horizontal">计算结果</el-divider>
+            <el-row :gutter="10">
+              <el-col :span="24">
+                <el-descriptions :column="2">
+                  <el-descriptions-item :label="Label(general_output.Cs)">{{
+                      general_output.Cs.value
+                    }}
+                  </el-descriptions-item>
+                </el-descriptions>
+              </el-col>
+            </el-row>
+          </el-card>
+        </el-form>
+        <el-form>
+          <el-row :gutter="10">
+            <el-col :span="24">
+              <el-form-item align="center">
+                <el-button icon="el-icon-video-play" type="primary" @click="calculate" size="medium">计算</el-button>
+                <el-button icon="el-icon-delete" @click="cleanAll" size="medium">清空</el-button>
+              </el-form-item>
+            </el-col>
+          </el-row>
+        </el-form>
+      </el-col>
+      <el-col :span="4">
+        <!--        <div class="demo-image__placeholder">-->
+        <!--          <div class="el-image-block">-->
+        <!--            <el-image :src="img_compute" :preview-src-list="[img_compute]">-->
+        <!--            </el-image>-->
+        <!--            <span class="demonstration">GB150窄面法兰参数示意图</span>-->
+        <!--          </div>-->
+        <!--          <div class="el-image-block">-->
+        <!--            <el-image :src="img_shape" :preview-src-list="[img_shape]">-->
+        <!--            </el-image>-->
+        <!--            <span class="demonstration">GB150窄面法兰形状系数示意图</span>-->
+        <!--          </div>-->
+        <!--        </div>-->
+      </el-col>
+    </el-row>
+  </div>
+</template>
+
+<script>
+import CustomElInput from '@/components/CustomElInput'
+import {formatLabel} from '@/utils/common'
+
+import {e, log, max, pi, pow, round, sqrt, atan, sin, cos} from "mathjs"
+
+import defaultSettings from '@/settings'
+import {Message} from "element-ui";
+
+const precision = defaultSettings.precision
+
+export default {
+  name: 'EPRICalculation',
+  props: ['general'],
+  components: {
+    CustomElInput
+  },
+  data() {
+    return {
+      general_input: this.general.input,
+      general_output: this.general.output,
+
+    }
+  },
+  computed: {
+    Label() {
+      return para => {
+        return formatLabel(para)
+      }
+    }
+  },
+  methods: {
+    calculate() {
+      try {
+        //----------------输入----------------//
+        // 输入参数
+        const PMS = this.general_input.PMS.value
+        const Do = this.general_input.Do.value
+        const Di = this.general_input.Di.value
+        const D = this.general_input.D.value
+        const K = this.general_input.K.value
+        const N = this.general_input.N.value
+
+        //----------------输出----------------//
+        // 输入参数
+        const Pg = max(1.75 * PMS, 28)
+        const Tp = K * D / (12 * N) * (pi / 4 * Pg * (pow(Do, 2) - pow(Di, 2)))
+
+        // 过程参数
+        // const Cs = max(PMS, 50) * pi * (pow(ra, 2) - pow(ri, 2)) / 10 / n * (Pitch / (2 * pi) + f * r + f_ * Rma)
+
+        this.general_output.Pg.value = round(Pg, precision)
+
+        // this.general_output.Cs.value = round(Cs, precision)
+      } catch (e) {
+        Message.error(e)
+      }
+    },
+    clean1() {
+      this.general_input.PMS.value = ''
+      this.general_input.Do.value = ''
+      this.general_input.Di.value = ''
+      this.general_input.D.value = ''
+      this.general_input.K.value = ''
+      this.general_input.N.value = ''
+
+      this.general_output.Pg.value = '--'
+
+    },
+    clean2() {
+      this.general_output.Cs.value = '--'
+    },
+    cleanAll() {
+      this.clean1()
+      this.clean2()
+    }
+  }
+}
+</script>
+
+<style scoped>
+
+.custom-table-in-card {
+  width: 100%;
+  font-size: 15px;
+  border: 1px solid #DCDFE6;
+  border-collapse: collapse;
+  color: #606266;
+}
+
+td {
+  border: 1px solid #DCDFE6;
+  text-align: center;
+  padding: 4px 6px;
+}
+</style>
