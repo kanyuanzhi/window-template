@@ -31,9 +31,12 @@ const getters = {
   valve_headstock_enchiridion_butterfly: state => state.parameter_valve_headstock_enchiridion_butterfly.general,
   valve_headstock_enchiridion_ball: state => state.parameter_valve_headstock_enchiridion_ball.general,
 
-  valve_packing_edf:state => state.parameter_valve_packing_edf.general,
-  valve_packing_areva:state => state.parameter_valve_packing_areva.general,
-  valve_packing_enchiridion:state => state.parameter_valve_packing_enchiridion.general,
-  valve_packing_epri:state => state.parameter_valve_packing_epri.general,
+  valve_packing_edf: state => state.parameter_valve_packing_edf.general,
+  valve_packing_areva: state => state.parameter_valve_packing_areva.general,
+  valve_packing_enchiridion: state => state.parameter_valve_packing_enchiridion.general,
+  valve_packing_epri: state => state.parameter_valve_packing_epri.general,
+
+  pipe_nuclear: state => state.parameter_pipe_nuclear.general,
+  pipe_conventional: state => state.parameter_pipe_conventional.general,
 }
 export default getters

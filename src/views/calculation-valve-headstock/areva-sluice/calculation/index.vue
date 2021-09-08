@@ -19,7 +19,7 @@
                                  :disabled="!general_input.miu_1.is_manual"></custom-el-input>
               </el-col>
               <el-col :span="18">
-                <el-form-item label="材料类型">
+                <el-form-item label="材料类型" size="small" :inline="true">
                   <el-radio-group v-model="general_input.miu_1.selection" @change="miu1Change">
                     <el-radio :label="general_input.miu_1.items[0].selection">{{
                         general_input.miu_1.items[0].meaning
@@ -253,7 +253,7 @@
                 <custom-el-input :para="general_output.Q3_2" :disabled="true" v-else></custom-el-input>
               </el-col>
               <el-col :span="18">
-                <el-form-item :label="general_input.Q3_type.meaning" label-width="auto">
+                <el-form-item :label="general_input.Q3_type.meaning" label-width="auto" size="small" :inline="true">
                   <el-radio-group v-model="general_input.Q3_type.value">
                     <el-radio :label="general_input.Q3_type.items[0].selection">{{
                         general_input.Q3_type.items[0].meaning

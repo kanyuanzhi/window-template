@@ -36,3 +36,15 @@ export function formatLabel(para) {
     return str.concat('(', para.unit, ')')
   }
 }
+
+export function search(array, value) {
+  if (value < array[0]) {
+    return array[0]
+  }
+  for (let i = 1; i < array.length; i++) {
+    if (value < array[i]) {
+      return array[i-1]
+    }
+  }
+  return array[array.length-1]
+}

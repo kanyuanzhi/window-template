@@ -50,7 +50,7 @@ export const constantRoutes = [
       path: 'welcome',
       name: 'Welcome',
       component: () => import('@/views/welcome/index'),
-      meta: {title: '欢迎页面', icon: 'dashboard'}
+      meta: {title: '欢迎页面', icon: 'el-icon-s-home'}
     }]
   },
   {
@@ -58,37 +58,37 @@ export const constantRoutes = [
     component: Layout,
     redirect: '/user/change-password',
     name: 'user',
-    meta: {title: '用户管理', icon: 'el-icon-s-help'},
+    meta: {title: '用户管理', icon: 'el-icon-user-solid'},
     children: [
       {
         path: 'change-password',
         component: () => import('@/views/user/change-password/index'),
         name: 'changePassword',
-        meta: {title: '修改密码', icon: 'el-icon-s-help'}
+        meta: {title: '修改密码'}
       },
       {
         path: 'add-user',
         component: () => import('@/views/user/add-user/index'),
         name: 'addUser',
-        meta: {title: '新增用户', icon: 'el-icon-s-help'}
+        meta: {title: '新增用户'}
       },
       {
         path: 'edit-user',
         component: () => import('@/views/user/edit-user/index'),
         name: 'editUser',
-        meta: {title: '编辑用户', icon: 'el-icon-s-help'}
+        meta: {title: '编辑用户'}
       },
       {
         path: 'edit-role',
         component: () => import('@/views/user/edit-role/index'),
         name: 'EditRole',
-        meta: {title: '编辑权限', icon: 'el-icon-s-help'}
+        meta: {title: '编辑权限'}
       },
       {
         path: 'distribute-role',
         component: () => import('@/views/user/distribute-role/index'),
         name: 'distributeRole',
-        meta: {title: '分配权限', icon: 'el-icon-s-help'}
+        meta: {title: '分配权限'}
       }
     ]
   },
@@ -341,7 +341,7 @@ export const asyncRoutes = [
             meta: {title: '计算报告'}
           },
         ]
-      },{
+      }, {
         path: 'areva-cutoff-valve',
         name: 'AREVACutoffValve',
         redirect: 'noRedirect',
@@ -361,7 +361,7 @@ export const asyncRoutes = [
             meta: {title: '计算报告'}
           },
         ]
-      },{
+      }, {
         path: 'enchiridion-butterfly-valve',
         name: 'EnchiridionButterflyValve',
         redirect: 'noRedirect',
@@ -491,6 +491,58 @@ export const asyncRoutes = [
           {
             path: 'report',
             component: () => import('@/views/calculation-valve-packing/epri/report'),
+            name: 'Report',
+            meta: {title: '计算报告'}
+          },
+        ]
+      },
+    ]
+  },
+
+  {
+    path: '/calculation-pipe',
+    component: Layout,
+    redirect: 'noRedirect',
+    name: 'Pipe',
+    meta: {title: '管道跨距', icon: 'el-icon-s-help', role: ['super']},
+    children: [
+      {
+        path: 'nuclear',
+        name: 'Nuclear',
+        redirect: 'noRedirect',
+        component: () => import('@/views/calculation-pipe/nuclear'),
+        meta: {title: '核岛'},
+        children: [
+          {
+            path: 'calculation',
+            component: () => import('@/views/calculation-pipe/nuclear/calculation'),
+            name: 'Calculation',
+            meta: {title: '数据计算'}
+          },
+          {
+            path: 'report',
+            component: () => import('@/views/calculation-pipe/nuclear/report'),
+            name: 'Report',
+            meta: {title: '计算报告'}
+          },
+        ]
+      },
+      {
+        path: 'conventional',
+        name: 'Conventional',
+        redirect: 'noRedirect',
+        component: () => import('@/views/calculation-pipe/conventional'),
+        meta: {title: '常规岛'},
+        children: [
+          {
+            path: 'calculation',
+            component: () => import('@/views/calculation-pipe/conventional/calculation'),
+            name: 'Calculation',
+            meta: {title: '数据计算'}
+          },
+          {
+            path: 'report',
+            component: () => import('@/views/calculation-pipe/conventional/report'),
             name: 'Report',
             meta: {title: '计算报告'}
           },
