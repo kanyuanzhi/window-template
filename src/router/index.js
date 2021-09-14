@@ -38,6 +38,12 @@ export const constantRoutes = [
   },
 
   {
+    path: '/register',
+    component: () => import('@/views/register/index'),
+    hidden: true
+  },
+
+  {
     path: '/404',
     component: () => import('@/views/404'),
     hidden: true
@@ -53,6 +59,9 @@ export const constantRoutes = [
       meta: {title: '欢迎页面', icon: 'el-icon-s-home'}
     }]
   },
+]
+
+export const asyncRoutes = [
   {
     path: '/user',
     component: Layout,
@@ -64,43 +73,40 @@ export const constantRoutes = [
         path: 'change-password',
         component: () => import('@/views/user/change-password/index'),
         name: 'changePassword',
-        meta: {title: '修改密码'}
+        meta: {title: '修改密码', role: ['super', 'admin','operator','guest']}
       },
       {
         path: 'add-user',
         component: () => import('@/views/user/add-user/index'),
         name: 'addUser',
-        meta: {title: '新增用户'}
+        meta: {title: '新增用户', role: ['super', 'admin']}
       },
       {
         path: 'edit-user',
         component: () => import('@/views/user/edit-user/index'),
         name: 'editUser',
-        meta: {title: '编辑用户'}
+        meta: {title: '编辑用户', role: ['super']}
       },
       {
         path: 'edit-role',
         component: () => import('@/views/user/edit-role/index'),
         name: 'EditRole',
-        meta: {title: '编辑权限'}
+        meta: {title: '编辑权限', role: ['super']}
       },
       {
         path: 'distribute-role',
         component: () => import('@/views/user/distribute-role/index'),
         name: 'distributeRole',
-        meta: {title: '分配权限'}
+        meta: {title: '分配权限', role: ['super', 'admin']}
       }
     ]
   },
-]
-
-export const asyncRoutes = [
   {
     path: '/calculation-flange',
     component: Layout,
     redirect: 'noRedirect',
     name: 'Flange',
-    meta: {title: '法兰校核', icon: 'el-icon-s-help', role: ['super']},
+    meta: {title: '法兰校核', icon: 'el-icon-s-help', role: ['super','admin','operator']},
     children: [
       {
         path: 'rcc-m',
@@ -235,7 +241,7 @@ export const asyncRoutes = [
     component: Layout,
     redirect: 'noRedirect',
     name: 'ValveHeadstock',
-    meta: {title: '阀门启闭力矩', icon: 'el-icon-s-help', role: ['super']},
+    meta: {title: '阀门启闭力矩', icon: 'el-icon-s-help', role: ['super','admin','operator']},
     children: [
       {
         path: 'edf-sluice-valve-c',
@@ -410,7 +416,7 @@ export const asyncRoutes = [
     component: Layout,
     redirect: 'noRedirect',
     name: 'ValvePacking',
-    meta: {title: '阀门盘根力矩', icon: 'el-icon-s-help', role: ['super']},
+    meta: {title: '阀门盘根力矩', icon: 'el-icon-s-help', role: ['super','admin','operator']},
     children: [
       {
         path: 'edf',
@@ -504,7 +510,7 @@ export const asyncRoutes = [
     component: Layout,
     redirect: 'noRedirect',
     name: 'Pipe',
-    meta: {title: '管道跨距', icon: 'el-icon-s-help', role: ['super']},
+    meta: {title: '管道跨距', icon: 'el-icon-s-help', role: ['super','admin','operator']},
     children: [
       {
         path: 'nuclear',
@@ -551,16 +557,16 @@ export const asyncRoutes = [
     ]
   },
 
-  {
-    path: 'external-link',
-    component: Layout,
-    children: [
-      {
-        path: 'https://panjiachen.github.io/vue-element-admin-site/#/',
-        meta: {title: 'External Link', icon: 'link', role: ['super']}
-      }
-    ]
-  },
+  // {
+  //   path: 'external-link',
+  //   component: Layout,
+  //   children: [
+  //     {
+  //       path: 'https://panjiachen.github.io/vue-element-admin-site/#/',
+  //       meta: {title: 'External Link', icon: 'link', role: ['super','admin']}
+  //     }
+  //   ]
+  // },
 
   // 404 page must be placed at the end !!!
   {path: '*', redirect: '/404', hidden: true}

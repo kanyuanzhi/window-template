@@ -2,11 +2,11 @@
   <div class="login-container">
     <div class="title-container">
       <h1 class="web-title">XXXX计算平台</h1>
-      <h3 class="title"><span>用户登录</span></h3>
+      <h3 class="title"><span>用户注册</span></h3>
     </div>
     <el-form
       ref="loginForm"
-      :model="loginForm"
+      :model="registerForm"
       :rules="loginRules"
       class="login-form"
       auto-complete="on"
@@ -18,7 +18,7 @@
         </span>
         <el-input
           ref="username"
-          v-model="loginForm.username"
+          v-model="registerForm.username"
           placeholder="用户名"
           name="username"
           type="text"
@@ -34,10 +34,31 @@
         <el-input
           :key="passwordType"
           ref="password"
-          v-model="loginForm.password"
+          v-model="registerForm.password"
           :type="passwordType"
           placeholder="密码"
           name="password"
+          tabindex="2"
+          auto-complete="on"
+          @keyup.enter.native="handleLogin"
+        />
+        <span class="show-pwd" @click="showPwd">
+          <svg-icon
+            :icon-class="passwordType === 'password' ? 'eye' : 'eye-open'"
+          />
+        </span>
+      </el-form-item>
+      <el-form-item prop="confirmPassword">
+        <span class="svg-container">
+          <svg-icon icon-class="password"/>
+        </span>
+        <el-input
+          :key="passwordType"
+          ref="confirmPassword"
+          v-model="registerForm.confirmPassword"
+          :type="passwordType"
+          placeholder="再次输入密码"
+          name="confirmPassword"
           tabindex="2"
           auto-complete="on"
           @keyup.enter.native="handleLogin"
@@ -54,14 +75,13 @@
         type="primary"
         style="width: 100%; margin-bottom: 30px"
         @click.native.prevent="handleLogin"
-      >登录
-      </el-button
-      >
+      >注册
+      </el-button>
 
       <div class="tips">
-        <el-link :underline="false" type="info" @click="handleGotoRegister">点击注册</el-link>
-<!--        <span style="margin-right:20px;">username: admin</span>-->
-<!--        <span> password: any</span>-->
+        <el-link :underline="false" type="info" @click="handleGotoLogin">返回登录</el-link>
+        <!--        <span style="margin-right:20px;">username: admin</span>-->
+        <!--        <span> password: any</span>-->
       </div>
     </el-form>
   </div>
@@ -69,40 +89,6 @@
 
 <script>
 import {validUsername} from '@/utils/validate'
-// import Dexie from 'dexie'
-
-// Dexie.debug = true; // In production, set to false to increase performance a little.
-//
-// let db = new Dexie("projectDatabase")
-// db.version(1).stores({roles: "++id,key,name,introduction", users: "++id,username,password,roles,token,name,introduction"})
-
-// db.transaction('rw', db.users, async () => {
-//   if ((await db.users.where({username: "super"}).count()) === 0) {
-//     await db.users.add({
-//       username: "super",
-//       password: "123456",
-//       roles: ["1", "2", "3", "4", "5"],
-//       token: "qazwsxedc",
-//       name: "",
-//       introduction: ""
-//     })
-//   }
-// }).catch(e => {
-//   console.error(e.stack);
-// })
-//
-// db.transaction('rw', db.roles, async () => {
-//   if ((await db.roles.count()) === 0) {
-//     await db.roles.add({key: "1", name:"1权限", introduction:""})
-//     await db.roles.add({key: "2", name:"1权限", introduction:""})
-//     await db.roles.add({key: "3", name:"1权限", introduction:""})
-//     await db.roles.add({key: "4", name:"1权限", introduction:""})
-//     await db.roles.add({key: "5", name:"1权限", introduction:""})
-//   }
-// }).catch(e => {
-//   console.error(e.stack);
-// })
-
 
 export default {
   name: 'Login',
@@ -121,14 +107,23 @@ export default {
         callback()
       }
     }
+    const validateConfirmPassword = (rule, value, callback) => {
+      if (value !== this.registerForm.password) {
+        callback(new Error('两次密码不一致'))
+      } else {
+        callback()
+      }
+    }
     return {
-      loginForm: {
-        username: 'super',
-        password: '123456'
+      registerForm: {
+        username: '',
+        password: '',
+        confirmPassword: '',
       },
       loginRules: {
         username: [{required: true, trigger: 'blur', validator: validateUsername}],
-        password: [{required: true, trigger: 'blur', validator: validatePassword}]
+        password: [{required: true, trigger: 'blur', validator: validatePassword}],
+        confirmPassword: [{required: true, trigger: 'blur', validator: validateConfirmPassword}],
       },
       loading: false,
       passwordType: 'password',
@@ -158,12 +153,9 @@ export default {
       this.$refs.loginForm.validate(valid => {
         if (valid) {
           this.loading = true
-          this.$store.dispatch('user/login', this.loginForm).then(() => {
-            if(this.redirect === '/register'){
-              this.$router.push({path: '/'})
-            }else {
-              this.$router.push({path: this.redirect || '/'})
-            }
+          this.$store.dispatch('user/register', this.registerForm).then(() => {
+            this.$message('注册成功!')
+            this.$router.push({path: '/login'})
             this.loading = false
           }).catch(() => {
             this.loading = false
@@ -173,8 +165,8 @@ export default {
         }
       })
     },
-    handleGotoRegister(){
-      this.$router.push({path:'/register'})
+    handleGotoLogin(){
+      this.$router.push({path:'/login'})
     }
   }
 }

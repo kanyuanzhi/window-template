@@ -11,6 +11,7 @@ NProgress.configure({ showSpinner: false }) // NProgress Configuration
 // no redirect whitelist
 const whiteList = [
   '/login',
+  '/register',
   // '/fljh-lsyjl-project1_report',
   // '/fljh-lsyjl-project2_report',
   // '/fljh-lsyjl-project3_report',
