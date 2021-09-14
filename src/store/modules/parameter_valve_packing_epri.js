@@ -6,7 +6,7 @@ const state = {
         value: '',
         meaning: '阀门最大运行压力',
         label: 'PMS',
-        unit: 'bar'
+        unit: 'MPa'
       },
       Do: {
         value: '',

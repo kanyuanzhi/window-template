@@ -618,6 +618,8 @@ export default {
       this.condition_input.Ps.value = ''
       this.condition_input.Ec.value = ''
       this.condition_input.Eh.value = ''
+      this.condition_input.FT.value = ''
+      this.condition_input.FT.is_calculated = true
 
       this.condition_output.FS0.value = '--'
       this.condition_output.FT.value = '--'
@@ -655,9 +657,9 @@ export default {
       this.condition_output.M.value = '--'
     },
     FTIsCalculatedChange(val) {
-      // if (val) {
-      //   this.condition_input.FT.value = this.condition_output.FT.value
-      // }
+      if (val) {
+        this.condition_input.FT.value = this.condition_output.FT.value
+      }
     }
   }
 }

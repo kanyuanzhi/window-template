@@ -22,7 +22,7 @@ const state = {
       },
       miu_k: {
         value: '',
-        meaning: '摩擦系数',
+        meaning: '球体摩擦系数',
         label: 'μk',
         unit: ''
       },
@@ -36,7 +36,7 @@ const state = {
       // 输入参数二
       miu: {
         value: '',
-        meaning: '摩擦系数',
+        meaning: '阀杆摩擦系数',
         label: 'μ',
         unit: ''
       },

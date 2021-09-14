@@ -32,6 +32,19 @@ const state = {
         label: 'Dtcm',
         unit: 'cm'
       },
+      gc:{
+        value: '',
+        meaning: '调整公差（范围：0~0.5）',
+        label: 'gc',
+        unit: 'cm'
+      },
+      hcm: {
+        value: '',
+        meaning: '填料高度',
+        label: 'hcm',
+        unit: 'cm',
+        is_calculated: true
+      },
       PMS: {
         value: '',
         meaning: '阀门设计压力',

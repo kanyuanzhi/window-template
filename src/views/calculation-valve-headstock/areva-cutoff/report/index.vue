@@ -17,11 +17,12 @@
               </tr>
               </thead>
               <tbody>
-              <custom-tr section="输入参数（系统与参数结构）" input_output="input" para="Ds" rowspan="19"></custom-tr>
+              <custom-tr section="输入参数（系统与参数结构）" input_output="input" para="Ds" rowspan="20"></custom-tr>
               <custom-tr section="输入参数（系统与参数结构）" input_output="input" para="delta_P"></custom-tr>
               <custom-tr section="输入参数（系统与参数结构）" input_output="input" para="Dt"></custom-tr>
               <custom-tr section="输入参数（系统与参数结构）" input_output="input" para="Pfonc"></custom-tr>
               <custom-tr section="输入参数（系统与参数结构）" input_output="input" para="Dtcm"></custom-tr>
+              <custom-tr section="输入参数（系统与参数结构）" input_output="input" para="gc"></custom-tr>
               <custom-tr section="输入参数（系统与参数结构）" input_output="output" para="hcm"></custom-tr>
               <custom-tr section="输入参数（系统与参数结构）" input_output="output" para="S"></custom-tr>
               <custom-tr section="输入参数（系统与参数结构）" input_output="input" para="PMS"></custom-tr>

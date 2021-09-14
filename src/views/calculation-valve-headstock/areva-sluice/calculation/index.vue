@@ -61,6 +61,23 @@
                 <custom-el-input :para="general_input.Dtcm"></custom-el-input>
               </el-col>
               <el-col :span="6">
+                <custom-el-input :para="general_input.gc"></custom-el-input>
+              </el-col>
+              <el-col :span="6">
+                <custom-el-input :para="general_input.hcm"
+                                 :disabled="general_input.hcm.is_calculated"></custom-el-input>
+              </el-col>
+              <el-col :span="6">
+                <el-form-item label="选取方式" size="small" :inline="true">
+                  <el-radio-group v-model="general_input.hcm.is_calculated" @change="hcmIsCalculatedChange">
+                    <el-radio :label="true">公式计算</el-radio>
+                    <el-radio :label="false">手动填写</el-radio>
+                  </el-radio-group>
+                </el-form-item>
+              </el-col>
+            </el-row>
+            <el-row :gutter="10">
+              <el-col :span="6">
                 <custom-el-input :para="general_input.PMS"></custom-el-input>
               </el-col>
               <el-col :span="6">
@@ -69,11 +86,11 @@
               <el-col :span="6">
                 <custom-el-input :para="general_input.ri"></custom-el-input>
               </el-col>
-            </el-row>
-            <el-row :gutter="10">
               <el-col :span="6">
                 <custom-el-input :para="general_input.h"></custom-el-input>
               </el-col>
+            </el-row>
+            <el-row :span="6">
               <el-col :span="6">
                 <custom-el-input :para="general_input.miu_st"></custom-el-input>
               </el-col>
@@ -253,7 +270,7 @@
                 <custom-el-input :para="general_output.Q3_2" :disabled="true" v-else></custom-el-input>
               </el-col>
               <el-col :span="18">
-                <el-form-item :label="general_input.Q3_type.meaning" label-width="auto" size="small" :inline="true">
+                <el-form-item :label="general_input.Q3_type.meaning" label-width="250px" size="small" :inline="true">
                   <el-radio-group v-model="general_input.Q3_type.value">
                     <el-radio :label="general_input.Q3_type.items[0].selection">{{
                         general_input.Q3_type.items[0].meaning
@@ -368,6 +385,8 @@ export default {
         const Dt = this.general_input.Dt.value
         const Pfonc = this.general_input.Pfonc.value
         const Dtcm = this.general_input.Dtcm.value
+        const gc = this.general_input.gc.value
+        const hcm_manual = this.general_input.hcm.value
         const PMS = this.general_input.PMS.value
         const ra = this.general_input.ra.value
         const ri = this.general_input.ri.value
@@ -399,7 +418,13 @@ export default {
 
         //----------------输出----------------//
         // 系统与结构参数
-        const hcm = Dtcm + 1.5
+        let hcm
+        const hcm_calculate = Dtcm + 1.5 + gc
+        if (this.general_input.hcm.is_calculated) {
+          hcm = hcm_calculate
+        } else {
+          hcm = hcm_manual
+        }
         const S = pi * Dtcm * hcm
         const PPE = 1.5 * PMS
         const FB = max(PMS * 0.1, 5) * pi * (pow(ra, 2) - pow(ri, 2)) * fD // 单位换算：MPa * mm2 = N
@@ -480,6 +505,9 @@ export default {
       this.general_input.Dt.value = ''
       this.general_input.Pfonc.value = ''
       this.general_input.Dtcm.value = ''
+      this.general_input.gc.value = ''
+      this.general_input.hcm.value = ''
+      this.general_input.hcm.is_calculated = true
       this.general_input.PMS.value = ''
       this.general_input.ra.value = ''
       this.general_input.ri.value = ''
@@ -536,6 +564,11 @@ export default {
       this.clean2()
       this.clean3()
       this.clean4()
+    },
+    hcmIsCalculatedChange(val) {
+      if (val) {
+        this.general_input.hcm.value = this.general_output.hcm.value
+      }
     }
   }
 }
