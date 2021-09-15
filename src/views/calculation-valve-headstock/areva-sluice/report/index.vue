@@ -64,7 +64,7 @@
               <custom-tr section="中间过程参数" input_output="output" para="Tf"></custom-tr>
 
               <tr>
-                <td rowspan="6">
+                <td rowspan="5">
                   <div class="custom-cell">结果数据</div>
                 </td>
                 <td>
@@ -82,11 +82,29 @@
                   </div>
                 </td>
               </tr>
+              <tr>
+                <td>
+                  <div class="custom-cell">
+                    {{ formatLabel(general.input.with_gear) }}
+                  </div>
+                </td>
+                <td>
+                  <div class="custom-cell">
+                  </div>
+                </td>
+                <td>
+                  <div class="custom-cell">
+                    {{ WithGear }}
+                  </div>
+                </td>
+              </tr>
               <custom-tr section="结果数据" input_output="output" para="C"></custom-tr>
-              <custom-tr section="结果数据" input_output="output" para="Cma_without_gear"></custom-tr>
-              <custom-tr section="结果数据" input_output="output" para="Cma_with_gear"></custom-tr>
-              <custom-tr section="结果数据" input_output="output" para="CRT_without_gear"></custom-tr>
-              <custom-tr section="结果数据" input_output="output" para="CRT_with_gear"></custom-tr>
+<!--              <custom-tr section="结果数据" input_output="output" para="Cma_without_gear"></custom-tr>-->
+<!--              <custom-tr section="结果数据" input_output="output" para="Cma_with_gear"></custom-tr>-->
+<!--              <custom-tr section="结果数据" input_output="output" para="CRT_without_gear"></custom-tr>-->
+<!--              <custom-tr section="结果数据" input_output="output" para="CRT_with_gear"></custom-tr>-->
+              <custom-tr section="结果数据" input_output="output" para="Cma"></custom-tr>
+              <custom-tr section="结果数据" input_output="output" para="CRT"></custom-tr>
               </tbody>
             </table>
           </div>
@@ -127,6 +145,11 @@ export default {
       return this.general.input.Q3_type.value === 1
         ? this.general.input.Q3_type.items[0].meaning
         : this.general.input.Q3_type.items[1].meaning
+    },
+    WithGear() {
+      return this.general.input.with_gear.value === 1
+        ? this.general.input.with_gear.items[0].meaning
+        : this.general.input.with_gear.items[1].meaning
     }
   },
   methods: {

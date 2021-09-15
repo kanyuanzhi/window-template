@@ -16,7 +16,7 @@ const state = {
       },
       h1: {
         value: '',
-        meaning: '壁厚',
+        meaning: '管道壁厚',
         label: 'h1',
         unit: 'mm'
       },

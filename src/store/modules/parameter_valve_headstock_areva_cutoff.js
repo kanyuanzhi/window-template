@@ -221,6 +221,21 @@ const state = {
         label: 'Q6',
         unit: 'N'
       },
+
+      // 结果数据
+      with_gear:{
+        value: 1,
+        meaning: '',
+        label: '有无齿轮箱',
+        unit: '',
+        items: [{
+          selection: 1,
+          meaning: '有齿轮箱'
+        }, {
+          selection: 2,
+          meaning: '无齿轮箱'
+        }]
+      }
     },
 
     output: {
@@ -321,30 +336,42 @@ const state = {
         label: 'C',
         unit: 'N·m'
       },
-      Cma_without_gear: {
+      Cma: {
         value: '--',
-        meaning: '力矩（已考虑裕度）（无齿轮箱）',
+        meaning: '力矩（已考虑裕度）',
         label: 'Cma',
         unit: 'N·m'
       },
-      Cma_with_gear: {
+      CRT: {
         value: '--',
-        meaning: '力矩（已考虑裕度）（有齿轮箱）',
-        label: 'Cma',
-        unit: 'N·m'
-      },
-      CRT_without_gear: {
-        value: '--',
-        meaning: '力矩设定值（无齿轮箱）',
+        meaning: '力矩设定值',
         label: 'CRT',
         unit: 'N·m'
       },
-      CRT_with_gear: {
-        value: '--',
-        meaning: '力矩设定值（有齿轮箱）',
-        label: 'CRT',
-        unit: 'N·m'
-      },
+      // Cma_without_gear: {
+      //   value: '--',
+      //   meaning: '力矩（已考虑裕度）（无齿轮箱）',
+      //   label: 'Cma',
+      //   unit: 'N·m'
+      // },
+      // Cma_with_gear: {
+      //   value: '--',
+      //   meaning: '力矩（已考虑裕度）（有齿轮箱）',
+      //   label: 'Cma',
+      //   unit: 'N·m'
+      // },
+      // CRT_without_gear: {
+      //   value: '--',
+      //   meaning: '力矩设定值（无齿轮箱）',
+      //   label: 'CRT',
+      //   unit: 'N·m'
+      // },
+      // CRT_with_gear: {
+      //   value: '--',
+      //   meaning: '力矩设定值（有齿轮箱）',
+      //   label: 'CRT',
+      //   unit: 'N·m'
+      // },
     }
   }
 }

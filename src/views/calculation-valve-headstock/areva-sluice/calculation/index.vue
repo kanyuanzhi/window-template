@@ -284,6 +284,22 @@
                 </el-form-item>
               </el-col>
             </el-row>
+            <el-row :gutter="10">
+              <el-col :span="12">
+                <el-form-item :label="general_input.with_gear.meaning" label-width="100px" size="small" :inline="true">
+                  <el-radio-group v-model="general_input.with_gear.value">
+                    <el-radio :label="general_input.with_gear.items[0].selection">{{
+                        general_input.with_gear.items[0].meaning
+                      }}
+                    </el-radio>
+                    <el-radio :label="general_input.with_gear.items[1].selection">{{
+                        general_input.with_gear.items[1].meaning
+                      }}
+                    </el-radio>
+                  </el-radio-group>
+                </el-form-item>
+              </el-col>
+            </el-row>
             <el-divider class="custom-el-divider--horizontal">计算结果</el-divider>
             <el-row :gutter="10">
               <el-col :span="24">
@@ -292,22 +308,30 @@
                       general_output.C.value
                     }}
                   </el-descriptions-item>
-                  <el-descriptions-item :label="Label(general_output.Cma_without_gear)">{{
-                      general_output.Cma_without_gear.value
+                  <el-descriptions-item :label="Label(general_output.Cma)">{{
+                      general_output.Cma.value
                     }}
                   </el-descriptions-item>
-                  <el-descriptions-item :label="Label(general_output.Cma_with_gear)">{{
-                      general_output.Cma_with_gear.value
+                  <el-descriptions-item :label="Label(general_output.CRT)">{{
+                      general_output.CRT.value
                     }}
                   </el-descriptions-item>
-                  <el-descriptions-item :label="Label(general_output.CRT_without_gear)">{{
-                      general_output.CRT_without_gear.value
-                    }}
-                  </el-descriptions-item>
-                  <el-descriptions-item :label="Label(general_output.CRT_with_gear)">{{
-                      general_output.CRT_with_gear.value
-                    }}
-                  </el-descriptions-item>
+<!--                  <el-descriptions-item :label="Label(general_output.Cma_without_gear)">{{-->
+<!--                      general_output.Cma_without_gear.value-->
+<!--                    }}-->
+<!--                  </el-descriptions-item>-->
+<!--                  <el-descriptions-item :label="Label(general_output.Cma_with_gear)">{{-->
+<!--                      general_output.Cma_with_gear.value-->
+<!--                    }}-->
+<!--                  </el-descriptions-item>-->
+<!--                  <el-descriptions-item :label="Label(general_output.CRT_without_gear)">{{-->
+<!--                      general_output.CRT_without_gear.value-->
+<!--                    }}-->
+<!--                  </el-descriptions-item>-->
+<!--                  <el-descriptions-item :label="Label(general_output.CRT_with_gear)">{{-->
+<!--                      general_output.CRT_with_gear.value-->
+<!--                    }}-->
+<!--                  </el-descriptions-item>-->
                 </el-descriptions>
               </el-col>
             </el-row>
@@ -416,6 +440,9 @@ export default {
         const Q5 = this.general_input.Q5.value
         const Q6 = this.general_input.Q6.value
 
+        // 结果数据
+        const with_gear = this.general_input.with_gear.value
+
         //----------------输出----------------//
         // 系统与结构参数
         let hcm
@@ -453,6 +480,14 @@ export default {
         const Cma_with_gear = C * Ma / (i * eta)
         const CRT_without_gear = (1 + gama) * Cma_without_gear
         const CRT_with_gear = (1 + gama) * Cma_with_gear
+        let Cma, CRT
+        if (with_gear === 1) {
+          Cma = Cma_with_gear
+          CRT = CRT_with_gear
+        } else {
+          Cma = Cma_without_gear
+          CRT = CRT_without_gear
+        }
 
         this.general_output.hcm.value = round(hcm, precision)
         this.general_output.S.value = round(S, precision)
@@ -470,10 +505,12 @@ export default {
         this.general_output.Tf.value = round(Tf, precision)
 
         this.general_output.C.value = round(C, precision)
-        this.general_output.Cma_without_gear.value = round(Cma_without_gear, precision)
-        this.general_output.Cma_with_gear.value = round(Cma_with_gear, precision)
-        this.general_output.CRT_without_gear.value = round(CRT_without_gear, precision)
-        this.general_output.CRT_with_gear.value = round(CRT_with_gear, precision)
+        // this.general_output.Cma_without_gear.value = round(Cma_without_gear, precision)
+        // this.general_output.Cma_with_gear.value = round(Cma_with_gear, precision)
+        // this.general_output.CRT_without_gear.value = round(CRT_without_gear, precision)
+        // this.general_output.CRT_with_gear.value = round(CRT_with_gear, precision)
+        this.general_output.Cma.value = round(Cma, precision)
+        this.general_output.CRT.value = round(CRT, precision)
 
       } catch (e) {
         Message.error(e)
@@ -553,11 +590,15 @@ export default {
       this.general_output.Tf.value = '--'
     },
     clean4() {
+      this.general_input.with_gear = 1
+
       this.general_output.C.value = '--'
-      this.general_output.Cma_without_gear.value = '--'
-      this.general_output.Cma_with_gear.value = '--'
-      this.general_output.CRT_without_gear.value = '--'
-      this.general_output.CRT_with_gear.value = '--'
+      // this.general_output.Cma_without_gear.value = '--'
+      // this.general_output.Cma_with_gear.value = '--'
+      // this.general_output.CRT_without_gear.value = '--'
+      // this.general_output.CRT_with_gear.value = '--'
+      this.general_output.Cma.value = '--'
+      this.general_output.CRT.value = '--'
     },
     cleanAll() {
       this.clean1()

@@ -114,6 +114,132 @@
         <!--        </div>-->
       </el-col>
     </el-row>
+    <el-divider class="custom-el-divider--horizontal">水平管道支吊架最大间距表（单位：m）</el-divider>
+    <el-row>
+      <el-col :span="24">
+        <el-table
+          v-loading="loading"
+          :data="table_data_use_h1"
+          height="500"
+          border
+          style="width: 100%;">
+          <el-table-column
+            fixed
+            :filters="this.filters"
+            :filter-method="filterHandler"
+            prop="D"
+            :label="general_input.D.meaning.concat(general_input.D.unit)">
+          </el-table-column>
+          <el-table-column
+            fixed
+            prop="h1"
+            :label="general_input.h1.meaning.concat(general_input.h1.unit)">
+          </el-table-column>
+          <el-table-column label="管内介质温度（℃）">
+            <el-table-column label="无保温">
+              <el-table-column
+                prop="0liquid"
+                label="水管">
+              </el-table-column>
+              <el-table-column
+                prop="0vapor"
+                label="汽管">
+              </el-table-column>
+            </el-table-column>
+            <el-table-column label="100">
+              <el-table-column
+                prop="100liquid"
+                label="水管">
+              </el-table-column>
+              <el-table-column
+                prop="100vapor"
+                label="汽管">
+              </el-table-column>
+            </el-table-column>
+            <el-table-column label="150">
+              <el-table-column
+                prop="150liquid"
+                label="水管">
+              </el-table-column>
+              <el-table-column
+                prop="150vapor"
+                label="汽管">
+              </el-table-column>
+            </el-table-column>
+            <el-table-column label="200">
+              <el-table-column
+                prop="200liquid"
+                label="水管">
+              </el-table-column>
+              <el-table-column
+                prop="200vapor"
+                label="汽管">
+              </el-table-column>
+            </el-table-column>
+            <el-table-column label="250">
+              <el-table-column
+                prop="250liquid"
+                label="水管">
+              </el-table-column>
+              <el-table-column
+                prop="250vapor"
+                label="汽管">
+              </el-table-column>
+            </el-table-column>
+            <el-table-column label="300">
+              <el-table-column
+                prop="300liquid"
+                label="水管">
+              </el-table-column>
+              <el-table-column
+                prop="300vapor"
+                label="汽管">
+              </el-table-column>
+            </el-table-column>
+            <el-table-column label="350">
+              <el-table-column
+                prop="350liquid"
+                label="水管">
+              </el-table-column>
+              <el-table-column
+                prop="350vapor"
+                label="汽管">
+              </el-table-column>
+            </el-table-column>
+            <el-table-column label="400">
+              <el-table-column
+                prop="400vapor"
+                label="汽管">
+              </el-table-column>
+            </el-table-column>
+            <el-table-column label="450">
+              <el-table-column
+                prop="450vapor"
+                label="汽管">
+              </el-table-column>
+            </el-table-column>
+            <el-table-column label="500">
+              <el-table-column
+                prop="500vapor"
+                label="汽管">
+              </el-table-column>
+            </el-table-column>
+            <el-table-column label="540">
+              <el-table-column
+                prop="540vapor"
+                label="汽管">
+              </el-table-column>
+            </el-table-column>
+            <el-table-column label="570">
+              <el-table-column
+                prop="570vapor"
+                label="汽管">
+              </el-table-column>
+            </el-table-column>
+          </el-table-column>
+        </el-table>
+      </el-col>
+    </el-row>
   </div>
 </template>
 
@@ -139,12 +265,18 @@ export default {
   },
   data() {
     return {
+      loading: true,
       general_input: this.general.input,
       general_output: this.general.output,
       data_use_d: d_json,
       data_use_h1: h1_json,
-      T_range: [0, 100, 150, 200, 250, 300, 350, 400, 450, 500, 540, 570]
+      T_range: [0, 100, 150, 200, 250, 300, 350, 400, 450, 500, 540, 570],
+      table_data_use_h1: [],
+      filters: [],
     }
+  },
+  created() {
+    this.loadTable()
   },
   computed: {
     Label() {
@@ -181,8 +313,8 @@ export default {
         for (let i = 0; i < keys_D_string.length; i++) {
           keys_D_float.push(parseFloat(keys_D_string[i]))
         }
-        console.log(keys_D_string)
-        console.log(keys_D_float)
+        // console.log(keys_D_string)
+        // console.log(keys_D_float)
 
         const target_D_float = search(keys_D_float, D)
         const target_D_index = keys_D_float.indexOf(target_D_float)
@@ -234,7 +366,41 @@ export default {
     cleanAll() {
       this.clean1()
       this.clean2()
+    },
+    filterHandler(value, row, column) {
+      const property = column['property'];
+      return row[property] === value;
+    },
+    async loadTable() {
+      for (let D in this.data_use_h1) {
+        this.filters.push({
+          text: parseFloat(D),
+          value: parseFloat(D),
+        })
+        for (let h1 in this.data_use_h1[D]) {
+          const item = {
+            'D': parseFloat(D),
+            'h1': parseFloat(h1),
+          }
+          for (let T in this.data_use_h1[D][h1]) {
+            if (parseInt(T) < 400) {
+              item[T + 'liquid'] = this.data_use_h1[D][h1][T]['liquid']
+              item[T + 'vapor'] = this.data_use_h1[D][h1][T]['vapor']
+            } else {
+              item[T + 'vapor'] = this.data_use_h1[D][h1][T]['vapor']
+            }
+          }
+          this.table_data_use_h1.push(item)
+        }
+      }
+      this.loading = false
     }
   }
 }
 </script>
+
+<style scoped>
+/*/deep/ .el-table th {*/
+/*  text-align: center;*/
+/*}*/
+</style>
