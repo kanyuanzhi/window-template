@@ -145,14 +145,12 @@ export default {
         //----------------输出----------------//
         // 输入参数
         const Pg = max(1.75 * PMS, 28)
-        const Tp = K * D / (12 * N) * (pi / 4 * Pg * (pow(Do, 2) - pow(Di, 2)))
 
-        // 过程参数
-        // const Cs = max(PMS, 50) * pi * (pow(ra, 2) - pow(ri, 2)) / 10 / n * (Pitch / (2 * pi) + f * r + f_ * Rma)
+        // 结果参数
+        const Cs = K * D / (12 * N) * (pi / 4 * Pg * (pow(Do, 2) - pow(Di, 2)))
 
         this.general_output.Pg.value = round(Pg, precision)
-
-        // this.general_output.Cs.value = round(Cs, precision)
+        this.general_output.Cs.value = round(Cs, precision)
       } catch (e) {
         Message.error(e)
       }

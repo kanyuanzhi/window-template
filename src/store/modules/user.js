@@ -1,5 +1,5 @@
 // import { login, getInfo, logout, register, changePassword  } from '@/api-local/user'
-import { login, getInfo, logout, register, changePassword  } from '@/api/user'
+import {login, getInfo, logout, register, changePassword, updateUserInfo} from '@/api/user'
 import { getToken, setToken, removeToken } from '@/utils/auth'
 import router, { resetRouter } from '@/router'
 
@@ -134,6 +134,20 @@ const actions = {
       removeToken() // must remove  token  first
       commit('RESET_STATE')
       resolve()
+    })
+  },
+
+  // user register
+  editProfile({ commit }, profile) {
+    const { username, name, introduction } = profile
+    return new Promise((resolve, reject) => {
+      updateUserInfo({ username: username, name: name, introduction: introduction }).then(response => {
+        commit('SET_INTRODUCTION', introduction)
+        commit('SET_NAME', name)
+        resolve(response)
+      }).catch(error => {
+        reject(error)
+      })
     })
   },
 

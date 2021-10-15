@@ -70,6 +70,12 @@ export const asyncRoutes = [
     meta: {title: '用户管理', icon: 'el-icon-user-solid'},
     children: [
       {
+        path: 'edit-profile',
+        component: () => import('@/views/user/edit-profile/index'),
+        name: 'editProfile',
+        meta: {title: '修改信息', role: ['super', 'admin','operator','guest']}
+      },
+      {
         path: 'change-password',
         component: () => import('@/views/user/change-password/index'),
         name: 'changePassword',

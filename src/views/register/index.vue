@@ -1,7 +1,7 @@
 <template>
   <div class="login-container">
     <div class="title-container">
-      <h1 class="web-title">XXXX计算平台</h1>
+      <h1 class="web-title">力学计算平台</h1>
       <h3 class="title"><span>用户注册</span></h3>
     </div>
     <el-form
