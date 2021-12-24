@@ -70,7 +70,14 @@ const state = {
   }
 }
 
-const mutations = {}
+const mutations = {
+  update: (state, new_input) => {
+    state.general.input = new_input
+  },
+  update_output: (state, new_output) => {
+    state.general.output = new_output
+  }
+}
 
 const actions = {}
 

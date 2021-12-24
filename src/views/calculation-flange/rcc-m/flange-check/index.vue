@@ -6,7 +6,10 @@
           <div slot="header" class="clearfix">
             <span>法兰应力</span>
           </div>
-          <el-divider class="custom-el-divider--horizontal">通用参数</el-divider>
+          <el-divider class="custom-el-divider--horizontal">通用参数 当前使用算例：{{
+              case_index['flange_rcc_m_general']
+            }}
+          </el-divider>
           <el-row :gutter="40">
             <el-col :span="20">
               <el-form label-width="80px">
@@ -60,12 +63,18 @@
           </el-row>
           <el-row>
             <el-col :span="24">
-              <check-template ref="design" :condition="design" :general="general"></check-template>
-              <check-template ref="running" :condition="running" :general="general"></check-template>
-              <check-template ref="abnormal" :condition="abnormal" :general="general"></check-template>
-              <check-template ref="emergency" :condition="emergency" :general="general"></check-template>
-              <check-template ref="accident" :condition="accident" :general="general"></check-template>
-              <check-template ref="trial" :condition="trial" :general="general"></check-template>
+              <check-template ref="design" :condition="design" :general="general" :case_index="case_index"
+                              v-if="design.input.need_check"></check-template>
+              <check-template ref="running" :condition="running" :general="general" :case_index="case_index"
+                              v-if="running.input.need_check"></check-template>
+              <check-template ref="abnormal" :condition="abnormal" :general="general" :case_index="case_index"
+                              v-if="abnormal.input.need_check"></check-template>
+              <check-template ref="emergency" :condition="emergency" :general="general" :case_index="case_index"
+                              v-if="emergency.input.need_check"></check-template>
+              <check-template ref="accident" :condition="accident" :general="general" :case_index="case_index"
+                              v-if="accident.input.need_check"></check-template>
+              <check-template ref="trial" :condition="trial" :general="general" :case_index="case_index"
+                              v-if="trial.input.need_check"></check-template>
             </el-col>
           </el-row>
         </el-card>
@@ -104,7 +113,7 @@ export default {
     CustomElInput,
     CheckTemplate
   },
-  props: ['general', 'design', 'running', 'abnormal', 'emergency', 'accident', 'trial'],
+  props: ['general', 'design', 'running', 'abnormal', 'emergency', 'accident', 'trial', 'case_index'],
   data() {
     return {
       general_input: this.general.input,
@@ -123,23 +132,27 @@ export default {
   methods: {
     calculate() {
       try {
-        this.$refs.design.calculate()
-        this.$refs.running.calculate()
-        this.$refs.abnormal.calculate()
-        this.$refs.emergency.calculate()
-        this.$refs.accident.calculate()
-        this.$refs.trial.calculate()
+        if (this.design.input.need_check) this.$refs.design.calculate()
+        if (this.running.input.need_check) this.$refs.running.calculate()
+        if (this.abnormal.input.need_check) this.$refs.abnormal.calculate()
+        if (this.emergency.input.need_check) this.$refs.emergency.calculate()
+        if (this.accident.input.need_check) this.$refs.accident.calculate()
+        if (this.trial.input.need_check) this.$refs.trial.calculate()
       } catch (e) {
         Message.error(e)
       }
     },
     cleanAll() {
-      this.$refs.design.cleanAll()
-      this.$refs.running.cleanAll()
-      this.$refs.abnormal.cleanAll()
-      this.$refs.emergency.cleanAll()
-      this.$refs.accident.cleanAll()
-      this.$refs.trial.cleanAll()
+      try {
+        if (this.design.input.need_check) this.$refs.design.cleanAll()
+        if (this.running.input.need_check) this.$refs.running.cleanAll()
+        if (this.abnormal.input.need_check) this.$refs.abnormal.cleanAll()
+        if (this.emergency.input.need_check) this.$refs.emergency.cleanAll()
+        if (this.accident.input.need_check) this.$refs.accident.cleanAll()
+        if (this.trial.input.need_check) this.$refs.trial.cleanAll()
+      } catch (e) {
+        Message.error(e)
+      }
     }
   }
 }

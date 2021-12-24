@@ -1,5 +1,7 @@
 const getDefaultConditionInput = () => {
   return {
+    need_check: true,
+
     // 法兰压紧力
     P: {
       value: '',
@@ -18,6 +20,12 @@ const getDefaultConditionInput = () => {
       meaning: '系统外载荷轴向力',
       label: 'Fa',
       unit: 'N'
+    },
+    m_: {
+      value: '',
+      meaning: '水压试验工况下垫片系数',
+      label: 'm\'',
+      unit: ''
     },
 
     // 螺栓预紧力
@@ -171,8 +179,6 @@ const getDefaultConditionOutput = () => {
       unit: 'mm2',
       check_result: '--', // '通过' or '不通过'
     },
-
-    bolt_check_result: '--', // '通过' or '不通过'
 
     // 法兰力
     FSi_: {
@@ -412,9 +418,9 @@ const state = {
         value: '',
         meaning: '螺栓传递力',
         label: 'PV',
-        unit: 'N'
+        unit: 'N',
+        is_calculated: false
       },
-
 
       // 法兰力矩
       A: {
@@ -496,13 +502,13 @@ const state = {
         unit: 'mm'
       },
       b0: {
-        value: '',
+        value: '--',
         meaning: '基本密封宽度',
         label: 'b0',
         unit: 'mm'
       },
       b: {
-        value: '',
+        value: '--',
         meaning: '有效密封宽度',
         label: 'b',
         unit: 'mm'
@@ -541,7 +547,7 @@ const state = {
       },
       Rma: {
         value: '--',
-        meaning: '',
+        meaning: '螺母座面处螺杆公称直径的算数平均值',
         label: 'Rma',
         unit: 'mm',
       },
@@ -550,6 +556,12 @@ const state = {
         meaning: '螺栓紧固力矩',
         label: 'CS',
         unit: 'N·m'
+      },
+      PV: {
+        value: '--',
+        meaning: '螺栓传递力',
+        label: 'PV',
+        unit: 'N',
       },
 
       // 法兰尺寸
@@ -580,13 +592,13 @@ const state = {
       },
       ht: {
         value: '--',
-        meaning: '支撑载荷HT与HT的轴到节圆的距离',
+        meaning: '支撑载荷HT与HT\'的轴到节圆的距离',
         label: 'ht',
         unit: 'mm'
       },
 
       // 法兰系数
-      g1_20:{
+      g1_20: {
         value: '--',
         meaning: '系数',
         label: '20g1',
@@ -658,6 +670,21 @@ const state = {
         label: 'B1',
         unit: ''
       },
+
+      // 校核
+      SA_max: {
+        value: '--',
+        meaning: '所需的螺栓最小截面积 ',
+        label: 'SA max',
+        unit: 'mm2'
+      },
+
+      SA_check_result: {
+        value: '--', // '通过' or '不通过'
+        meaning: '所需的螺栓最小截面积校核结果',
+        label: 'SA check result',
+        unit: ''
+      },
     }
   },
   design: {
@@ -698,7 +725,50 @@ const state = {
   },
 }
 
-const mutations = {}
+const mutations = {
+  update_flange_rcc_m_general: (state, new_input) => {
+    state.general.input = new_input
+  },
+  update_flange_rcc_m_general_output: (state, new_output) => {
+    state.general.output = new_output
+  },
+  update_flange_rcc_m_design: (state, new_input) => {
+    state.design.input = new_input
+  },
+  update_flange_rcc_m_design_output: (state, new_output) => {
+    state.design.output = new_output
+  },
+  update_flange_rcc_m_running: (state, new_input) => {
+    state.running.input = new_input
+  },
+  update_flange_rcc_m_running_output: (state, new_output) => {
+    state.running.output = new_output
+  },
+  update_flange_rcc_m_abnormal: (state, new_input) => {
+    state.abnormal.input = new_input
+  },
+  update_flange_rcc_m_abnormal_output: (state, new_output) => {
+    state.abnormal.output = new_output
+  },
+  update_flange_rcc_m_emergency: (state, new_input) => {
+    state.emergency.input = new_input
+  },
+  update_flange_rcc_m_emergency_output: (state, new_output) => {
+    state.emergency.output = new_output
+  },
+  update_flange_rcc_m_accident: (state, new_input) => {
+    state.accident.input = new_input
+  },
+  update_flange_rcc_m_accident_output: (state, new_output) => {
+    state.accident.output = new_output
+  },
+  update_flange_rcc_m_trial: (state, new_input) => {
+    state.trial.input = new_input
+  },
+  update_flange_rcc_m_trial_output: (state, new_output) => {
+    state.trial.output = new_output
+  },
+}
 
 const actions = {}
 

@@ -27,7 +27,7 @@ export default {
   props: ['section', 'input_output', 'para', 'colspan', 'rowspan'],
   data() {
     return {
-      general: this.$store.getters.flange_gb150_wide_plate_general,
+      general: this.$store.getters.flange_gb150_wide_plate,
     }
   },
   methods: {

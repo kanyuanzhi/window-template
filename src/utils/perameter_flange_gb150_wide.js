@@ -3,11 +3,11 @@ export function getDefaultGB150General() {
     name: 'general',
     name_zh: '通用',
     input: {
-      // 法兰连接部件
+      // 法兰连接部件（从页面中删除，用不到）
       flange_connector_materials_name: {
         value: 'Q235-A#',
         meaning: '法兰连接部件材料名称',
-        label: '',
+        label: '材料名称',
         unit: ''
       },
       Sigma_nt: {
@@ -19,20 +19,20 @@ export function getDefaultGB150General() {
 
       // 法兰参数
       flange_materials_name: {
-        value: '16MnR',
+        value: '', // 16MnR
         meaning: '法兰材料名称',
-        label: '',
+        label: 'Material',
         unit: ''
       },
       Sigma_f: {
         value: '',
-        meaning: '法兰材料许用应力',
+        meaning: '室温下法兰材料许用应力',
         label: 'σf',
         unit: 'Mpa'
       },
       Sigma_ft: {
         value: '',
-        meaning: '法兰材料许用应力',
+        meaning: '设计温度下法兰材料许用应力',
         label: 'σft',
         unit: 'Mpa'
       },
@@ -56,35 +56,35 @@ export function getDefaultGB150General() {
       },
       delta_0: {
         value: '',
-        meaning: 'δ0',
+        meaning: '法兰颈部小端有效厚度',
         label: 'δ0',
         unit: 'mm',
-        format_label: 'δ0'
+        // format_label: 'δ0'
       },
       delta_1: {
         value: '',
-        meaning: 'δ1',
+        meaning: '法兰颈部大端有效厚度',
         label: 'δ1',
         unit: 'mm',
-        format_label: 'δ1'
+        // format_label: 'δ1'
       },
 
       // 螺栓参数
       bolt_materials_name: {
-        value: 'Q235-A#',
+        value: '', // Q235-A#
         meaning: '螺栓材料名称',
-        label: '',
+        label: 'Material',
         unit: ''
       },
       Sigma_b: {
         value: '',
-        meaning: '螺栓材料许用应力',
+        meaning: '室温下螺栓材料许用应力',
         label: 'σb',
         unit: 'Mpa'
       },
       Sigma_bt: {
         value: '',
-        meaning: '螺栓材料许用应力',
+        meaning: '设计温度下螺栓材料许用应力',
         label: 'σbt',
         unit: 'Mpa'
       },
@@ -109,9 +109,9 @@ export function getDefaultGB150General() {
 
       // 垫片参数
       gasket_type: {
-        value: '石棉橡胶垫',
+        value: '', // 石棉橡胶垫
         meaning: '垫片类型',
-        label: '',
+        label: 'Material',
         unit: ''
       },
       D: {

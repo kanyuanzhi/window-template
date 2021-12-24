@@ -8,15 +8,13 @@
           </div>
           <div class="report-panel" style="margin-bottom: 20px">
             <table class="custom-table">
-              <thead>
-              <tr>
+              <tbody>
+              <tr class="head">
                 <td width="10%"></td>
                 <td width="30%">计算内容</td>
                 <td width="10%">单位</td>
                 <td width="50%">值</td>
               </tr>
-              </thead>
-              <tbody>
               <custom-tr section="输入参数" input_output="input" para="P" rowspan="9"></custom-tr>
               <custom-tr section="输入参数" input_output="input" para="Do"></custom-tr>
               <custom-tr section="输入参数" input_output="input" para="Di"></custom-tr>
@@ -92,7 +90,7 @@ export default {
   border-collapse: collapse;
 }
 
-thead td {
+.head td {
   border: 1px solid #5a5e66;
   border-bottom: 2px solid #5a5e66;
   text-align: center;

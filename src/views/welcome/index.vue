@@ -147,7 +147,7 @@ export default {
         type: 'EDF C型闸阀，EDF V型闸阀，EDF W型闸阀，EDF S型截止阀，华龙一号 闸阀，华龙一号 截止阀，阀门手册 蝶阀，阀门手册 球阀',
       }, {
         object: '阀门盘根力矩',
-        type: 'EDF，华龙一号，阀门手册，EPRI',
+        type: 'EDF，华龙一号，阀门手册',
       }, {
         object: '管道跨距',
         type: '核岛，常规岛',

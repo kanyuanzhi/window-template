@@ -3,6 +3,7 @@
     <el-row :gutter="10">
       <el-col :span="20">
         <el-form label-width="80px">
+          <el-divider class="custom-el-divider--horizontal">当前使用算例：{{ case_index[parameter] }}</el-divider>
           <el-card class="box-card" shadow="hover">
             <div slot="header" class="clearfix">
               <span>输入参数（系统与结构参数）</span>
@@ -43,7 +44,7 @@
             </el-row>
             <el-row :gutter="10">
               <el-col :span="6">
-                <custom-el-input :para="general_input.FR"></custom-el-input>
+                <custom-el-input :para="general_input.FR" :disabled="true"></custom-el-input>
               </el-col>
               <el-col :span="6">
                 <custom-el-input :para="general_input.Pfonc"></custom-el-input>
@@ -117,7 +118,7 @@
             </div>
             <el-row :gutter="10">
               <el-col :span="6">
-                <custom-el-input :para="general_input.Q4"></custom-el-input>
+                <custom-el-input :para="general_input.Q4" :disabled="true"></custom-el-input>
               </el-col>
               <el-col :span="6">
                 <custom-el-input :para="general_input.Q5"></custom-el-input>
@@ -179,11 +180,17 @@
         </el-form>
         <el-form>
           <el-row :gutter="10">
-            <el-col :span="24">
+            <el-col :span="6" :offset="9">
               <el-form-item align="center">
                 <el-button icon="el-icon-video-play" type="primary" @click="calculate" size="medium">计算</el-button>
                 <el-button icon="el-icon-delete" @click="cleanAll" size="medium">清空</el-button>
               </el-form-item>
+            </el-col>
+            <el-col :span="9">
+              <case-dialog ref="caseDialog" :parameter="parameter"
+                           @update="data => this.general_input=data"
+                           @remove="data => this.general_input=data"
+                           @clear-output="data => this.general_output=data"></case-dialog>
             </el-col>
           </el-row>
         </el-form>
@@ -208,6 +215,7 @@
 
 <script>
 import CustomElInput from '@/components/CustomElInput'
+import CaseDialog from '@/components/CaseDialog'
 import {formatLabel} from '@/utils/common'
 
 import {e, log, max, pi, pow, round, sqrt, atan, sin, cos} from "mathjs"
@@ -219,9 +227,10 @@ const precision = defaultSettings.precision
 
 export default {
   name: 'EDFSluiceCCalculation',
-  props: ['general'],
+  props: ['general', 'case_index', 'parameter'],
   components: {
-    CustomElInput
+    CustomElInput,
+    CaseDialog
   },
   data() {
     return {
@@ -274,14 +283,19 @@ export default {
         const alpha = atan(tan_alpha) * 180 / pi
 
         // 过程参数
-        const Q1 = (miu_1 / (cos(theta) - miu_1 * sin(theta))) * ((pi * pow(Ds, 2) / (4 * cos(theta))) * (delta_P + 2 * Sp) + 2 * FR)
-        const Q2 = pi * pow(Dt, 2) / 4 * (Pms + Sp)
-        const Q3 = 1.5 * Pms <= 10 ? pi * Dt * h : 1.5 * Pms / 10 * pi * Dt * h
-        const Qt = (Q1 + Q2 + Q3 + Q4 - Q5) * CR
-        const Tf = (tan_alpha + miu_2 / cos(beta)) / (1 - tan_alpha * miu_2 / cos(beta)) * Rm
+        // const Q1 = (miu_1 / (cos(theta * pi / 180) - miu_1 * sin(theta * pi / 180))) * ((pi * pow(Ds, 2) / (4 * cos(theta * pi / 180))) * (delta_P + 2 * Sp) + 2 * FR)
+        const Q1 = (miu_1 / (cos(theta * pi / 180) - miu_1 * sin(theta * pi / 180))) * delta_P * (pi * pow(Ds, 2) / (4 * cos(theta * pi / 180)))
+        // const Q2 = pi * pow(Dt, 2) / 4 * (Pms + Sp)
+        const Q2 = pi * pow(Dt, 2) / 4 * Pfonc
+        // const Q3 = 1.5 * Pms <= 10 ? pi * Dt * h : 1.5 * Pms / 10 * pi * Dt * h
+        const Q3 = 1.5 * Pms <= 10 ? 10 * pi * Dt * h : 1.5 * Pms / 10 * pi * Dt * h
+        // const Qt = (Q1 + Q2 + Q3 + Q4 - Q5) * CR
+        const Qt = Q1 + Q2 + Q3 - Q5 + Q6
+        const Tf = (tan_alpha + miu_2 / cos(beta * pi / 180)) / (1 - tan_alpha * miu_2 / cos(beta * pi / 180)) * Rm
 
         // 结果数据
-        const C = Qt / R * Tf
+        // const C = Qt / R * Tf
+        const C = Qt / R * Tf * CR / 1000
 
         this.general_output.Rm.value = round(Rm, precision)
         this.general_output.alpha.value = round(alpha, precision)
@@ -295,6 +309,7 @@ export default {
 
         this.general_output.C.value = round(C, precision)
 
+        this.$refs.caseDialog.save()
       } catch (e) {
         Message.error(e)
       }

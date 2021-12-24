@@ -3,6 +3,7 @@
     <el-row :gutter="10">
       <el-col :span="20">
         <el-form label-width="80px">
+          <el-divider class="custom-el-divider--horizontal">当前使用算例：{{ case_index[parameter] }}</el-divider>
           <el-card class="box-card" shadow="hover">
             <div slot="header" class="clearfix">
               <span>输入参数一</span>
@@ -144,11 +145,17 @@
         </el-form>
         <el-form>
           <el-row :gutter="10">
-            <el-col :span="24">
+            <el-col :span="6" :offset="9">
               <el-form-item align="center">
                 <el-button icon="el-icon-video-play" type="primary" @click="calculate" size="medium">计算</el-button>
                 <el-button icon="el-icon-delete" @click="cleanAll" size="medium">清空</el-button>
               </el-form-item>
+            </el-col>
+            <el-col :span="9">
+              <case-dialog ref="caseDialog" :parameter="parameter"
+                           @update="data => this.general_input=data"
+                           @remove="data => this.general_input=data"
+                           @clear-output="data => this.general_output=data"></case-dialog>
             </el-col>
           </el-row>
         </el-form>
@@ -173,6 +180,7 @@
 
 <script>
 import CustomElInput from '@/components/CustomElInput'
+import CaseDialog from '@/components/CaseDialog'
 import {formatLabel} from '@/utils/common'
 
 import {e, log, max, pi, pow, round, sqrt, atan, sin, cos} from "mathjs"
@@ -184,9 +192,10 @@ const precision = defaultSettings.precision
 
 export default {
   name: 'EnchiridionButterflyCalculation',
-  props: ['general'],
+  props: ['general', 'case_index', 'parameter'],
   components: {
-    CustomElInput
+    CustomElInput,
+    CaseDialog
   },
   data() {
     return {
@@ -236,6 +245,8 @@ export default {
         this.general_output.MT.value = round(MT, precision)
         this.general_output.MZ.value = round(MZ, precision)
         this.general_output.MS.value = round(MS, precision)
+
+        this.$refs.caseDialog.save()
       } catch (e) {
         Message.error(e)
       }
@@ -247,7 +258,7 @@ export default {
       this.general_input.k.value = 0.785
       this.general_input.gama.value = ''
     },
-    clean2(){
+    clean2() {
       this.general_input.P.value = ''
       this.general_input.miu.value = ''
       this.general_input.n.value = ''
@@ -255,16 +266,16 @@ export default {
       this.general_input.dc.value = ''
       this.general_input.s.value = ''
     },
-    clean3(){
+    clean3() {
       this.general_input.PH.value = ''
       this.general_input.miu_.value = ''
       this.general_input.Qc.value = ''
       this.general_input.d.value = ''
     },
-    clean4(){
+    clean4() {
       this.general_input.Ma.value = 1.3
     },
-    clean5(){
+    clean5() {
       this.general_output.MD.value = '--'
       this.general_output.MT.value = '--'
       this.general_output.MZ.value = '--'

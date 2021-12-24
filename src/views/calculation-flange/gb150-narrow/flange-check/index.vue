@@ -3,6 +3,7 @@
     <el-row :gutter="10">
       <el-col :span="20">
         <el-form label-width="80px">
+          <el-divider class="custom-el-divider--horizontal">当前使用算例：{{ case_index[parameter] }}</el-divider>
           <el-card class="box-card" shadow="hover">
             <div slot="header" class="clearfix">
               <span>法兰校核</span>
@@ -39,9 +40,9 @@
               <el-col :span="6">
                 <custom-el-input :para="general_input.KI_factor"></custom-el-input>
               </el-col>
-              <el-col :span="6">
-                <custom-el-input label_width="120px" :para="general_input.KI_index_limit"></custom-el-input>
-              </el-col>
+<!--              <el-col :span="6">-->
+<!--                <custom-el-input label_width="120px" :para="general_input.KI_index_limit"></custom-el-input>-->
+<!--              </el-col>-->
             </el-row>
             <el-divider class="custom-el-divider--horizontal">法兰计算参数</el-divider>
             <el-row :gutter="10">
@@ -71,8 +72,8 @@
                       general_output.K.value
                     }}
                   </el-descriptions-item>
-                  <el-descriptions-item :label="Label(general_output.T)">{{
-                      general_output.T.value
+                  <el-descriptions-item :label="Label(general_output.T_factor)">{{
+                      general_output.T_factor.value
                     }}
                   </el-descriptions-item>
                   <el-descriptions-item :label="Label(general_output.Y)">{{
@@ -128,12 +129,12 @@
                       general_output.FD.value
                     }}
                   </el-descriptions-item>
-                  <el-descriptions-item :label="Label(general_output.FT)">{{
-                      general_output.FT.value
+                  <el-descriptions-item :label="Label(general_output.F)">{{
+                      general_output.F.value
                     }}
                   </el-descriptions-item>
-                  <el-descriptions-item :label="Label(general_output.LA)">{{
-                      general_output.LA.value
+                  <el-descriptions-item :label="Label(general_output.FT)">{{
+                      general_output.FT.value
                     }}
                   </el-descriptions-item>
                 </el-descriptions>
@@ -215,11 +216,17 @@
         </el-form>
         <el-form>
           <el-row :gutter="10">
-            <el-col :span="24">
+            <el-col :span="6" :offset="9">
               <el-form-item align="center">
                 <el-button icon="el-icon-video-play" type="primary" @click="calculate" size="medium">计算</el-button>
                 <el-button icon="el-icon-delete" @click="cleanAll" size="medium">清空</el-button>
               </el-form-item>
+            </el-col>
+            <el-col :span="9">
+              <case-dialog ref="caseDialog" :parameter="parameter"
+                           @update="data => this.general_input=data"
+                           @remove="data => this.general_input=data"
+                           @clear-output="data => this.general_output=data"></case-dialog>
             </el-col>
           </el-row>
         </el-form>
@@ -244,6 +251,7 @@
 
 <script>
 import CustomElInput from '@/components/CustomElInput'
+import CaseDialog from '@/components/CaseDialog'
 import CheckTemplate from './components/CheckTemplate'
 import {formatLabel} from '@/utils/common'
 
@@ -256,10 +264,11 @@ const precision = defaultSettings.precision
 
 export default {
   name: 'BoltCheck',
-  props: ['general'],
+  props: ['general', 'case_index', 'parameter'],
   components: {
     CustomElInput,
-    CheckTemplate
+    CheckTemplate,
+    CaseDialog
   },
   data() {
     return {
@@ -311,14 +320,16 @@ export default {
         const delta_0 = this.general_input.delta_0.value
         const delta_1 = this.general_input.delta_1.value
         const Di = this.general_input.Di.value
-        const DG = this.general_input.DG.value
-
-        // 法兰形状系数
-        const T = this.general_output.T.value
-        if (T === '--') {
-          throw new Error([this.general_output.T.meaning, this.general_output.T.label, '未计算！'].join(' '))
+        const DG = this.general_output.DG.value
+        if (DG === '--') {
+          throw new Error([this.general_output.DG.meaning, this.general_output.DG.label, '未计算！'].join(' '))
         }
-        const Y = this.general_output.U.value
+        // 法兰形状系数
+        const T_factor = this.general_output.T_factor.value
+        if (T_factor === '--') {
+          throw new Error([this.general_output.T_factor.meaning, this.general_output.T_factor.label, '未计算！'].join(' '))
+        }
+        const Y = this.general_output.Y.value
         if (Y === '--') {
           throw new Error([this.general_output.Y.meaning, this.general_output.Y.label, '未计算！'].join(' '))
         }
@@ -385,7 +396,7 @@ export default {
         const VI_type = VI
         const f_factor_type = f_factor
         const e_ = FI_type / h0
-        const Lam = ((delta_f * e_ + 1) / T + VI_type * delta_f ^ 3 / (U * h0 * delta_0 ^ 2))
+        const Lam = (delta_f * e_ + 1) / T_factor + VI_type * pow(delta_f, 3) / (U * h0 * pow(delta_0, 2))
 
         // 设计工况
         const Fsi = T_ * 1000 * n / KI
@@ -459,7 +470,7 @@ export default {
         this.general_output.KI_index.limit = KI_index_limit
         this.general_output.KI_index.check_result = this.check(KI_index, KI_index_limit)
 
-
+        this.$refs.caseDialog.save()
       } catch (e) {
         Message.error(e)
       }
@@ -472,7 +483,7 @@ export default {
       this.general_input.Sigma_ft.value = ''
       this.general_input.Ef.value = ''
       this.general_input.Eft.value = ''
-      this.general_input.KI_factor.value = ''
+      this.general_input.KI_factor.value = 0.3
       this.general_input.KI_index_limit.value = 1
 
       this.general_output.LA.value = '--'

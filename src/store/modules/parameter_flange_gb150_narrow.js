@@ -3,9 +3,9 @@ const state = {
     input: {
       // 垫片参数
       gasket_materials_name: {
-        value: 'STAINLESS STEEL/GRAPHITE',
+        value: '', // STAINLESS STEEL/GRAPHITE
         meaning: '垫片材质',
-        label: '',
+        label: 'Material',
         unit: ''
       },
       DGO: {
@@ -41,9 +41,9 @@ const state = {
 
       // 螺栓参数
       bolt_materials_name: {
-        value: '40MnB',
+        value: '', // 40MnB
         meaning: '螺栓材质',
-        label: '',
+        label: 'Material',
         unit: ''
       },
       dB: {
@@ -85,9 +85,9 @@ const state = {
 
       // 法兰参数
       flange_materials_name: {
-        value: '16Mn',
+        value: '', // 16Mn
         meaning: '法兰材质',
-        label: '',
+        label: 'Material',
         unit: ''
       },
       Do: {
@@ -180,7 +180,7 @@ const state = {
         value: '',
         meaning: '单根螺栓的最终紧固力矩',
         label: 'T\'',
-        unit: 'N·mm',
+        unit: 'N·m',
         check_result: '--' // 通过 or 不通过
       },
 
@@ -210,7 +210,7 @@ const state = {
         unit: 'MPa'
       },
       KI_factor: {
-        value: '--',
+        value: 0.3,
         meaning: '刚度系数',
         label: 'KI',
         unit: ''
@@ -888,7 +888,14 @@ const state = {
   }
 }
 
-const mutations = {}
+const mutations = {
+  update: (state, new_input) => {
+    state.general.input = new_input
+  },
+  update_output: (state, new_output) => {
+    state.general.output = new_output
+  }
+}
 
 const actions = {}
 

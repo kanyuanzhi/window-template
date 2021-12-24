@@ -27,7 +27,7 @@ export default {
   props: ['section', 'input_output', 'para', 'rowspan'],
   data() {
     return {
-      general: this.$store.getters.valve_headstock_edf_areva_cutoff,
+      general: this.$store.getters.valve_headstock_areva_cutoff,
     }
   },
   methods: {

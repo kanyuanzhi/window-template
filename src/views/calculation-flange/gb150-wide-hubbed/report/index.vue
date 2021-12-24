@@ -8,15 +8,13 @@
           </div>
           <div class="report-panel" style="margin-bottom: 20px">
             <table class="custom-table">
-              <thead>
-              <tr>
+              <tbody>
+              <tr class="head">
                 <td width="10%"></td>
                 <td width="30%">计算内容</td>
                 <td width="10%">单位</td>
                 <td width="50%">值</td>
               </tr>
-              </thead>
-              <tbody>
               <custom-tr section="设计条件" input_output="input" para="P_stress" rowspan="6"></custom-tr>
               <custom-tr section="设计条件" input_output="output" para="Pc"></custom-tr>
               <custom-tr section="设计条件" input_output="input" para="T"></custom-tr>
@@ -24,9 +22,9 @@
               <custom-tr section="设计条件" input_output="input" para="M"></custom-tr>
               <custom-tr section="设计条件" input_output="output" para="Peq"></custom-tr>
 
-              <custom-tr section="法兰连接部件" input_output="input" para="flange_connector_materials_name"
-                         rowspan="2"></custom-tr>
-              <custom-tr section="法兰连接部件" input_output="input" para="Sigma_nt"></custom-tr>
+<!--              <custom-tr section="法兰连接部件" input_output="input" para="flange_connector_materials_name"-->
+<!--                         rowspan="2"></custom-tr>-->
+<!--              <custom-tr section="法兰连接部件" input_output="input" para="Sigma_nt"></custom-tr>-->
 
               <custom-tr section="法兰" input_output="input" para="flange_materials_name" rowspan="8"></custom-tr>
               <custom-tr section="法兰" input_output="input" para="Sigma_f"></custom-tr>
@@ -154,7 +152,7 @@ export default {
   border-collapse: collapse;
 }
 
-thead td {
+.head td {
   border: 1px solid #5a5e66;
   border-bottom: 2px solid #5a5e66;
   text-align: center;

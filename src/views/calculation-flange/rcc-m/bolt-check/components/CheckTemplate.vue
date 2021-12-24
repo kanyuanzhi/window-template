@@ -2,7 +2,9 @@
   <el-row :gutter="40">
     <el-col :span="16">
       <el-form label-width="80px">
-        <el-divider class="custom-el-divider--horizontal">{{ condition_name_zh }}工况</el-divider>
+        <el-divider class="custom-el-divider--horizontal">{{ condition_name_zh }}工况
+          当前使用算例：{{ case_index['flange_rcc_m_' + condition_name] }}
+        </el-divider>
         <div class="left-panel">
           <el-row :gutter="10">
             <el-col :span="8" :offset="6">
@@ -39,7 +41,7 @@ const precision = defaultSettings.precision
 
 export default {
   name: "CheckTemplate",
-  props: ['general', 'condition'],
+  props: ['general', 'condition', 'case_index'],
   components: {
     CustomElInput
   },
@@ -51,7 +53,8 @@ export default {
       condition_name: this.condition.name,
       condition_name_zh: this.condition.name_zh,
       condition_input: this.condition.input,
-      condition_output: this.condition.output
+      condition_output: this.condition.output,
+      check: false
     }
   },
   computed: {
@@ -103,7 +106,7 @@ export default {
         Message.error(e)
       }
     },
-    cleanAll(){
+    cleanAll() {
       this.general_input.SB.value = this.general_output.SB.value
       this.general_input.SB.is_calculated = true
       this.condition_output.SA.check_result = '--'

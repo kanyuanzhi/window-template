@@ -5,7 +5,9 @@
     </td>
     <td>
       <div class="custom-cell">
-        {{ is_general ? formatLabel(general[input_output][para]) : formatLabel(design[input_output][para]) }}
+        {{
+          is_general ? formatLabel(general[input_output][para]) : formatLabel(design[input_output][para])
+        }}
       </div>
     </td>
     <td>
@@ -97,7 +99,7 @@ export default {
       trial: this.$store.getters.flange_rcc_m_trial,
     }
   },
-  methods:{
+  methods: {
     formatLabel(para) {
       if (para.format_label !== undefined) {
         return para.format_label
@@ -109,12 +111,12 @@ export default {
 </script>
 
 <style scoped>
-td{
+td {
   border: 1px solid #5a5e66;
   text-align: center;
 }
 
-.custom-cell{
+.custom-cell {
   line-height: normal;
   padding: 8px 4px;
 }

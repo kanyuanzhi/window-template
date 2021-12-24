@@ -104,6 +104,12 @@ export const asyncRoutes = [
         component: () => import('@/views/user/distribute-role/index'),
         name: 'distributeRole',
         meta: {title: '分配权限', role: ['super', 'admin']}
+      },
+      {
+        path: 'manage-case',
+        component: () => import('@/views/user/manage-case/index'),
+        name: 'manageCase',
+        meta: {title: '管理算例', role: ['super', 'admin','operator']}
       }
     ]
   },
@@ -487,27 +493,27 @@ export const asyncRoutes = [
           },
         ]
       },
-      {
-        path: 'epri',
-        name: 'EPRI',
-        redirect: 'noRedirect',
-        component: () => import('@/views/calculation-valve-packing/epri'),
-        meta: {title: 'EPRI'},
-        children: [
-          {
-            path: 'calculation',
-            component: () => import('@/views/calculation-valve-packing/epri/calculation'),
-            name: 'Calculation',
-            meta: {title: '数据计算'}
-          },
-          {
-            path: 'report',
-            component: () => import('@/views/calculation-valve-packing/epri/report'),
-            name: 'Report',
-            meta: {title: '计算报告'}
-          },
-        ]
-      },
+      // {
+      //   path: 'epri',
+      //   name: 'EPRI',
+      //   redirect: 'noRedirect',
+      //   component: () => import('@/views/calculation-valve-packing/epri'),
+      //   meta: {title: 'EPRI'},
+      //   children: [
+      //     {
+      //       path: 'calculation',
+      //       component: () => import('@/views/calculation-valve-packing/epri/calculation'),
+      //       name: 'Calculation',
+      //       meta: {title: '数据计算'}
+      //     },
+      //     {
+      //       path: 'report',
+      //       component: () => import('@/views/calculation-valve-packing/epri/report'),
+      //       name: 'Report',
+      //       meta: {title: '计算报告'}
+      //     },
+      //   ]
+      // },
     ]
   },
 
@@ -559,6 +565,27 @@ export const asyncRoutes = [
             meta: {title: '计算报告'}
           },
         ]
+      },
+    ]
+  },
+  {
+    path: '/docs',
+    component: Layout,
+    redirect: 'noRedirect',
+    name: 'docs',
+    meta: {title: '文档', icon: 'el-icon-document', role: ['super','admin','operator','guest']},
+    children: [
+      {
+        path: 'reports',
+        name: 'Reports',
+        component: () => import('@/views/docs/reports'),
+        meta: {title: '算例汇总'},
+      },
+      {
+        path: 'http://101.35.130.105:8888/pdfs/力学计算小工具用户手册.pdf',
+        // name: 'Manual',
+        // component: () => import('@/views/docs/manual'),
+        meta: {title: '用户手册'},
       },
     ]
   },

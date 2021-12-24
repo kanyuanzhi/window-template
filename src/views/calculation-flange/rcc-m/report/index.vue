@@ -4,12 +4,12 @@
       <el-col :span="20" :offset="2">
         <div id="print-area">
           <div class="report-header">
-            <span>RCC-M法兰校核</span>
+            <span>RCC-M法兰校核（校核工况：{{ needCheckList }}）</span>
           </div>
           <div class="report-panel" style="margin-bottom: 20px">
             <table class="custom-table">
-              <thead>
-              <tr>
+              <tbody>
+              <tr class="head">
                 <td width="4%"></td>
                 <td width="17%">计算内容</td>
                 <td width="8%">单位</td>
@@ -20,9 +20,8 @@
                 <td width="12%">事故工况</td>
                 <td width="12%">试验工况</td>
               </tr>
-              </thead>
-              <tbody>
-              <custom-tr section="垫片参数" :is_general="true" input_output="input" para="m" rowspan="7"></custom-tr>
+              <custom-tr section="垫片参数" :is_general="true" input_output="input" para="m" rowspan="8"></custom-tr>
+              <custom-tr section="垫片参数" :is_general="false" input_output="input" para="m_"></custom-tr>
               <custom-tr section="垫片参数" :is_general="true" input_output="input" para="y"></custom-tr>
               <custom-tr section="垫片参数" :is_general="true" input_output="input" para="Do"></custom-tr>
               <custom-tr section="垫片参数" :is_general="true" input_output="input" para="Di"></custom-tr>
@@ -76,7 +75,7 @@
               </tr>
               <tr>
                 <td colspan="6">
-                  <div class="custom-cell">{{ SA_max }}</div>
+                  <div class="custom-cell">{{ general.output.SA_max.value }}</div>
                 </td>
               </tr>
               <tr>
@@ -107,7 +106,7 @@
               </tr>
               <tr>
                 <td colspan="6">
-                  <div class="custom-cell">{{ SA_check }}</div>
+                  <div class="custom-cell">{{ general.output.SA_check_result.value }}</div>
                 </td>
               </tr>
 
@@ -145,7 +144,7 @@
               <custom-tr section="法兰力矩" :is_general="true" input_output="output" para="C0"></custom-tr>
               <custom-tr section="法兰力矩" :is_general="false" input_output="output" para="M"></custom-tr>
 
-              <custom-tr section="法兰应力" :is_general="true" input_output="output" para="g1_20" rowspan="20"></custom-tr>
+              <custom-tr section="法兰应力" :is_general="true" input_output="output" para="g1_20" rowspan="21"></custom-tr>
               <custom-tr section="法兰应力" :is_general="true" input_output="output" para="h0"></custom-tr>
               <custom-tr section="法兰应力" :is_general="true" input_output="output" para="h_h0"></custom-tr>
               <custom-tr section="法兰应力" :is_general="true" input_output="output" para="g1_g0"></custom-tr>
@@ -157,7 +156,7 @@
               <custom-tr section="法兰应力" :is_general="true" input_output="output" para="U"></custom-tr>
               <custom-tr section="法兰应力" :is_general="true" input_output="output" para="Z"></custom-tr>
               <custom-tr section="法兰应力" :is_general="true" input_output="input" para="F"></custom-tr>
-              <custom-tr section="法兰应力" :is_general="true" input_output="input" para="mu"></custom-tr>
+              <custom-tr section="法兰应力" :is_general="true" input_output="input" para="nu"></custom-tr>
               <custom-tr section="法兰应力" :is_general="true" input_output="input" para="V"></custom-tr>
               <custom-tr section="法兰应力" :is_general="true" input_output="output" para="e_"></custom-tr>
               <custom-tr section="法兰应力" :is_general="true" input_output="output" para="L"></custom-tr>
@@ -216,41 +215,22 @@ export default {
   },
   data() {
     return {
-      print:{
+      print: {
         id: 'print-area',
         popTitle: '校核报告',
       }
     }
   },
   computed: {
-    SA_max() {
-      if (this.design.output.SA.value !== '--'
-        && this.running.output.SA.value !== '--'
-        && this.abnormal.output.SA.value !== '--'
-        && this.emergency.output.SA.value !== '--'
-        && this.accident.output.SA.value !== '--'
-        && this.trial.output.SA.value !== '--') {
-        return max(this.design.output.SA.value,
-          this.running.output.SA.value,
-          this.abnormal.output.SA.value,
-          this.emergency.output.SA.value,
-          this.accident.output.SA.value,
-          this.trial.output.SA.value,)
-      } else {
-        return '--（有工况未计算）'
-      }
-    },
-    SA_check() {
-      if (this.design.output.SA.check_result === '通过'
-        && this.running.output.SA.check_result === '通过'
-        && this.abnormal.output.SA.check_result === '通过'
-        && this.emergency.output.SA.check_result === '通过'
-        && this.accident.output.SA.check_result === '通过'
-        && this.trial.output.SA.check_result === '通过') {
-        return '通过'
-      } else {
-        return '不通过'
-      }
+    needCheckList() {
+      const list = []
+      if (this.design.input.need_check) list.push('设计工况')
+      if (this.running.input.need_check) list.push('运行工况')
+      if (this.abnormal.input.need_check) list.push('异常工况')
+      if (this.emergency.input.need_check) list.push('紧急工况')
+      if (this.accident.input.need_check) list.push('事故工况')
+      if (this.trial.input.need_check) list.push('试验工况')
+      return list.join('、')
     }
   },
   methods: {
@@ -284,7 +264,7 @@ export default {
   border-collapse: collapse;
 }
 
-thead td {
+.head td {
   border: 1px solid #5a5e66;
   border-bottom: 2px solid #5a5e66;
   text-align: center;

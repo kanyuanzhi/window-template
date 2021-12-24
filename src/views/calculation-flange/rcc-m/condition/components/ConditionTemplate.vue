@@ -2,6 +2,8 @@
   <el-row :gutter="10">
     <el-col :span="20">
       <el-form label-width="80px">
+        <el-divider class="custom-el-divider--horizontal">当前使用算例：{{ case_index['flange_rcc_m_' + condition_name] }}
+        </el-divider>
         <el-card class="box-card" shadow="hover">
           <div slot="header" class="clearfix">
             <span>法兰压紧力（{{ condition_name_zh }}工况）</span>
@@ -16,11 +18,17 @@
             <el-col :span="6">
               <custom-el-input :para="general_output.Dj" :disabled="true"></custom-el-input>
             </el-col>
-            <el-col :span="6">
+            <el-col :span="6" v-if="condition_name!=='trial'">
               <custom-el-input :para="general_input.m" :disabled="true"></custom-el-input>
+            </el-col>
+            <el-col :span="6" v-else>
+              <custom-el-input :para="condition_input.m_"></custom-el-input>
             </el-col>
             <el-col :span="6">
               <custom-el-input :para="general_output.b" :disabled="true"></custom-el-input>
+            </el-col>
+            <el-col :span="6">
+              <custom-el-input :para="general_output.Fj" :disabled="true"></custom-el-input>
             </el-col>
           </el-row>
           <el-row :gutter="10">
@@ -148,9 +156,6 @@
           <el-row :gutter="10">
             <el-col :span="6">
               <custom-el-input :para="general_output.Dj" :disabled="true"></custom-el-input>
-            </el-col>
-            <el-col :span="6">
-              <custom-el-input :para="general_input.m" :disabled="true"></custom-el-input>
             </el-col>
             <el-col :span="6">
               <custom-el-input :para="condition_input.P" :disabled="true"></custom-el-input>
@@ -329,11 +334,17 @@
       </el-form>
       <el-form>
         <el-row :gutter="10">
-          <el-col :span="24">
+          <el-col :span="6" :offset="9">
             <el-form-item align="center">
               <el-button icon="el-icon-video-play" type="primary" @click="calculate" size="medium">计算</el-button>
               <el-button icon="el-icon-delete" @click="cleanAll" size="medium">清空</el-button>
             </el-form-item>
+          </el-col>
+          <el-col :span="9">
+            <case-dialog ref="caseDialog" :parameter="'flange_rcc_m_'+condition_name"
+                         @update="data => this.condition_input=data"
+                         @remove="data => this.condition_input=data"
+                         @clear-output="data => this.condition_output=data"></case-dialog>
           </el-col>
         </el-row>
       </el-form>
@@ -352,21 +363,24 @@
 
 <script>
 import CustomElInput from '@/components/CustomElInput'
+import CaseDialog from '@/components/CaseDialog'
 import {formatLabel} from '@/utils/common'
 
 import {e, log, max, min, pi, pow, round, sqrt} from "mathjs"
 
 import defaultSettings from '@/settings'
 import {Message} from "element-ui";
+import localStorage from "localStorage";
 
 const precision = defaultSettings.precision
 
 export default {
   name: 'ConditionTemplate',
   components: {
-    CustomElInput
+    CustomElInput,
+    CaseDialog,
   },
-  props: ['general', 'condition'],
+  props: ['general', 'condition', 'case_index'],
   data() {
     return {
       general_input: this.general.input,
@@ -399,7 +413,8 @@ export default {
           throw new Error([this.general_output.Dj.meaning, this.general_output.Dj.label, '未计算！'].join(' '))
         }
         const m = this.general_input.m.value
-        const b = this.general_output.Dj.value
+        const m_ = this.condition_input.m_.value
+        const b = this.general_output.b.value
         if (b === '--') {
           throw new Error([this.general_output.b.meaning, this.general_output.b.label, '未计算！'].join(' '))
         }
@@ -447,16 +462,19 @@ export default {
 
         //----------------输出----------------//
         // 法兰压紧力
-        const Peq = 16 * Mf / (pi * pow(Dj, 3) + 4 * Fa / (pi * pow(Dj, 2)))
+        const Peq = 16 * Mf / (pi * pow(Dj, 3)) + 4 * Fa / (pi * pow(Dj, 2))
         const FF = pi / 4 * pow(Dj, 2) * (P + Peq)
         // const FM = pi / 4 * pow(Dj, 2) * m * P
-        const FM = 2 * pi * Dj * b * m * P
+
+        let m_condition = this.condition_name === 'trial' ? m_ : m
+        const FM = 2 * pi * Dj * b * m_condition * (P + Peq)
         const FS = FF + FM
 
         // 螺栓预紧力
         let FT
         const FS0 = Ec / Eh * FS
-        const FT_calculate = sqrt(pow(Faq, 2) + pow(Mfn / Dj, 2)) / ff
+        // const FT_calculate = sqrt(pow(Faq, 2) + pow(Mfn / Dj, 2)) / ff
+        const FT_calculate = Faq / ff + 2 * Mfn / (Dj * ff)
         if (this.condition_input.FT.is_calculated) {
           FT = FT_calculate
         } else {
@@ -470,23 +488,25 @@ export default {
         let FSP, SA
         switch (this.condition_name) {
           case 'design':
-            FSP = pi / 4 * pow(Dj, 2) * P * (1 + m)
+            // FSP = pi / 4 * pow(Dj, 2) * P * (1 + m)
+            FSP = FS
             SA = FSP / S_bolt
             break
           case 'running':
-            SA = Eh / Ec * FSi / min(S_bolt, Sy)
+            SA = Eh / Ec * FSi / min(2 * S_bolt, 2 / 3 * Sy)
             break
           case 'abnormal':
-            SA = Eh / Ec * FSi / min(S_bolt, Sy)
+            SA = Eh / Ec * FSi / min(2 * S_bolt, 2 / 3 * Sy)
             break
           case 'emergency':
-            SA = Eh / Ec * FSi / min(S_bolt, Sy)
+            SA = Eh / Ec * FSi / min(2 * S_bolt, 2 / 3 * Sy)
             break
           case 'accident':
-            SA = Eh / Ec * FSi / min(S_bolt, Sy)
+            SA = Eh / Ec * FSi / min(2 * S_bolt, 2 / 3 * Sy)
             break
           case 'trial':
-            FSP = pi / 4 * pow(Dj, 2) * P * (1 + m)
+            // FSP = pi / 4 * pow(Dj, 2) * P * (1 + m)
+            FSP = FS
             SA = FSP / (2 / 3 * Sy)
             break
         }
@@ -590,9 +610,12 @@ export default {
         }
         this.condition_output.M.value = round(M, precision)
 
+        this.$refs.caseDialog.save()
       } catch (e) {
         Message.error(e)
       }
+
+      localStorage.setItem('parameter_flange_rcc_m_' + this.condition_name + '_input', JSON.stringify(this.condition.input))
     },
     cleanAll() {
       this.clean1()
@@ -605,6 +628,7 @@ export default {
       this.condition_input.P.value = ''
       this.condition_input.Mf.value = ''
       this.condition_input.Fa.value = ''
+      this.condition_input.m_.value = ''
 
       this.condition_output.Peq.value = '--'
       this.condition_output.FF.value = '--'

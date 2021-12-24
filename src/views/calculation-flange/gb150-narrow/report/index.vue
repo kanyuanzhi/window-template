@@ -8,15 +8,13 @@
           </div>
           <div class="report-panel" style="margin-bottom: 20px">
             <table class="custom-table">
-              <thead>
-              <tr>
+              <tbody>
+              <tr class="head">
                 <td width="10%"></td>
                 <td width="30%">计算内容</td>
                 <td width="10%">单位</td>
                 <td width="50%">值</td>
               </tr>
-              </thead>
-              <tbody>
               <custom-tr section="垫片参数" input_output="input" para="gasket_materials_name" rowspan="10"></custom-tr>
               <custom-tr section="垫片参数" input_output="input" para="DGO"></custom-tr>
               <custom-tr section="垫片参数" input_output="input" para="DGI"></custom-tr>
@@ -50,7 +48,7 @@
               <custom-tr section="法兰参数" input_output="input" para="delta_0"></custom-tr>
               <custom-tr section="法兰参数" input_output="input" para="delta_1"></custom-tr>
               <custom-tr section="法兰参数" input_output="input" para="h"></custom-tr>
-              <custom-tr section="法兰参数" input_output="input" para="DG"></custom-tr>
+              <custom-tr section="法兰参数" input_output="output" para="DG"></custom-tr>
 
               <custom-tr section="法兰形状系数" input_output="output" para="g0" rowspan="52"></custom-tr>
               <custom-tr section="法兰形状系数" input_output="output" para="g1"></custom-tr>
@@ -182,6 +180,7 @@
               <custom-tr section="法兰校核" input_output="input" para="KI_factor"></custom-tr>
               <custom-tr section="法兰校核" input_output="output" para="Fsi"></custom-tr>
               <custom-tr section="法兰校核" input_output="output" para="FD"></custom-tr>
+              <custom-tr section="法兰校核" input_output="output" para="F"></custom-tr>
               <custom-tr section="法兰校核" input_output="output" para="FT"></custom-tr>
               <custom-tr section="法兰校核" input_output="output" para="FG"></custom-tr>
               <custom-tr section="法兰校核" input_output="output" para="Mp"></custom-tr>
@@ -228,7 +227,8 @@
                   </div>
                 </td>
               </tr>
-              <custom-tr-check-result section="法兰校核" input_output="output" para="KI_index"></custom-tr-check-result>
+
+              <custom-tr-check-result section="法兰校核结果" input_output="output" para="KI_index" :rowspan="1"></custom-tr-check-result>
 
 
               </tbody>
@@ -299,7 +299,7 @@ export default {
   border-collapse: collapse;
 }
 
-thead td {
+.head td {
   border: 1px solid #5a5e66;
   border-bottom: 2px solid #5a5e66;
   text-align: center;

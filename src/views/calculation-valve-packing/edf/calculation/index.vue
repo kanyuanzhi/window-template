@@ -3,6 +3,7 @@
     <el-row :gutter="10">
       <el-col :span="20">
         <el-form label-width="80px">
+          <el-divider class="custom-el-divider--horizontal">当前使用算例：{{ case_index[parameter] }}</el-divider>
           <el-card class="box-card" shadow="hover">
             <div slot="header" class="clearfix">
               <span>输入参数</span>
@@ -72,11 +73,17 @@
         </el-form>
         <el-form>
           <el-row :gutter="10">
-            <el-col :span="24">
+            <el-col :span="6" :offset="9">
               <el-form-item align="center">
                 <el-button icon="el-icon-video-play" type="primary" @click="calculate" size="medium">计算</el-button>
                 <el-button icon="el-icon-delete" @click="cleanAll" size="medium">清空</el-button>
               </el-form-item>
+            </el-col>
+            <el-col :span="9">
+              <case-dialog ref="caseDialog" :parameter="parameter"
+                           @update="data => this.general_input=data"
+                           @remove="data => this.general_input=data"
+                           @clear-output="data => this.general_output=data"></case-dialog>
             </el-col>
           </el-row>
         </el-form>
@@ -101,6 +108,7 @@
 
 <script>
 import CustomElInput from '@/components/CustomElInput'
+import CaseDialog from '@/components/CaseDialog'
 import {formatLabel} from '@/utils/common'
 
 import {e, log, max, pi, pow, round, sqrt, atan, sin, cos} from "mathjs"
@@ -112,9 +120,10 @@ const precision = defaultSettings.precision
 
 export default {
   name: 'EDFCalculation',
-  props: ['general'],
+  props: ['general', 'case_index', 'parameter'],
   components: {
-    CustomElInput
+    CustomElInput,
+    CaseDialog
   },
   data() {
     return {
@@ -147,9 +156,12 @@ export default {
 
         //----------------输出----------------//
         // 过程参数
-        const Cs = max(1.75 * P, 28) * pi / 4 * (pow(Do, 2) - pow(Di, 2)) / n * (Pitch / (2 * pi) + f * r + f_ * Rma)
+        // const Cs = max(1.75 * P, 28) * pi / 4 * (pow(Do, 2) - pow(Di, 2)) / n * (Pitch / (2 * pi) + f * r + f_ * Rma)
+        const Cs = max(1.5 * P, 10) * pi / 4 * (pow(Do, 2) - pow(Di, 2)) / n * (Pitch / (2 * pi) + f * r + f_ * Rma) / 1000
 
         this.general_output.Cs.value = round(Cs, precision)
+
+        this.$refs.caseDialog.save()
       } catch (e) {
         Message.error(e)
       }

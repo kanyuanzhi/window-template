@@ -3,9 +3,10 @@
     <el-row :gutter="10">
       <el-col :span="20">
         <el-form label-width="80px">
+          <el-divider class="custom-el-divider--horizontal">当前使用算例：{{ case_index[parameter] }}</el-divider>
           <el-card class="box-card" shadow="hover">
             <div slot="header" class="clearfix">
-              <span>垫片参数（{{ general_input.gasket_materials_name.value }}）</span>
+              <span>垫片参数</span>
               <el-button @click="clean1" style="float: right;padding: 0;" type="text" size="medium"
                          icon="el-icon-delete">清空
               </el-button>
@@ -30,6 +31,9 @@
             <el-row :gutter="10">
               <el-col :span="6">
                 <custom-el-input :para="general_input.m"></custom-el-input>
+              </el-col>
+              <el-col :span="6">
+                <custom-el-text-input :para="general_input.gasket_materials_name"></custom-el-text-input>
               </el-col>
             </el-row>
             <el-divider class="custom-el-divider--horizontal">计算结果</el-divider>
@@ -58,7 +62,7 @@
           </el-card>
           <el-card class="box-card" shadow="hover">
             <div slot="header" class="clearfix">
-              <span>螺栓参数（{{ general_input.bolt_materials_name.value }}）</span>
+              <span>螺栓参数</span>
               <el-button @click="clean2" style="float: right;padding: 0;" type="text" size="medium"
                          icon="el-icon-delete">清空
               </el-button>
@@ -86,6 +90,9 @@
               </el-col>
               <el-col :span="6">
                 <custom-el-input :para="general_input.n"></custom-el-input>
+              </el-col>
+              <el-col :span="6">
+                <custom-el-text-input :para="general_input.bolt_materials_name"></custom-el-text-input>
               </el-col>
             </el-row>
             <el-divider class="custom-el-divider--horizontal">计算结果</el-divider>
@@ -122,7 +129,7 @@
           </el-card>
           <el-card class="box-card" shadow="hover">
             <div slot="header" class="clearfix">
-              <span>法兰参数（{{ general_input.flange_materials_name.value }}）</span>
+              <span>法兰参数</span>
               <el-button @click="clean3" style="float: right;padding: 0;" type="text" size="medium"
                          icon="el-icon-delete">清空
               </el-button>
@@ -156,6 +163,11 @@
               </el-col>
               <el-col :span="6">
                 <custom-el-input :para="general_output.DG" :disabled="true"></custom-el-input>
+              </el-col>
+            </el-row>
+            <el-row :gutter="10">
+              <el-col :span="6">
+                <custom-el-text-input :para="general_input.flange_materials_name"></custom-el-text-input>
               </el-col>
             </el-row>
           </el-card>
@@ -457,11 +469,17 @@
         </el-form>
         <el-form>
           <el-row :gutter="10">
-            <el-col :span="24">
+            <el-col :span="6" :offset="9">
               <el-form-item align="center">
                 <el-button icon="el-icon-video-play" type="primary" @click="calculate" size="medium">计算</el-button>
                 <el-button icon="el-icon-delete" @click="cleanAll" size="medium">清空</el-button>
               </el-form-item>
+            </el-col>
+            <el-col :span="9">
+              <case-dialog ref="caseDialog" :parameter="parameter"
+                           @update="data => this.general_input=data"
+                           @remove="data => this.general_input=data"
+                           @clear-output="data => this.general_output=data"></case-dialog>
             </el-col>
           </el-row>
         </el-form>
@@ -486,6 +504,8 @@
 
 <script>
 import CustomElInput from '@/components/CustomElInput'
+import CustomElTextInput from '@/components/CustomElTextInput'
+import CaseDialog from '@/components/CaseDialog'
 import {formatLabel} from '@/utils/common'
 
 import {e, log, max, pi, pow, round, sqrt} from "mathjs"
@@ -497,9 +517,11 @@ const precision = defaultSettings.precision
 
 export default {
   name: 'GB150NarrowGeneral',
-  props: ['general'],
+  props: ['general', 'case_index', 'parameter'],
   components: {
-    CustomElInput
+    CustomElTextInput,
+    CustomElInput,
+    CaseDialog
   },
   data() {
     return {
@@ -699,6 +721,7 @@ export default {
         this.general_output.VI.value = round(VI, precision)
         this.general_output.f_factor.value = round(f_factor, precision)
 
+        this.$refs.caseDialog.save()
       } catch (e) {
         Message.error(e)
       }

@@ -17,3 +17,5 @@ tests/**/coverage/
 
 #Electron-builder output
 /dist_electron
+
+*.pdf

@@ -1,5 +1,5 @@
 <template>
-  <router-view :general="general"/>
+  <router-view :general="general" :case_index="case_index" :parameter="'pipe_nuclear'"/>
 </template>
 
 
@@ -10,6 +10,7 @@ export default {
   data() {
     return {
       general: this.$store.getters.pipe_nuclear,
+      case_index: this.$store.getters.current_case_index,
     }
   }
 }

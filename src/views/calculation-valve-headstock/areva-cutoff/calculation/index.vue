@@ -2,6 +2,7 @@
   <div class="app-container">
     <el-row :gutter="10">
       <el-col :span="20">
+        <el-divider class="custom-el-divider--horizontal">当前使用算例：{{ case_index[parameter] }}</el-divider>
         <el-form label-width="80px">
           <el-card class="box-card" shadow="hover">
             <div slot="header" class="clearfix">
@@ -21,7 +22,7 @@
                 <custom-el-input :para="general_input.delta_P"></custom-el-input>
               </el-col>
               <el-col :span="6">
-                <custom-el-input :para="general_input.Dt"></custom-el-input>
+                <custom-el-input :para="general_input.Dt" @custom-change="DtChange"></custom-el-input>
               </el-col>
               <el-col :span="6">
                 <custom-el-input :para="general_input.Pfonc"></custom-el-input>
@@ -29,7 +30,7 @@
             </el-row>
             <el-row :gutter="10">
               <el-col :span="6">
-                <custom-el-input :para="general_input.Dtcm"></custom-el-input>
+                <custom-el-input :para="general_input.Dtcm" :disabled="true"></custom-el-input>
               </el-col>
               <el-col :span="6">
                 <custom-el-input :para="general_input.gc"></custom-el-input>
@@ -78,6 +79,31 @@
             <el-row :gutter="6">
               <el-col :span="6">
                 <custom-el-input :para="general_input.L"></custom-el-input>
+              </el-col>
+            </el-row>
+            <el-divider class="custom-el-divider--horizontal">参考值</el-divider>
+            <el-row :gutter="10">
+              <el-col :span="12" :offset="6">
+                <table class="custom-table-in-card">
+                  <tr>
+                    <td width="20%">Packing material</td>
+                    <td width="40%">Friction coefficient μst packing/stem</td>
+                    <td width="20%">R-value</td>
+                    <td width="20%">sealing factor fD</td>
+                  </tr>
+                  <tr>
+                    <td>pure graphite</td>
+                    <td>0.18</td>
+                    <td>0.55</td>
+                    <td>2.5</td>
+                  </tr>
+                  <tr>
+                    <td>PTFE-silk</td>
+                    <td>0.06</td>
+                    <td>0.80</td>
+                    <td>1.7</td>
+                  </tr>
+                </table>
               </el-col>
             </el-row>
             <el-divider class="custom-el-divider--horizontal">计算结果</el-divider>
@@ -152,13 +178,27 @@
               <el-col :span="6">
                 <custom-el-input :para="general_input.gama"></custom-el-input>
               </el-col>
-              <el-col :span="6">
-                <custom-el-input :para="general_input.i"></custom-el-input>
-              </el-col>
             </el-row>
             <el-row :gutter="10">
               <el-col :span="6">
-                <custom-el-input :para="general_input.eta"></custom-el-input>
+                <el-form-item size="small" :inline="true">
+                  <el-radio-group v-model="general_input.with_gear.value" @change="withGearChange">
+                    <el-radio :label="general_input.with_gear.items[0].selection">{{
+                        general_input.with_gear.items[0].meaning
+                      }}
+                    </el-radio>
+                    <el-radio :label="general_input.with_gear.items[1].selection">{{
+                        general_input.with_gear.items[1].meaning
+                      }}
+                    </el-radio>
+                  </el-radio-group>
+                </el-form-item>
+              </el-col>
+              <el-col :span="6">
+                <custom-el-input :para="general_input.i" :disabled="general_input.with_gear.value===2"></custom-el-input>
+              </el-col>
+              <el-col :span="6">
+                <custom-el-input :para="general_input.eta" :disabled="general_input.with_gear.value===2"></custom-el-input>
               </el-col>
             </el-row>
             <el-divider class="custom-el-divider--horizontal">计算结果</el-divider>
@@ -291,22 +331,6 @@
                 </el-form-item>
               </el-col>
             </el-row>
-            <el-row :gutter="10">
-              <el-col :span="12">
-                <el-form-item :label="general_input.with_gear.meaning" label-width="100px" size="small" :inline="true">
-                  <el-radio-group v-model="general_input.with_gear.value">
-                    <el-radio :label="general_input.with_gear.items[0].selection">{{
-                        general_input.with_gear.items[0].meaning
-                      }}
-                    </el-radio>
-                    <el-radio :label="general_input.with_gear.items[1].selection">{{
-                        general_input.with_gear.items[1].meaning
-                      }}
-                    </el-radio>
-                  </el-radio-group>
-                </el-form-item>
-              </el-col>
-            </el-row>
             <el-divider class="custom-el-divider--horizontal">计算结果</el-divider>
             <el-row :gutter="10">
               <el-col :span="24">
@@ -323,22 +347,22 @@
                       general_output.CRT.value
                     }}
                   </el-descriptions-item>
-<!--                  <el-descriptions-item :label="Label(general_output.Cma_without_gear)">{{-->
-<!--                      general_output.Cma_without_gear.value-->
-<!--                    }}-->
-<!--                  </el-descriptions-item>-->
-<!--                  <el-descriptions-item :label="Label(general_output.Cma_with_gear)">{{-->
-<!--                      general_output.Cma_with_gear.value-->
-<!--                    }}-->
-<!--                  </el-descriptions-item>-->
-<!--                  <el-descriptions-item :label="Label(general_output.CRT_without_gear)">{{-->
-<!--                      general_output.CRT_without_gear.value-->
-<!--                    }}-->
-<!--                  </el-descriptions-item>-->
-<!--                  <el-descriptions-item :label="Label(general_output.CRT_with_gear)">{{-->
-<!--                      general_output.CRT_with_gear.value-->
-<!--                    }}-->
-<!--                  </el-descriptions-item>-->
+                  <!--                  <el-descriptions-item :label="Label(general_output.Cma_without_gear)">{{-->
+                  <!--                      general_output.Cma_without_gear.value-->
+                  <!--                    }}-->
+                  <!--                  </el-descriptions-item>-->
+                  <!--                  <el-descriptions-item :label="Label(general_output.Cma_with_gear)">{{-->
+                  <!--                      general_output.Cma_with_gear.value-->
+                  <!--                    }}-->
+                  <!--                  </el-descriptions-item>-->
+                  <!--                  <el-descriptions-item :label="Label(general_output.CRT_without_gear)">{{-->
+                  <!--                      general_output.CRT_without_gear.value-->
+                  <!--                    }}-->
+                  <!--                  </el-descriptions-item>-->
+                  <!--                  <el-descriptions-item :label="Label(general_output.CRT_with_gear)">{{-->
+                  <!--                      general_output.CRT_with_gear.value-->
+                  <!--                    }}-->
+                  <!--                  </el-descriptions-item>-->
                 </el-descriptions>
               </el-col>
             </el-row>
@@ -346,11 +370,17 @@
         </el-form>
         <el-form>
           <el-row :gutter="10">
-            <el-col :span="24">
+            <el-col :span="6" :offset="9">
               <el-form-item align="center">
                 <el-button icon="el-icon-video-play" type="primary" @click="calculate" size="medium">计算</el-button>
                 <el-button icon="el-icon-delete" @click="cleanAll" size="medium">清空</el-button>
               </el-form-item>
+            </el-col>
+            <el-col :span="9">
+              <case-dialog ref="caseDialog" :parameter="parameter"
+                           @update="data => this.general_input=data"
+                           @remove="data => this.general_input=data"
+                           @clear-output="data => this.general_output=data"></case-dialog>
             </el-col>
           </el-row>
         </el-form>
@@ -375,6 +405,7 @@
 
 <script>
 import CustomElInput from '@/components/CustomElInput'
+import CaseDialog from '@/components/CaseDialog'
 import {formatLabel} from '@/utils/common'
 
 import {e, log, max, pi, pow, round, sqrt, atan, sin, cos} from "mathjs"
@@ -386,9 +417,10 @@ const precision = defaultSettings.precision
 
 export default {
   name: 'AREVACutoffCalculation',
-  props: ['general'],
+  props: ['general', 'case_index', 'parameter'],
   components: {
-    CustomElInput
+    CustomElInput,
+    CaseDialog
   },
   data() {
     return {
@@ -453,9 +485,10 @@ export default {
         //----------------输出----------------//
         // 系统与结构参数
         let hcm
-        const hcm_calculate = Dtcm + 1.5 + gc
+        const hcm_calculate = Dtcm + gc
         if (this.general_input.hcm.is_calculated) {
           hcm = hcm_calculate
+          this.general_input.hcm.value = round(hcm, precision)
         } else {
           hcm = hcm_manual
         }
@@ -465,17 +498,19 @@ export default {
 
         // 螺纹与系数参数
         const Rm = 0.5 * (D - 0.5 * PP)
-        const tan_alpha = Lead / (2 * pi * Rm) * (Nbf * PP) / (2 * pi * Rm)
+        // const tan_alpha = Lead / (2 * pi * Rm) * (Nbf * PP) / (2 * pi * Rm)
+        const tan_alpha = Lead / (2 * pi * Rm)
         const alpha = atan(tan_alpha) * 180 / pi
 
         // 过程参数
         const Q1 = pi * pow(Ds, 2) / 4 * delta_P
         const Q2 = pi * pow(Dt, 2) / 4 * (Pfonc - delta_P)
-        const Q3_1 = 12 * S * PPE
-        const Q3_2 = FB * ri / (ra + ri) * (1 - pow(e, -2 * miu_st * R * h / (ra - ri)))
+        const Q3_1 = 1.2 * S * PPE
+        // const Q3_2 = FB * ri / (ra + ri) * (1 - pow(e, -2 * miu_st * R * h / (ra - ri)))
+        const Q3_2 = FB / 2 * (1 - pow(e, -2 * miu_st * R * h / (ra - ri)))
         const Q4_1 = E * pi * Ds
         const Q4_2 = 1.3 * delta_P * pi * Ds * L
-        const Tf = (tan_alpha + miu_2 / cos(beta)) / (1 - tan_alpha * miu_2 / cos(beta)) * Rm + miu_3 * RMB
+        const Tf = (tan_alpha + miu_2 / cos(beta * pi / 180)) / (1 - tan_alpha * miu_2 / cos(beta * pi / 180)) * Rm + miu_3 * RMB
 
         // 结果数据
         let Q3
@@ -485,16 +520,16 @@ export default {
           Q3 = Q3_2
         }
         let Q4
-        if (Q3_type === 1) {
+        if (Q4_type === 1) {
           Q4 = Q4_1
         } else {
           Q4 = Q4_2
         }
-        const C = (Q1 + Q2 + Q3 + Q4 + Q6) * Tf / RCAD / 10000
+        const C = (Q1 + Q2 + Q3 + Q4 - Q5 + Q6) * Tf / RCAD / 1000
         const Cma_without_gear = C * Ma
         const Cma_with_gear = C * Ma / (i * eta)
-        const CRT_without_gear = (1 + gama) * Cma_without_gear
-        const CRT_with_gear = (1 + gama) * Cma_with_gear
+        const CRT_without_gear = (1 + gama/100) * Cma_without_gear
+        const CRT_with_gear = (1 + gama/100) * Cma_with_gear
         let Cma, CRT
         if (with_gear === 1) {
           Cma = Cma_with_gear
@@ -529,6 +564,7 @@ export default {
         this.general_output.Cma.value = round(Cma, precision)
         this.general_output.CRT.value = round(CRT, precision)
 
+        this.$refs.caseDialog.save()
       } catch (e) {
         Message.error(e)
       }
@@ -611,7 +647,33 @@ export default {
       if (val) {
         this.general_input.hcm.value = this.general_output.hcm.value
       }
+    },
+    DtChange(val) {
+      console.log(val)
+      this.general_input.Dtcm.value = round(val / 10, precision)
+    },
+    withGearChange(val){
+      if (val === 2){
+        this.general_input.i.value = 1
+        this.general_input.eta.value = 1
+      }
     }
   }
 }
 </script>
+
+<style scoped>
+.custom-table-in-card {
+  width: 100%;
+  font-size: 15px;
+  border: 1px solid #DCDFE6;
+  border-collapse: collapse;
+  color: #606266;
+}
+
+td {
+  border: 1px solid #DCDFE6;
+  text-align: center;
+  padding: 4px 6px;
+}
+</style>

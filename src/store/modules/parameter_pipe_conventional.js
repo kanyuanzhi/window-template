@@ -20,7 +20,7 @@ const state = {
         label: 'h1',
         unit: 'mm'
       },
-      h1_or_d:{
+      h1_or_d: {
         value: 0, // 0：使用壁厚、1：使用内径
         meaning: '选择使用内径或壁厚参与计算',
         label: '',
@@ -77,7 +77,14 @@ const state = {
   }
 }
 
-const mutations = {}
+const mutations = {
+  update: (state, new_input) => {
+    state.general.input = new_input
+  },
+  update_output: (state, new_output) => {
+    state.general.output = new_output
+  }
+}
 
 const actions = {}
 

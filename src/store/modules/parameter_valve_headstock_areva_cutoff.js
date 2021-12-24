@@ -32,9 +32,9 @@ const state = {
         label: 'Dtcm',
         unit: 'cm'
       },
-      gc:{
+      gc: {
         value: '',
-        meaning: '调整公差（范围：0~0.5）',
+        meaning: '调整公差（范围：1.5~2.0）',
         label: 'gc',
         unit: 'cm'
       },
@@ -169,16 +169,29 @@ const state = {
         unit: '%'
       },
       i: {
-        value: '',
+        value: 1,
         meaning: '齿轮箱转速比',
         label: 'i',
         unit: ''
       },
       eta: {
-        value: '',
+        value: 1,
         meaning: '齿轮箱效率',
         label: 'η',
         unit: ''
+      },
+      with_gear: {
+        value: 2,
+        meaning: '',
+        label: '有无齿轮箱',
+        unit: '',
+        items: [{
+          selection: 1,
+          meaning: '有齿轮箱'
+        }, {
+          selection: 2,
+          meaning: '无齿轮箱'
+        }]
       },
 
       // 中间过程参数
@@ -223,19 +236,7 @@ const state = {
       },
 
       // 结果数据
-      with_gear:{
-        value: 1,
-        meaning: '',
-        label: '有无齿轮箱',
-        unit: '',
-        items: [{
-          selection: 1,
-          meaning: '有齿轮箱'
-        }, {
-          selection: 2,
-          meaning: '无齿轮箱'
-        }]
-      }
+
     },
 
     output: {
@@ -376,7 +377,14 @@ const state = {
   }
 }
 
-const mutations = {}
+const mutations = {
+  update: (state, new_input) => {
+    state.general.input = new_input
+  },
+  update_output: (state, new_output) => {
+    state.general.output = new_output
+  }
+}
 
 const actions = {}
 

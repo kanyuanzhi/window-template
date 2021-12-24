@@ -2,41 +2,43 @@
   <el-row :gutter="40">
     <el-col :span="18">
       <el-form label-width="80px">
-        <el-divider class="custom-el-divider--horizontal">{{ condition_name_zh }}工况</el-divider>
+        <el-divider class="custom-el-divider--horizontal">{{ condition_name_zh }}工况
+          当前使用算例：{{ case_index['flange_rcc_m_' + condition_name] }}
+        </el-divider>
         <div class="left-panel" style="margin-bottom: 20px">
           <el-table
-            :data="table_data"
-            size="medium"
-            style="width: 100%">
+              :data="table_data"
+              size="medium"
+              style="width: 100%">
             <el-table-column
-              prop="name"
-              label=""
-              min-width="10%">
+                prop="name"
+                label=""
+                min-width="10%">
             </el-table-column>
             <el-table-column
-              prop="SR"
-              :label="Label(condition_output.SR)"
-              min-width="18%">
+                prop="SR"
+                :label="Label(condition_output.SR)"
+                min-width="18%">
             </el-table-column>
             <el-table-column
-              prop="ST"
-              :label="Label(condition_output.ST)"
-              min-width="18%">
+                prop="ST"
+                :label="Label(condition_output.ST)"
+                min-width="18%">
             </el-table-column>
             <el-table-column
-              prop="SH"
-              :label="Label(condition_output.SH)"
-              min-width="18%">
+                prop="SH"
+                :label="Label(condition_output.SH)"
+                min-width="18%">
             </el-table-column>
             <el-table-column
-              prop="SH_SR"
-              :label="Label(condition_output.SH_SR)"
-              min-width="18%">
+                prop="SH_SR"
+                :label="Label(condition_output.SH_SR)"
+                min-width="18%">
             </el-table-column>
             <el-table-column
-              prop="SH_ST"
-              :label="Label(condition_output.SH_ST)"
-              min-width="18%">
+                prop="SH_ST"
+                :label="Label(condition_output.SH_ST)"
+                min-width="18%">
             </el-table-column>
           </el-table>
         </div>
@@ -65,12 +67,13 @@ import {formatLabel} from '@/utils/common'
 
 import {Message} from "element-ui";
 import defaultSettings from '@/settings'
+import localStorage from "localStorage";
 
 const precision = defaultSettings.precision
 
 export default {
   name: "CheckTemplate",
-  props: ['general', 'condition'],
+  props: ['general', 'condition', 'case_index'],
   components: {
     CustomElInput
   },
@@ -255,14 +258,14 @@ export default {
           this.condition_output.SH_ST.check_result = this.check(SH_ST, SH_ST_limit)
 
           this.condition_output.flange_check_result = (this.condition_output.SR.check_result === '通过'
-            && this.condition_output.ST.check_result === '通过'
-            && this.condition_output.SH.check_result === '通过'
-            && this.condition_output.SH_SR.check_result === '通过'
-            && this.condition_output.SH_ST.check_result === '通过') ? '通过' : '不通过'
+              && this.condition_output.ST.check_result === '通过'
+              && this.condition_output.SH.check_result === '通过'
+              && this.condition_output.SH_SR.check_result === '通过'
+              && this.condition_output.SH_ST.check_result === '通过') ? '通过' : '不通过'
         } else {
           this.condition_output.flange_check_result = (this.condition_output.SR.check_result === '通过'
-            && this.condition_output.ST.check_result === '通过'
-            && this.condition_output.SH.check_result === '通过') ? '通过' : '不通过'
+              && this.condition_output.ST.check_result === '通过'
+              && this.condition_output.SH.check_result === '通过') ? '通过' : '不通过'
         }
       } catch (e) {
         Message.error(e)

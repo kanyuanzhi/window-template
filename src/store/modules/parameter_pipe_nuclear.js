@@ -20,7 +20,7 @@ const state = {
         label: 'h1',
         unit: 'mm'
       },
-      h1_or_d:{
+      h1_or_d: {
         value: 0, // 0：使用壁厚、1：使用内径
         meaning: '选择使用内径或壁厚参与计算',
         label: '',
@@ -54,46 +54,62 @@ const state = {
         value: '',
         meaning: '保温密度',
         label: 'p3',
-        unit: ''
+        unit: 'kg/m3'
       },
       h2: {
         value: '',
         meaning: '保温厚度',
         label: 'h2',
-        unit: ''
+        unit: 'mm'
       },
-      p1:{
-        value: '',
+      p1: {
+        value: 7850,
         meaning: '材料密度',
         label: 'p1',
-        unit: ''
+        unit: 'kg/m3'
       },
-      E:{
+      E: {
         value: '',
         meaning: '弹性模量',
         label: 'E',
-        unit: ''
+        unit: 'Mpa'
       },
-      p2:{
-        value: '',
+      p2: {
+        value: 1000,
         meaning: '介质密度',
         label: 'p2',
-        unit: ''
+        unit: 'kg/m3'
       },
 
       // 等效长度
-      W:{
+      W: {
         value: '',
         meaning: '集中载荷重量',
         label: 'W',
-        unit: ''
+        unit: 'kg'
       },
-      l1:{
+      l1: {
         value: '',
         meaning: '集中载荷长度',
         label: 'l1',
-        unit: ''
+        unit: 'mm'
       },
+
+      // 允许跨距
+      V: {
+        value: 2.5,
+        meaning: '挠度',
+        label: 'V',
+        unit: 'mm',
+      },
+
+      // 跨距校核
+      L_:{
+        value: '',
+        meaning: '现场支架跨距',
+        label: 'L\'',
+        unit: 'mm',
+      }
     },
 
     output: {
@@ -110,7 +126,14 @@ const state = {
         value: '--',
         meaning: '单位长度载荷',
         label: 'q',
-        unit: ''
+        unit: 'N/m'
+      },
+      L: {
+        value: '--',
+        meaning: '允许跨距',
+        label: 'L',
+        unit: 'mm',
+        check_result: '--',
       },
 
       // 等效长度
@@ -118,21 +141,20 @@ const state = {
         value: '--',
         meaning: '等效长度',
         label: 'l2',
-        unit: ''
-      },
-
-      // 跨距
-      L: {
-        value: '--',
-        meaning: '跨距',
-        label: 'L',
-        unit: 'm'
+        unit: 'mm'
       },
     }
   }
 }
 
-const mutations = {}
+const mutations = {
+  update: (state, new_input) => {
+    state.general.input = new_input
+  },
+  update_output: (state, new_output) => {
+    state.general.output = new_output
+  }
+}
 
 const actions = {}
 

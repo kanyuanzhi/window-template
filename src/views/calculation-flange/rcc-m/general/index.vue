@@ -3,6 +3,8 @@
     <el-row :gutter="10">
       <el-col :span="20">
         <el-form label-width="80px">
+          <el-divider class="custom-el-divider--horizontal">当前使用算例：{{ case_index['flange_rcc_m_general'] }}
+          </el-divider>
 
           <el-card class="box-card" shadow="hover">
             <div slot="header" class="clearfix">
@@ -88,7 +90,16 @@
                 <custom-el-input :para="general_input.f_"></custom-el-input>
               </el-col>
               <el-col :span="6">
-                <custom-el-input :para="general_input.PV"></custom-el-input>
+                <custom-el-input :para="general_input.PV"
+                                 :disabled="general_input.PV.is_calculated"></custom-el-input>
+              </el-col>
+              <el-col :span="6">
+                <el-form-item label="选取方式" size="small" :inline="true">
+                  <el-radio-group v-model="general_input.PV.is_calculated" @change="PVIsCalculatedChange">
+                    <el-radio :label="true">公式计算</el-radio>
+                    <el-radio :label="false">手动填写</el-radio>
+                  </el-radio-group>
+                </el-form-item>
               </el-col>
             </el-row>
             <el-divider class="custom-el-divider--horizontal">计算结果</el-divider>
@@ -107,8 +118,14 @@
                       general_output.r.value
                     }}
                   </el-descriptions-item>
+                </el-descriptions>
+                <el-descriptions :column="3">
                   <el-descriptions-item :label="Label(general_output.Rma)">{{
                       general_output.Rma.value
+                    }}
+                  </el-descriptions-item>
+                  <el-descriptions-item :label="Label(general_output.PV)">{{
+                      general_output.PV.value
                     }}
                   </el-descriptions-item>
                   <el-descriptions-item :label="Label(general_output.CS)">{{
@@ -268,17 +285,28 @@
 
         <el-form>
           <el-row :gutter="10">
-            <el-col :span="24">
+            <el-col :span="6" :offset="9">
               <el-form-item align="center">
                 <el-button icon="el-icon-video-play" type="primary" @click="calculate" size="medium">计算</el-button>
                 <el-button icon="el-icon-delete" @click="cleanAll" size="medium">清空</el-button>
               </el-form-item>
+            </el-col>
+            <el-col :span="9">
+              <case-dialog ref="caseDialog" :parameter="'flange_rcc_m_general'"
+                           @update="data => this.general_input=data"
+                           @remove="data => this.general_input=data"
+                           @clear-output="data => this.general_output=data"></case-dialog>
             </el-col>
           </el-row>
         </el-form>
       </el-col>
       <el-col :span="4">
         <div class="demo-image__placeholder">
+          <div class="el-image-block">
+            <el-image :src="img_flange" :preview-src-list="[img_flange]">
+            </el-image>
+            <span class="demonstration">法兰示意图</span>
+          </div>
           <div class="el-image-block">
             <el-image :src="img_bolt" :preview-src-list="[img_bolt]">
             </el-image>
@@ -307,6 +335,7 @@
 
 <script>
 import CustomElInput from '@/components/CustomElInput'
+import CaseDialog from '@/components/CaseDialog'
 import {formatLabel} from '@/utils/common'
 
 import {e, log, max, pi, pow, round, sqrt} from "mathjs"
@@ -317,18 +346,23 @@ const precision = defaultSettings.precision
 
 export default {
   name: 'General',
-  props: ['general'],
+  props: ['general', 'design', 'running', 'abnormal', 'emergency', 'accident', 'trial', 'case_index'],
   components: {
     CustomElInput,
+    CaseDialog,
   },
   data() {
     return {
       general_input: this.general.input,
       general_output: this.general.output,
+      img_flange: require('@/assets/model_images/flange_rcc_m_flange.jpg'),
       img_bolt: require('@/assets/model_images/flange_rcc_m_bolt.png'),
       img_lambda: require('@/assets/model_images/flange_rcc_m_lambda.png'),
       img_F: require('@/assets/model_images/flange_rcc_m_F.png'),
-      img_V: require('@/assets/model_images/flange_rcc_m_V.png')
+      img_V: require('@/assets/model_images/flange_rcc_m_V.png'),
+
+      parameter_case: 1,
+      LoadDialogVisible: false
     }
   },
   computed: {
@@ -354,7 +388,7 @@ export default {
       const S = this.general_input.S.value
       const f = this.general_input.f.value
       const f_ = this.general_input.f_.value
-      const PV = this.general_input.PV.value
+      const PV_manual = this.general_input.PV.value
 
       // 法兰尺寸
       const A = this.general_input.A.value
@@ -386,6 +420,23 @@ export default {
       const SB = SB_ * n
       const r = (d - 0.6495 * P) / 2
       const Rma = (d + S) / 4
+      let PV
+
+
+      const PV_calculate = max(
+        this.design.input.need_check ? (this.design.output.FSi.value === '--' ? 0 : this.design.output.FSi.value) : -10000,
+        this.running.input.need_check ? (this.running.output.FSi.value === '--' ? 0 : this.design.output.FSi.value) : -10000,
+        this.abnormal.input.need_check ? (this.abnormal.output.FSi.value === '--' ? 0 : this.abnormal.output.FSi.value) : -10000,
+        this.emergency.input.need_check ? (this.emergency.output.FSi.value === '--' ? 0 : this.emergency.output.FSi.value) : -10000,
+        this.accident.input.need_check ? (this.accident.output.FSi.value === '--' ? 0 : this.accident.output.FSi.value) : -10000,
+        this.trial.input.need_check ? (this.trial.output.FSi.value === '--' ? 0 : this.trial.output.FSi.value) : -10000,
+      ) / this.general.input.n.value
+
+      if (this.general_input.PV.is_calculated) {
+        PV = PV_calculate
+      } else {
+        PV = PV_manual
+      }
       const CS = PV * (P / (2 * pi) + f * r + f_ * Rma) / 1000
 
       // 法兰尺寸
@@ -398,7 +449,8 @@ export default {
       const R = 0.5 * (C - B) - g1
       const hd = (C - B - g1) / 2
       const hg = (C - Dj) / 2
-      const ht = (C - B + hg - g1) / 2
+      // const ht = (C - B + hg - g1) / 2
+      const ht = (R + hg + g1) / 2
 
       // 法兰系数
       const g1_20 = 20 * g1
@@ -435,6 +487,7 @@ export default {
       this.general_output.r.value = round(r, precision)
       this.general_output.Rma.value = round(Rma, precision)
       this.general_output.CS.value = round(CS, precision)
+      this.general_output.PV.value = round(PV_calculate, precision)
 
       this.general_output.C0.value = round(C0, precision)
       this.general_output.R.value = round(R, precision)
@@ -454,6 +507,8 @@ export default {
       this.general_output.e_.value = round(e_, precision)
       this.general_output.L.value = round(L, precision)
       this.general_output.B1.value = round(B1, precision)
+
+      this.$refs.caseDialog.save()
     },
     cleanAll() {
       this.clean1()
@@ -466,9 +521,10 @@ export default {
       this.general_input.y.value = ''
       this.general_input.Do.value = ''
       this.general_input.Di.value = ''
-      this.general_input.b0.value = ''
-      this.general_input.b.value = ''
 
+      this.general_output.N.value = '--'
+      this.general_output.b0.value = '--'
+      this.general_output.b.value = '--'
       this.general_output.Dj.value = '--'
       this.general_output.Fj.value = '--'
     },
@@ -480,12 +536,14 @@ export default {
       this.general_input.f.value = ''
       this.general_input.f_.value = ''
       this.general_input.PV.value = ''
+      this.general_input.PV.is_calculated = true
 
       this.general_output.SB_.value = '--'
       this.general_output.SB.value = '--'
       this.general_output.r.value = '--'
       this.general_output.Rma.value = '--'
       this.general_output.CS.value = '--'
+      this.general_output.PV.value = '--'
     },
     clean3() {
       this.general_input.A.value = ''
@@ -519,7 +577,12 @@ export default {
       this.general_output.e_.value = '--'
       this.general_output.L.value = '--'
       this.general_output.B1.value = '--'
-    }
+    },
+    PVIsCalculatedChange(val) {
+      if (val) {
+        this.general_input.PV.value = this.general_output.PV.value
+      }
+    },
   }
 }
 </script>
